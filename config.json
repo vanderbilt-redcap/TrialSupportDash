@@ -1,0 +1,38 @@
+{
+	"name": "PassItOn",
+	"namespace": "Vanderbilt\\PassItOn",
+	"framework-version": 5,
+	"description": "REDCap external module that implements the user dashboard for PassItOn REDCap projects.",
+	"documentation": "README.md",
+	"authors": [
+		{
+			"name": "Carl Reed",
+			"email": "datacore@vumc.org",
+			"institution": "Vanderbilt University Medical Center"
+		},
+		{
+			"name": "Kyle McGuffin",
+			"email": "datacore@vumc.org",
+			"institution": "Vanderbilt University Medical Center"
+		}
+	],
+	"versions": {
+		"0.0.1": "Initial module creation"
+	},
+	"permissions": [],
+	"enable-every-page-hooks-on-system-pages": false,
+	"links": {
+		"project": [],
+		"control-center": []
+	},
+	"no-auth-pages": [],
+	"project-settings": [],
+	"system-settings": [],
+	"crons": [],
+	"compatibility": {
+		"php-version-min": "",
+		"php-version-max": "",
+		"redcap-version-min": "",
+		"redcap-version-max": ""
+	}
+}
