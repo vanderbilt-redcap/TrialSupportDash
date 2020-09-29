@@ -38,8 +38,47 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 	   if (empty($user_dag_name)) {
 			   return false;
 	   } else {
-			   return $user_dag_name;
+			   return $user_dag_name;	// example return value "001_vanderbilt"
 	   }
 	}
 	
+	public function getGroupIDsByDAGName($unique_dag_name) {
+		// this function attempts to find the group_id for the given unique dag name
+		$group_ids = [];
+		
+		// initialize Project objects
+		global $Proj;
+		$edc_project = $Proj;
+		$screening_pid = $this->getProjectSetting('screening_project');
+		if (empty($screening_pid))
+			return false;	// throw exception?
+		$screening_project = new \Project($screening_pid);
+		
+		$edc_dag_names = $edc_project->getUniqueGroupNames();
+		foreach ($edc_dag_names as $group_id => $unique_name) {
+			if ($unique_dag_name == $unique_name) {
+				$group_ids['edc_group_id'] = $group_id;
+				break;
+			}
+		}
+		
+		$screening_dag_names = $screening_project->getUniqueGroupNames();
+		foreach ($screening_dag_names as $group_id => $unique_name) {
+			if ($unique_dag_name == $unique_name) {
+				$group_ids['screening_group_id'] = $group_id;
+				break;
+			}
+		}
+		
+		return $group_ids;
+		/* example result for getGroupIDsByDAGName($unique_dag_name='001_vanderbilt'):
+			[
+				[edc_group_id] = 210
+				[screening_group_id] = 312
+			]
+			
+			example result for getGroupIDsByDAGName($unique_dag_name='not_a_valid_dag_name'):
+			[] (empty array)
+		*/
+	}
 }
