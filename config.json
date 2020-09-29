@@ -26,7 +26,22 @@
 		"control-center": []
 	},
 	"no-auth-pages": [],
-	"project-settings": [],
+	"project-settings": [
+		{
+			"key": "screening_project",
+			"name": "PassItOn Screening Project ID",
+			"required": false,
+			"type": "project-id",
+			"repeatable": false
+		},
+		{
+			"key": "user_access_project",
+			"name": "PassItOn User Access Database Project ID",
+			"required": false,
+			"type": "project-id",
+			"repeatable": false
+		}
+	],
 	"system-settings": [],
 	"crons": [],
 	"compatibility": {
