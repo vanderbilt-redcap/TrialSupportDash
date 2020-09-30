@@ -81,4 +81,62 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 			[] (empty array)
 		*/
 	}
+	
+	public function getRecordsByDAGName($unique_dag_name, $edc_params=null, $screening_params=null) {
+		// gets records from EDC and screening project
+		$unique_dag_name = "002__ohio_state_un";
+		$group_ids = $this->getGroupIDsByDAGName($unique_dag_name);
+		echo ("group_ids: " . print_r($group_ids, true) . "<br><br>");
+		if (empty($group_ids))
+			return false;
+		if (!empty($group_ids['edc_group_id']))
+			$edc_gid = $group_ids['edc_group_id'];
+		if (!empty($group_ids['screening_group_id']))
+			$screening_gid = $group_ids['screening_group_id'];
+		
+		$edc_pid = $this->getProjectId();
+		$screening_pid = $this->getProjectSetting('screening_project');
+		if (empty($screening_pid))
+			return false;	// throw exception?
+		
+		$records = new \stdClass();
+		
+		// overwrite pid/groups from given params and fetch EDC records
+		if (!empty($edc_gid)) {
+			if (empty($edc_params)) {
+				$edc_params = [];
+			}
+			$edc_params['project_id'] = $edc_pid;
+			$edc_params['groups'] = $edc_gid;
+			
+			echo "edc_params: " . print_r($edc_params, true) . "<br>";
+			$edc_records = \REDCap::getData($edc_params);
+			if ($edc_params['return_format'] == 'json')
+				$edc_records = json_decode($edc_records);
+			
+			$records->edc = $edc_records;
+		}
+		
+		// fetch screening records
+		if (!empty($screening_gid)) {
+			if (empty($screening_params)) {
+				$screening_params = [];
+			}
+			$screening_params['project_id'] = $screening_pid;
+			$screening_params['groups'] = $screening_gid;
+			
+			echo "screening_params: " . print_r($edc_params, true) . "<br>";
+			$screening_records = \REDCap::getData($screening_params);
+			if ($screening_params['return_format'] == 'json')
+				$screening_records = json_decode($screening_records);
+			
+			$records->screening = $screening_records;
+		}
+		
+		if (empty($records)) {
+			return false;
+		} else {
+			return $records;
+		}
+	}
 }
