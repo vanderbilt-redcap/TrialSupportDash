@@ -2,44 +2,46 @@
 namespace Vanderbilt\PassItOn;
 
 class PassItOn extends \ExternalModules\AbstractExternalModule {
+	// authentication
+	private $forbidden_roles = ["1042", "1045", "1049", "1051", "1050"];
 	
 	public function getCurrentUserDAGName() {
-	   // this function looks through [user_name]s in user_access_project for USERID match
-	   // when it finds record matching user, return dag_group_name if non-empty
+		// this function looks through [user_name]s in user_access_project for USERID match
+		// when it finds record matching user, return dag_group_name if non-empty
 
-	   // determine current user's [user_name]
-	   $current_user_name = constant(USERID);
-	   if (empty($current_user_name))
-			   return false;
+		// determine current user's [user_name]
+		$current_user_name = constant(USERID);
+		if (empty($current_user_name))
+			return false;
 
-	   // get user_access_project pid from project settings
-	   $uad_pid = $this->getProjectSetting('user_access_project');
-	   if (empty($uad_pid))
-			   return false;   // throw exception?
+		// get user_access_project pid from project settings
+		$uad_pid = $this->getProjectSetting('user_access_project');
+		if (empty($uad_pid))
+			return false;   // throw exception?
 
-	   // get other project records
-	   $params = [
-			   "project_id" => (int) $uad_pid,
-			   "return_format" => 'json',
-			   "fields" => [
-					   "user_name", "dag_group_name"
-			   ]
-	   ];
-	   $data = json_decode(\REDCap::getData($params));
+		// get other project records
+		$params = [
+			"project_id" => (int) $uad_pid,
+			"return_format" => 'json',
+			"fields" => [
+				"user_name", "dag_group_name"
+			]
+		];
+		$data = json_decode(\REDCap::getData($params));
 
-	   // get and return [dag_group_name] from record whose [user_name] matches $current_user_na
-	   foreach ($data as $record) {
-			   if ($current_user_name === $record->user_name) {
-					   $user_dag_name = $record->dag_group_name;
-					   break;
-			   }
-	   }
+		// get and return [dag_group_name] from record whose [user_name] matches $current_user_na
+		foreach ($data as $record) {
+			if ($current_user_name === $record->user_name) {
+				$user_dag_name = $record->dag_group_name;
+				break;
+			}
+		}
 
-	   if (empty($user_dag_name)) {
-			   return false;
-	   } else {
-			   return $user_dag_name;	// example return value "001_vanderbilt"
-	   }
+		if (empty($user_dag_name)) {
+			return false;
+		} else {
+			return $user_dag_name;	// example return value "001_vanderbilt"
+		}
 	}
 	
 	public function getGroupIDsByDAGName($unique_dag_name) {
@@ -86,7 +88,7 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		// gets records from EDC and screening project
 		$unique_dag_name = "002__ohio_state_un";
 		$group_ids = $this->getGroupIDsByDAGName($unique_dag_name);
-		echo ("group_ids: " . print_r($group_ids, true) . "<br><br>");
+		
 		if (empty($group_ids))
 			return false;
 		if (!empty($group_ids['edc_group_id']))
@@ -109,7 +111,6 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 			$edc_params['project_id'] = $edc_pid;
 			$edc_params['groups'] = $edc_gid;
 			
-			echo "edc_params: " . print_r($edc_params, true) . "<br>";
 			$edc_records = \REDCap::getData($edc_params);
 			if ($edc_params['return_format'] == 'json')
 				$edc_records = json_decode($edc_records);
@@ -125,7 +126,6 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 			$screening_params['project_id'] = $screening_pid;
 			$screening_params['groups'] = $screening_gid;
 			
-			echo "screening_params: " . print_r($edc_params, true) . "<br>";
 			$screening_records = \REDCap::getData($screening_params);
 			if ($screening_params['return_format'] == 'json')
 				$screening_records = json_decode($screening_records);
@@ -138,5 +138,50 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		} else {
 			return $records;
 		}
+	}
+	
+	public function getAllowedUserList() {
+		// get user_access_project pid from project settings
+		$uad_pid = $this->getProjectSetting('user_access_project');
+		if (empty($uad_pid))
+			return false;   // throw exception?
+		
+		$params = [
+			"project_id" => $uad_pid,
+			"return_format" => 'json',
+			"fields" => ["record_id", "user_name", "role_ext_2"]
+		];
+		$records = json_decode(\REDCap::getData($params));
+		
+		$allowedUsers = [];
+		foreach ($records as $record) {
+			$role_val = $record->role_ext_2;
+			if (!empty($role_val) and !in_array($role_val, $this->forbidden_roles))
+				$allowedUsers[] = $record->user_name;
+		}
+		
+		return $allowedUsers;
+	}
+	
+	public function isCurrentUserAllowed() {
+		$current_user = constant("USERID");
+		if (empty($current_user))
+			return false;
+		
+		if (empty($this->allowed_users))
+			$this->allowed_users = $this->getAllowedUserList();
+		
+		$allowed_users = $this->getAllowedUserList();
+		if (in_array($current_user, $allowed_users)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public function redcap_module_link_check_display($pid, $link) {
+		if ($link['name'] == "PassItOn Dashboard" and $this->isCurrentUserAllowed() == false and !SUPER_USER)
+			return false;
+		return $link;
 	}
 }
