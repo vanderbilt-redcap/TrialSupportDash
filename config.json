@@ -22,7 +22,13 @@
 	"permissions": [],
 	"enable-every-page-hooks-on-system-pages": false,
 	"links": {
-		"project": [],
+		"project": [
+			{
+				"name": "PassItOn Dashboard",
+				"icon": "report",
+				"url": "dashboard.php"
+			}
+		],
 		"control-center": []
 	},
 	"no-auth-pages": [],
