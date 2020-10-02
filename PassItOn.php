@@ -173,9 +173,6 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		if (empty($current_user))
 			return false;
 		
-		if (empty($this->allowed_users))
-			$this->allowed_users = $this->getAllowedUserList();
-		
 		$allowed_users = $this->getAllowedUserList();
 		if (in_array($current_user, $allowed_users)) {
 			return true;
@@ -189,6 +186,8 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		$mySiteData = new \stdClass();
 		$current_user_dag = $this->getCurrentUserDAGName();
 		$group_ids = $this->getGroupIDsByDAGName($current_user_dag);
+		if (empty($group_ids['edc_group_id']))
+			return false;
 		
 		// get display name for DAG (mySiteData->site_name)
 		$dag_display_name = \REDCap::getGroupNames(false, $group_ids['edc_group_id']);
