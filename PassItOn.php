@@ -86,7 +86,6 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 	
 	public function getRecordsByDAGName($unique_dag_name, $edc_params=null, $screening_params=null) {
 		// gets records from EDC and screening project
-		$unique_dag_name = "002__ohio_state_un";
 		$group_ids = $this->getGroupIDsByDAGName($unique_dag_name);
 		
 		if (empty($group_ids))
@@ -161,9 +160,15 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		}
 		
 		return $allowedUsers;
+		/* example return value
+			array( [0] => "user_2", [1] => "user_name_5" )
+		*/
 	}
 	
 	public function isCurrentUserAllowed() {
+		if (SUPER_USER)
+			return true;
+		
 		$current_user = constant("USERID");
 		if (empty($current_user))
 			return false;
@@ -179,9 +184,78 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		}
 	}
 	
+	// My Site Metrics
+	public function getMySiteMetricsData() {
+		$mySiteData = new \stdClass();
+		$current_user_dag = $this->getCurrentUserDAGName();
+		$group_ids = $this->getGroupIDsByDAGName($current_user_dag);
+		
+		// get display name for DAG (mySiteData->site_name)
+		$dag_display_name = \REDCap::getGroupNames(false, $group_ids['edc_group_id']);
+		if (strpos($dag_display_name, "-") !== false) {		// remove numeric prefix and hyphen
+			$pieces = explode("-", $dag_display_name);
+			if (count($pieces) >= 2)
+				$dag_display_name = trim($pieces[1]);
+		}
+		$mySiteData->site_name = $dag_display_name;
+		
+		// get records from EDC and screening projects
+		$params = [
+			"events" => ["screening_arm_1", "event_1_arm_1"],
+			"fields" => ["screening_id", "record_id", "sex", "race_ethnicity", "dos", "enroll_yn"]
+		];
+		$mySiteData->records = $this->getRecordsByDAGName($current_user_dag, $params, $params);
+		
+		// tabulate rows
+		$mySiteData->rows = [];
+		foreach ($mySiteData->records->edc as $rid => $record) {
+			// get past event id
+			$record = reset($record);
+			
+			// find matching record in screening records
+			$screening_record = null;
+			foreach ($mySiteData->records->screening as $rid2 => $record2) {
+				$candidate = reset($record2);
+				if ($candidate['screening_id'] == $rid) {
+					$screening_record = $candidate;
+					break;
+				}
+			}
+			if (!$screening_record)		// didn't find a matching record in screening project
+				continue;
+			
+			// have $record (from EDC project) and $screening_record (from screening project), proceed to tabulate My Site Metrics row
+			$row = [];
+			$row['name'] = "Example Patient";
+			$row['sex'] = $this->getFieldValueLabel('sex', $record['sex']);
+			$row['race'] = $this->getFieldValueLabel('race_ethnicity', $record['race_ethnicity']);
+			$row['screened'] = !empty($screening_record['dos']) ? "X" : "";
+			$row['enrolled'] = !empty($screening_record['enroll_yn']) ? "X" : "";
+			$mySiteData->rows[] = $row;
+		}
+		
+		return $mySiteData;
+	}
+	
+	// hooks
 	public function redcap_module_link_check_display($pid, $link) {
-		if ($link['name'] == "PassItOn Dashboard" and $this->isCurrentUserAllowed() == false and !SUPER_USER)
+		if ($link['name'] == "PassItOn Dashboard" and $this->isCurrentUserAllowed() == false)
 			return false;
 		return $link;
+	}
+	
+	// general/utility
+	function getFieldValueLabel($field, $value) {
+		global $Proj;
+		if (empty($value) or empty($Proj->metadata[$field]))
+			return false;
+		
+		$enum = $Proj->metadata[$field]["element_enum"];
+		preg_match_all("/$value, ([^\\\]+)/", $enum, $matches);
+		if (isset($matches[1][0])) {
+			return $matches[1][0];
+		}
+		
+		return false;
 	}
 }
