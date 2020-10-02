@@ -149,14 +149,14 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		$params = [
 			"project_id" => $uad_pid,
 			"return_format" => 'json',
-			"fields" => ["record_id", "user_name", "role_ext_2"]
+			"fields" => ["record_id", "user_name", "role_ext_2", "dashboard"]
 		];
 		$records = json_decode(\REDCap::getData($params));
 		
 		$allowedUsers = [];
 		foreach ($records as $record) {
 			$role_val = $record->role_ext_2;
-			if (!empty($role_val) and !in_array($role_val, $this->forbidden_roles))
+			if (!empty($role_val) and !in_array($role_val, $this->forbidden_roles) and $record->dashboard == '1')
 				$allowedUsers[] = $record->user_name;
 		}
 		
