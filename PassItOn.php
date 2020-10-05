@@ -10,7 +10,8 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		// when it finds record matching user, return dag_group_name if non-empty
 
 		// determine current user's [user_name]
-		$current_user_name = constant(USERID);
+		$current_user_name = constant("USERID");
+
 		if (empty($current_user_name))
 			return false;
 
@@ -28,7 +29,6 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 			]
 		];
 		$data = json_decode(\REDCap::getData($params));
-
 		// get and return [dag_group_name] from record whose [user_name] matches $current_user_na
 		foreach ($data as $record) {
 			if ($current_user_name === $record->user_name) {
@@ -188,7 +188,7 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		$group_ids = $this->getGroupIDsByDAGName($current_user_dag);
 		if (empty($group_ids['edc_group_id']))
 			return false;
-		
+
 		// get display name for DAG (mySiteData->site_name)
 		$dag_display_name = \REDCap::getGroupNames(false, $group_ids['edc_group_id']);
 		if (strpos($dag_display_name, "-") !== false) {		// remove numeric prefix and hyphen
@@ -197,7 +197,7 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 				$dag_display_name = trim($pieces[1]);
 		}
 		$mySiteData->site_name = $dag_display_name;
-		
+
 		// get records from EDC and screening projects
 		$params = [
 			"events" => ["screening_arm_1", "event_1_arm_1"],
