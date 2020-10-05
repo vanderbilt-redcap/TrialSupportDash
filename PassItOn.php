@@ -275,7 +275,16 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 				$data->sites[$unique_dag] = $site_data;
 		}
 		
-		// summarize pulled site-level data
+		// summarize pulled site-level data for table display rows
+		$data->summaryRows = [];
+		$data->siteRows = [];
+		foreach ($data->sites as $dag => $site) {
+			/*
+				iterate over records for each site
+				tabulate total and per-site enrolled #, transfused #, date of first enrollment, date of most recent enrollment
+					
+			*/
+		}
 		
 		return $data;
 	}
