@@ -44,28 +44,45 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		}
 	}
 	
-	public function getGroupIDsByDAGName($unique_dag_name) {
-		// this function attempts to find the group_id for the given unique dag name
-		$group_ids = [];
+	public function getProjectsDAGs() {
+		if (!empty($this->projects_dags))
+			return $this->projects_dags;
 		
-		// initialize Project objects
+		$projects_dags = new \stdClass();
+		
+		// get EDC unique DAG names
 		global $Proj;
-		$edc_project = $Proj;
+		$projects_dags->edc = $Proj->getUniqueGroupNames();
+		
+		// get screening project DAGs
 		$screening_pid = $this->getProjectSetting('screening_project');
 		if (empty($screening_pid))
 			return false;	// throw exception?
 		$screening_project = new \Project($screening_pid);
+		if (!($screening_project instanceof \Project))
+			return false;
+		$projects_dags->screening = $screening_project->getUniqueGroupNames();
 		
-		$edc_dag_names = $edc_project->getUniqueGroupNames();
-		foreach ($edc_dag_names as $group_id => $unique_name) {
+		// cache
+		$this->projects_dags = $projects_dags;
+		
+		return $projects_dags;
+	}
+	
+	public function getGroupIDsByDAGName($unique_dag_name) {
+		// this function attempts to find the group_id for the given unique dag name
+		$group_ids = [];
+		
+		// get DAGs for EDC and screening project
+		$projects_dags = $this->getProjectsDAGs();
+		
+		foreach ($projects_dags->edc as $group_id => $unique_name) {
 			if ($unique_dag_name == $unique_name) {
 				$group_ids['edc_group_id'] = $group_id;
 				break;
 			}
 		}
-		
-		$screening_dag_names = $screening_project->getUniqueGroupNames();
-		foreach ($screening_dag_names as $group_id => $unique_name) {
+		foreach ($projects_dags->screening as $group_id => $unique_name) {
 			if ($unique_dag_name == $unique_name) {
 				$group_ids['screening_group_id'] = $group_id;
 				break;
@@ -234,6 +251,16 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		}
 		
 		return $mySiteData;
+	}
+	
+	// All Sites Summary
+	public function getAllSitesSummaryData() {
+		$data = new \stdClass();
+		
+		$data->pdags = $this->getProjectsDAGs();
+		$data->pdags = $this->getProjectsDAGs();
+		
+		return $data;
 	}
 	
 	// hooks
