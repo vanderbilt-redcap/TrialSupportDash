@@ -5,118 +5,154 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 	// authentication
 	private $forbidden_roles = ["1042", "1045", "1049", "1051", "1050"];
 	
+	// cached getter functions
 	public function getCurrentUser() {
-		if (empty($this->currentUser)) {
+		if (!property_exists($this->currentUser)) {
 			$this->currentUser = constant("USERID");
 		}
+		
 		return $this->currentUser;
 	}
 	
 	public function getProjectIDs() {
-		if (!isset($this->pids)) {
-			$pids = new \stdClass();
-			$pids->edc = $this->getProjectId();
-			$pids->uad = $this->getProjectSetting('user_access_project');
-			$pids->screening = $this->getProjectSetting('screening_project');
-			$this->pids = $pids;
+		if (!property_exists($this->projectIDs)) {
+			$projectIDs = new \stdClass();
+			$projectIDs->edc = $this->getProjectId();
+			$projectIDs->uad = $this->getProjectSetting('user_access_project');
+			$projectIDs->screening = $this->getProjectSetting('screening_project');
+			$this->projectIDs = $projectIDs;
 		}
-		return $this->pids;
+		
+		return $this->projectIDs;
 	}
 	
-	public function getCurrentUserDAGName() {
-		// this function looks through [user_name]s in user_access_project for USERID match
-		// when it finds record matching user, return dag_group_name if non-empty
-
-		// determine current user's [user_name]
-		$current_user_name = $this->getCurrentUser();
-		
-		if (empty($current_user_name))
-			return false;
-
-		// get user_access_project pid from project settings
-		$uad_pid = $this->getProjectSetting('user_access_project');
-		if (empty($uad_pid))
-			return false;   // throw exception?
-
-		// get other project records
-		$params = [
-			"project_id" => (int) $uad_pid,
-			"return_format" => 'json',
-			"fields" => [
-				"user_name", "dag_group_name"
-			]
-		];
-		$data = json_decode(\REDCap::getData($params));
-
-		// get and return [dag_group_name] from record whose [user_name] matches $current_user_na
-		foreach ($data as $record) {
-			if ($current_user_name === $record->user_name) {
-				$user_dag_name = $record->dag_group_name;
-				break;
+	public function getUserDAGList() {
+		/*
+			this function returns an object whose keys are [user_name] values from records in the UAD project
+				and whose associated values are unique DAG names from the user's record's [dag_group_name] field
+			
+			returns object: {
+				"[user_name]": "[dag_group_name]",	// examples:
+				"user_name_1": "001_dag",
+				"diff_user_2": "002_other_dag",
+				...
 			}
-		}
+		*/
+		
+		if (!property_exists($this->userDAGList)) {
+			// determine UAD project ID
+			if (empty($uad_pid = $this->getProjectIDs()->uad))
+				return false;
 
-		if (empty($user_dag_name)) {
-			return false;
-		} else {
-			return $user_dag_name;	// example return value "001_vanderbilt"
+			// get records
+			$params = [
+				"project_id" => (int) $uad_pid,
+				"return_format" => 'json',
+				"fields" => [
+					"user_name", "dag_group_name"
+				]
+			];
+			$data = json_decode(\REDCap::getData($params));
+
+			// build list
+			$list = new \stdClass();
+			foreach ($data as $record) {
+				if (!empty($record->user_name)) {
+					$user = $record->user_name;
+					$list->$user = $record->dag_group_name;
+				}
+			}
+			
+			$this->userDAGList = $list;
 		}
+		return $this->userDAGList;
 	}
 	
-	public function getProjectsDAGs() {
-		if (!empty($this->projects_dags))
-			return $this->projects_dags;
+	public function getProjectDAGs() {
+		if (!property_exists($this->projectDags)) {
+			$projectDags = new \stdClass();
+			
+			// get EDC unique DAG names
+			global $Proj;
+			$projectDags->edc = $Proj->getUniqueGroupNames();
+			
+			// get screening project DAGs
+			$screening_pid = $this->getProjectSetting('screening_project');
+			if (empty($screening_pid))
+				return false;	// throw exception?
+			$screening_project = new \Project($screening_pid);
+			if (!($screening_project instanceof \Project))
+				return false;
+			$projectDags->screening = $screening_project->getUniqueGroupNames();
+			
+			// cache
+			$this->projectDags = $projectDags;
+		}
 		
-		$projects_dags = new \stdClass();
-		
-		// get EDC unique DAG names
-		global $Proj;
-		$projects_dags->edc = $Proj->getUniqueGroupNames();
-		
-		// get screening project DAGs
-		$screening_pid = $this->getProjectSetting('screening_project');
-		if (empty($screening_pid))
-			return false;	// throw exception?
-		$screening_project = new \Project($screening_pid);
-		if (!($screening_project instanceof \Project))
-			return false;
-		$projects_dags->screening = $screening_project->getUniqueGroupNames();
-		
-		// cache
-		$this->projects_dags = $projects_dags;
-		
-		return $projects_dags;
+		return $this->projectDags;
 	}
 	
+	public function getAllowedUsers() {
+		if (!property_exists($this->allowedUsers)) {
+			// get and store list of allowed users
+			if (empty($uad_pid = $this->getProjectIDs()->uad))
+				return false;
+			
+			$params = [
+				"project_id" => $uad_pid,
+				"return_format" => 'json',
+				"fields" => ["record_id", "user_name", "role_ext_2", "dashboard"]
+			];
+			$records = json_decode(\REDCap::getData($params));
+			
+			$allowedUsers = [];
+			foreach ($records as $record) {
+				$role_val = $record->role_ext_2;
+				if (!empty($role_val) and !in_array($role_val, $this->forbidden_roles) and $record->dashboard == '1')
+					$allowedUsers[] = $record->user_name;
+			}
+			$this->allowedUsers = $allowedUsers;
+		}
+		
+		return $this->allowedUsers;
+		/* example return value
+			array [
+				[0] => "some_user_abc",
+				[1] => "another_user"
+			]
+		*/
+	}
+	
+	// uncached functions
 	public function getGroupIDsByDAGName($unique_dag_name) {
 		// this function attempts to find the group_id for the given unique dag name
-		$group_ids = [];
+		$group_ids = new \stdClass();
 		
 		// get DAGs for EDC and screening project
-		$projects_dags = $this->getProjectsDAGs();
+		$projectDags = $this->getProjectDAGs();
 		
-		foreach ($projects_dags->edc as $group_id => $unique_name) {
+		foreach ($projectDags->edc as $group_id => $unique_name) {
 			if ($unique_dag_name == $unique_name) {
-				$group_ids['edc_group_id'] = $group_id;
+				$group_ids->edc_group_id = $group_id;
 				break;
 			}
 		}
-		foreach ($projects_dags->screening as $group_id => $unique_name) {
+		foreach ($projectDags->screening as $group_id => $unique_name) {
 			if ($unique_dag_name == $unique_name) {
-				$group_ids['screening_group_id'] = $group_id;
+				$group_ids->screening_group_id = $group_id;
 				break;
 			}
 		}
 		
 		return $group_ids;
 		/* example result for getGroupIDsByDAGName($unique_dag_name='001_vanderbilt'):
-			[
-				[edc_group_id] = 210
-				[screening_group_id] = 312
-			]
+			{
+				"edc_group_id": 210,
+				"screening_group_id": 312
+			}
 			
 			example result for getGroupIDsByDAGName($unique_dag_name='not_a_valid_dag_name'):
-			[] (empty array)
+			{} (empty object)
 		*/
 	}
 	
@@ -126,13 +162,13 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		
 		if (empty($group_ids))
 			return false;
-		if (!empty($group_ids['edc_group_id']))
-			$edc_gid = $group_ids['edc_group_id'];
-		if (!empty($group_ids['screening_group_id']))
-			$screening_gid = $group_ids['screening_group_id'];
+		if (!empty($group_ids->edc_group_id))
+			$edc_gid = $group_ids->edc_group_id;
+		if (!empty($group_ids->screening_group_id))
+			$screening_gid = $group_ids->screening_group_id;
 		
-		$edc_pid = $this->getProjectId();
-		$screening_pid = $this->getProjectSetting('screening_project');
+		$edc_pid = $this->getProjectIds()->edc;
+		$screening_pid = $this->getProjectIds()->screening;
 		if (empty($screening_pid))
 			return false;	// throw exception?
 		
@@ -175,42 +211,11 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		}
 	}
 	
-	public function getAllowedUserList() {
-		// get user_access_project pid from project settings
-		$uad_pid = $this->getProjectSetting('user_access_project');
-		if (empty($uad_pid))
-			return false;   // throw exception?
-		
-		$params = [
-			"project_id" => $uad_pid,
-			"return_format" => 'json',
-			"fields" => ["record_id", "user_name", "role_ext_2", "dashboard"]
-		];
-		$records = json_decode(\REDCap::getData($params));
-		
-		$allowedUsers = [];
-		foreach ($records as $record) {
-			$role_val = $record->role_ext_2;
-			if (!empty($role_val) and !in_array($role_val, $this->forbidden_roles) and $record->dashboard == '1')
-				$allowedUsers[] = $record->user_name;
-		}
-		
-		return $allowedUsers;
-		/* example return value
-			array( [0] => "user_2", [1] => "user_name_5" )
-		*/
-	}
-	
 	public function isCurrentUserAllowed() {
 		if (SUPER_USER)
 			return true;
 		
-		$current_user = constant("USERID");
-		if (empty($current_user))
-			return false;
-		
-		$allowed_users = $this->getAllowedUserList();
-		if (in_array($current_user, $allowed_users)) {
+		if (in_array($this->getCurrentUser(), $this->getAllowedUsers())) {
 			return true;
 		} else {
 			return false;
