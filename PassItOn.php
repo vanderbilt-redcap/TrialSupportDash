@@ -5,12 +5,31 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 	// authentication
 	private $forbidden_roles = ["1042", "1045", "1049", "1051", "1050"];
 	
+	public function getCurrentUser() {
+		if (empty($this->currentUser)) {
+			$this->currentUser = constant("USERID");
+		}
+		return $this->currentUser;
+	}
+	
+	public function getProjectIDs() {
+		if (!isset($this->pids)) {
+			$pids = new \stdClass();
+			$pids->edc = $this->getProjectId();
+			$pids->uad = $this->getProjectSetting('user_access_project');
+			$pids->screening = $this->getProjectSetting('screening_project');
+			$this->pids = $pids;
+		}
+		return $this->pids;
+	}
+	
 	public function getCurrentUserDAGName() {
 		// this function looks through [user_name]s in user_access_project for USERID match
 		// when it finds record matching user, return dag_group_name if non-empty
 
 		// determine current user's [user_name]
-		$current_user_name = constant(USERID);
+		$current_user_name = $this->getCurrentUser();
+		
 		if (empty($current_user_name))
 			return false;
 
