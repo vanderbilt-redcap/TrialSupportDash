@@ -198,29 +198,34 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		}
 	}
 	
-	// My Site Metrics
-	public function getMySiteMetricsData() {
-		$mySiteData = new \stdClass();
-		$current_user_dag = $this->getCurrentUserDAGName();
-		$group_ids = $this->getGroupIDsByDAGName($current_user_dag);
-		if (empty($group_ids['edc_group_id']))
-			return false;
-		
-		// get display name for DAG (mySiteData->site_name)
-		$dag_display_name = \REDCap::getGroupNames(false, $group_ids['edc_group_id']);
+	public function getDisplayNameByGroupID($group_id) {
+		// get display name given a DAG's group_id
+		$dag_display_name = \REDCap::getGroupNames(false, $group_id);
 		if (strpos($dag_display_name, "-") !== false) {		// remove numeric prefix and hyphen
 			$pieces = explode("-", $dag_display_name);
 			if (count($pieces) >= 2)
 				$dag_display_name = trim($pieces[1]);
 		}
-		$mySiteData->site_name = $dag_display_name;
+		return $dag_display_name;
+	}
+	
+	// My Site Metrics
+	public function getMySiteMetricsData($unique_dag_name) {
+		$mySiteData = new \stdClass();
+		
+		$group_ids = $this->getGroupIDsByDAGName($unique_dag_name);
+		if (empty($group_ids['edc_group_id']))
+			return false;
+		
+		// get display name for DAG (mySiteData->site_name)
+		$mySiteData->site_name = $this->getDisplayNameByGroupID($group_ids['edc_group_id']);
 		
 		// get records from EDC and screening projects
 		$params = [
 			"events" => ["screening_arm_1", "event_1_arm_1"],
-			"fields" => ["screening_id", "record_id", "sex", "race_ethnicity", "dos", "enroll_yn"]
+			"fields" => ["screening_id", "screen_id", "record_id", "sex", "race_ethnicity", "dos", "enroll_yn"]
 		];
-		$mySiteData->records = $this->getRecordsByDAGName($current_user_dag, $params, $params);
+		$mySiteData->records = $this->getRecordsByDAGName($unique_dag_name, $params, $params);
 		
 		// tabulate rows
 		$mySiteData->rows = [];
@@ -242,7 +247,7 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 			
 			// have $record (from EDC project) and $screening_record (from screening project), proceed to tabulate My Site Metrics row
 			$row = [];
-			$row['name'] = "Example Patient";
+			$row['id'] = $screening_record['screening_id'];
 			$row['sex'] = $this->getFieldValueLabel('sex', $record['sex']);
 			$row['race'] = $this->getFieldValueLabel('race_ethnicity', $record['race_ethnicity']);
 			$row['screened'] = !empty($screening_record['dos']) ? "X" : "";
@@ -257,8 +262,20 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 	public function getAllSitesSummaryData() {
 		$data = new \stdClass();
 		
-		$data->pdags = $this->getProjectsDAGs();
-		$data->pdags = $this->getProjectsDAGs();
+		// get DAGs from both projects
+		$projects_dags = $this->getProjectsDAGs();
+		if (!isset($projects_dags->edc) or empty($projects_dags->edc))
+			return false;
+		
+		// run metrics data pull for each site
+		$data->sites = [];
+		foreach ($projects_dags->edc as $group_id => $unique_dag) {
+			$site_data = $this->getMySiteMetricsData($unique_dag);
+			if (!empty($site_data) and !empty($site_data->rows))
+				$data->sites[$unique_dag] = $site_data;
+		}
+		
+		// summarize pulled site-level data
 		
 		return $data;
 	}
