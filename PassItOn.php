@@ -238,11 +238,11 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		$mySiteData = new \stdClass();
 		
 		$group_ids = $this->getGroupIDsByDAGName($unique_dag_name);
-		if (empty($group_ids['edc_group_id']))
+		if (empty($group_ids->edc_group_id))
 			return false;
 		
 		// get display name for DAG (mySiteData->site_name)
-		$mySiteData->site_name = $this->getDisplayNameByGroupID($group_ids['edc_group_id']);
+		$mySiteData->site_name = $this->getDisplayNameByGroupID($group_ids->edc_group_id);
 		
 		// get records from EDC and screening projects
 		$params = [
@@ -251,6 +251,10 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		];
 		$mySiteData->records = $this->getRecordsByDAGName($unique_dag_name, $params, $params);
 		
+		return $mySiteData;
+	}
+	
+	public function tabulateMySiteMetricsRows($mySiteData) {
 		// tabulate rows
 		$mySiteData->rows = [];
 		foreach ($mySiteData->records->edc as $rid => $record) {
@@ -278,8 +282,6 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 			$row['enrolled'] = !empty($screening_record['enroll_yn']) ? "X" : "";
 			$mySiteData->rows[] = $row;
 		}
-		
-		return $mySiteData;
 	}
 	
 	// All Sites Summary
