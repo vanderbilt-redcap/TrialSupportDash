@@ -49,7 +49,7 @@ final class UnitTest extends \ExternalModules\ModuleBaseTest
 	static $testDag = "001__vanderbilt";
 
 	public function setUp() : void {
-		$this->parent->setUp();
+		parent::setUp();
 
 		## Setup module cached date here
 	}
