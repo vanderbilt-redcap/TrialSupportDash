@@ -20,7 +20,10 @@ final class REDCapTest extends \ExternalModules\ModuleBaseTest
 
 			$this->assertTrue(class_exists("Project"));
 
+			global $Proj;
+
 			$Proj = new \Project($projectId);
+			$_GET['pid'] = $projectId;
 
 			$this->assertNotNull($Proj);
 			$this->assertTrue(method_exists($Proj,"getUniqueGroupNames"));
@@ -37,6 +40,11 @@ final class REDCapTest extends \ExternalModules\ModuleBaseTest
 			$this->assertIsString(reset($dagNames));
 
 
+			## Test getProjectDAGs function
+			$projectDags = $module->getProjectDAGs();
+
+			$this->assertNotFalse($projectDags);
+			$this->assertEquals($dagNames,$projectDags->edc);
 		}
 	}
 }

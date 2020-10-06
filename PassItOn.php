@@ -253,7 +253,8 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		
 		return $mySiteData;
 	}
-	
+
+	## Should be project independent
 	public function tabulateMySiteMetricsRows($mySiteData) {
 		// tabulate rows
 		$mySiteData->rows = [];
