@@ -22,6 +22,7 @@ final class REDCapTest extends \ExternalModules\ModuleBaseTest
 
 			$Proj = new \Project($projectId);
 
+			$this->assertNotNull($Proj);
 			$this->assertTrue(method_exists($Proj,"getUniqueGroupNames"));
 
 			## Ensure expected format of array return with numeric keys and string values
@@ -34,6 +35,8 @@ final class REDCapTest extends \ExternalModules\ModuleBaseTest
 			## Ensure return format
 			$this->assertIsNumeric(reset($groupIds));
 			$this->assertIsString(reset($dagNames));
+
+
 		}
 	}
 }

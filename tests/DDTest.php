@@ -23,16 +23,25 @@ final class DDTest extends \ExternalModules\ModuleBaseTest
 			$this->assertNotEquals($screeningProject,NULL);
 			$this->assertNotEquals($uaProject,NULL);
 
-			$demographicsEventFields = \REDCap::getValidFieldsByEvents($project_id,[$module->getProjectSetting("demographics_event",$project_id)]);
-			$transfusionEventFields = \REDCap::getValidFieldsByEvents($project_id,[$module->getProjectSetting("transfusion_event",$project_id)]);
+			$demoEvent = $module->getProjectSetting("demographics_event",$project_id);
+			$transfusionEvent = $module->getProjectSetting("transfusion_event",$project_id);
+
+			$this->assertNotEquals($demoEvent,NULL);
+			$this->assertNotEquals($transfusionEvent,NULL);
+
+			$demographicsEventFields = \REDCap::getValidFieldsByEvents($project_id,[$demoEvent]);
+			$transfusionEventFields = \REDCap::getValidFieldsByEvents($project_id,[$transfusionEvent]);
 
 			$this->assertContains("sex",$demographicsEventFields);
 			$this->assertContains("race_ethnicity",$demographicsEventFields);
 
+			## TODO Add additional fields
+			## TODO Check fields on screening project too
+
 			$this->assertContains("transfusion_given",$transfusionEventFields);
 			$this->assertContains("transfusion_datetime",$transfusionEventFields);
 
-			$metadata = $module->getMetadata($project_id);
+//			$metadata = $module->getMetadata($project_id);
 		}
 	}
 }
