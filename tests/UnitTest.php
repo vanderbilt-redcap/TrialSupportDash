@@ -20,11 +20,11 @@ final class UnitTest extends \ExternalModules\ModuleBaseTest
 		parent::setUp();
 
 		## Setup module cached date here
-		self::$screeningData = json_decode(file_get_contents(__DIR__."/test_data/screening_test_data.json"),true);
-		self::$edcData = json_decode(file_get_contents(__DIR__."/test_data/edc_test_data.json"),true);
-		self::$combinedData = json_decode(file_get_contents(__DIR__."/test_data/combined_test_data.json"),true);
-		self::$edcDags = json_decode(file_get_contents(__DIR__."/test_data/edc_test_dags.json"),true);
-		self::$screeningDags = json_decode(file_get_contents(__DIR__."/test_data/screening_test_dags.json"),true);
+		self::$screeningData = json_decode(file_get_contents(__DIR__."/test_data/screening_data.json"),true);
+		self::$edcData = json_decode(file_get_contents(__DIR__."/test_data/edc_data.json"),true);
+		self::$combinedData = json_decode(file_get_contents(__DIR__."/test_data/combined_data.json"),true);
+		self::$edcDags = json_decode(file_get_contents(__DIR__."/test_data/edc_dags.json"),true);
+		self::$screeningDags = json_decode(file_get_contents(__DIR__."/test_data/screening_dags.json"),true);
 	}
 
 	function testTabulateMySiteMetricsRows() {
