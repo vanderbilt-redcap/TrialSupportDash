@@ -7,5 +7,15 @@
 		"enrolled": "1",
 		"transfused": "1",
 		"transfused_date": "2020-01-01"
+	},
+	{
+		"id": "3",
+		"sex": "2",
+		"race": "100",
+		"screened": "",
+		"enrolled": "0",
+		"transfused": "1",
+		"transfused_date": "2020-01-03"
+
 	}
 ]

@@ -9,5 +9,27 @@
 			"transfusion_given": "1",
 			"transfusion_datetime": "2020-01-01"
 		}
+	},
+	"3": {
+		"100": {
+			"screening_id": "3",
+			"sex": "2",
+			"demographics": "100"
+		},
+		"101": {
+			"transfusion_given": "0",
+			"transfusion_datetime": ""
+		}
+	},
+	"5": {
+		"100": {
+			"screening_id": "5",
+			"sex": "1",
+			"demographics": "10"
+		},
+		"101": {
+			"transfusion_given": "1",
+			"transfusion_datetime": "2020-01-05"
+		}
 	}
 }
