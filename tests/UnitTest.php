@@ -8,43 +8,11 @@ require_once APP_PATH_DOCROOT . '/ExternalModules/tests/ModuleBaseTest.php';
 
 final class UnitTest extends \ExternalModules\ModuleBaseTest
 {
-	static $screeningData = [
-		"1" => [
-			"100" => [
-				"screening_id" => "1",
-				"dos" => "2020-01-01",
-				"enroll_yn" => "1"
-			]
-		]
-	];
-
-	static $edcData = [
-		"1" => [
-			"100" => [
-				"screening_id" => "1",
-				"sex" => "1",
-				"demographics" => "1"
-			]
-		]
-	];
-
-	static $combinedData = [
-		[
-			"id" => "1",
-			"sex" => "1",
-			"race" => "1",
-			"screened" => "2020-01-01",
-			"enrolled" => "1"
-		]
-	];
-
-	static $edcDags = [
-
-	];
-
-	static $screeningDags = [
-
-	];
+	static $screeningData = false;
+	static $edcData = false;
+	static $combinedData = false;
+	static $edcDags = false;
+	static $screeningDags = false;
 
 	static $testDag = "001__vanderbilt";
 
@@ -52,6 +20,11 @@ final class UnitTest extends \ExternalModules\ModuleBaseTest
 		parent::setUp();
 
 		## Setup module cached date here
+		self::$screeningData = json_decode(file_get_contents(__DIR__."/test_data/screening_test_data.json"),true);
+		self::$edcData = json_decode(file_get_contents(__DIR__."/test_data/edc_test_data.json"),true);
+		self::$combinedData = json_decode(file_get_contents(__DIR__."/test_data/combined_test_data.json"),true);
+		self::$edcDags = json_decode(file_get_contents(__DIR__."/test_data/edc_test_dags.json"),true);
+		self::$screeningDags = json_decode(file_get_contents(__DIR__."/test_data/screening_test_dags.json"),true);
 	}
 
 	function testTabulateMySiteMetricsRows() {

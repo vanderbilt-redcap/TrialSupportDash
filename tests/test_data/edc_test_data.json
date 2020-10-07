@@ -1,0 +1,13 @@
+{
+	"1": {
+		"100": {
+			"screening_id": "1",
+			"sex": "1",
+			"demographics": "1"
+		},
+		"101": {
+			"transfusion_given": "1",
+			"transfusion_datetime": "2020-01-01"
+		}
+	}
+}
