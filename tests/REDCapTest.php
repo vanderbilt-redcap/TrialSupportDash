@@ -41,10 +41,10 @@ final class REDCapTest extends \ExternalModules\ModuleBaseTest
 
 
 			## Test getProjectDAGs function
-			$projectDags = $module->getProjectDAGs();
+			$module->getDAGs();
 
-			$this->assertNotFalse($projectDags);
-			$this->assertEquals($dagNames,$projectDags->edc);
+			$this->assertNotFalse($module->dags);
+			$this->assertEquals($module->dags,$projectDags->edc);
 		}
 	}
 }
