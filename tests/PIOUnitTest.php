@@ -6,7 +6,7 @@ namespace Vanderbilt\PassItOn;
 require_once dirname(dirname(dirname(__DIR__))) . '/redcap_connect.php';
 require_once APP_PATH_DOCROOT . '/ExternalModules/tests/ModuleBaseTest.php';
 
-final class TestPassItOn extends \ExternalModules\ModuleBaseTest
+final class PIOUnitTest extends \ExternalModules\ModuleBaseTest
 {
 	## these static variables will hold values that we will compare our function results to
 	static $correctMySiteData;

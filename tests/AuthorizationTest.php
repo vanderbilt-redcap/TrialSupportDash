@@ -6,7 +6,7 @@ namespace Vanderbilt\PassItOn;
 require_once dirname(dirname(dirname(__DIR__))) . '/redcap_connect.php';
 require_once APP_PATH_DOCROOT . '/ExternalModules/tests/ModuleBaseTest.php';
 
-final class TestAuthorization extends \ExternalModules\ModuleBaseTest
+final class AuthorizationTest extends \ExternalModules\ModuleBaseTest
 {
 	public function setUp() : void {
 		parent::setUp();
