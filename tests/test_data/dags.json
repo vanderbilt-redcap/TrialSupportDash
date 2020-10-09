@@ -1,0 +1,30 @@
+{
+	"edc": {
+		"210": {
+			"unique": "001__vanderbilt",
+			"display": "001 - Vanderbilt"
+		},
+		"211": {
+			"unique": "002__cleveland_cli",
+			"display": "002 - Cleveland CLI"
+		},
+		"232": {
+			"unique": "003__placeholder",
+			"display": "003 - PLACEHOLDER"
+		}
+	},
+	"screening": {
+		"214": {
+			"unique": "002__cleveland_cli",
+			"display": "002 - Cleveland"
+		},
+		"218": {
+			"unique": "001__vanderbilt",
+			"display": "001 - Vandy"
+		},
+		"220": {
+			"unique": "003__other_site",
+			"display": "003 - Other Site"
+		}
+	}
+}
