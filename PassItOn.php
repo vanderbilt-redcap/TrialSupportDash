@@ -290,7 +290,7 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		$data = new \stdClass();
 		
 		// get DAGs from both projects
-		$projects_dags = $this->getProjectsDAGs();
+		$projects_dags = $this->getProjectDAGs();
 		if (!isset($projects_dags->edc) or empty($projects_dags->edc))
 			return false;
 		

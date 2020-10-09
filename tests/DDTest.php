@@ -8,6 +8,23 @@ require_once APP_PATH_DOCROOT . '/ExternalModules/tests/ModuleBaseTest.php';
 
 final class DDTest extends \ExternalModules\ModuleBaseTest
 {
+	## Setup project context (Required for some REDCap functions)
+	function setUp(): void {
+		parent::setUp();
+
+		if(!defined("PROJECT_ID")) {
+			/** @var $module \Vanderbilt\PassItOn\PassItOn */
+			$module = $this->module;
+
+			$q = \ExternalModules\ExternalModules::getEnabledProjects($module->PREFIX);
+
+			if($row = db_fetch_assoc($q)) {
+				define("PROJECT_ID", $row["project_id"]);
+				$_GET["pid"] = $row["project_id"];
+			}
+		}
+	}
+
 	function testDD(){
 		/** @var $module \Vanderbilt\PassItOn\PassItOn */
 		$module = $this->module;
@@ -42,6 +59,35 @@ final class DDTest extends \ExternalModules\ModuleBaseTest
 			$this->assertContains("transfusion_datetime",$transfusionEventFields);
 
 //			$metadata = $module->getMetadata($project_id);
+		}
+	}
+
+	function testEdcData() {
+		/** @var $module \Vanderbilt\PassItOn\PassItOn */
+		$module = $this->module;
+
+		$q = \ExternalModules\ExternalModules::getEnabledProjects($module->PREFIX);
+
+		while($row = db_fetch_assoc($q)) {
+			$project_id = $row["project_id"];
+
+			$_GET["pid"] = $project_id;
+			global $Proj;
+
+			$Proj = new \Project($project_id);
+
+			$siteData = $module->getAllSitesSummaryData();
+
+			foreach($siteData->sites as $dagName => $dagData) {
+				$module->tabulateMySiteMetricsRows($dagData);
+				$mergedRecords = array_map(function($data) {
+					return $data["id"];
+				},$dagData->rows);
+
+				$edcRecords = array_keys($dagData->edc);
+
+				$this->assertEquals($edcRecords,$mergedRecords);
+			}
 		}
 	}
 }
