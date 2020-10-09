@@ -1,21 +1,34 @@
-[
-	{
-		"id": "1",
-		"sex": "1",
-		"race": "1",
-		"screened": "2020-01-01",
-		"enrolled": "1",
-		"transfused": "1",
-		"transfused_date": "2020-01-01"
+{
+	"totals": {
+		{
+			"name": "Target",
+			"enrolled": 2000,
+			"transfused": 2000,
+			"fpe": "-",
+			"lpe": "-"
+		},
+		{
+			"name": "Current Enrolled",
+			"enrolled": 4,
+			"transfused": 1,
+			"fpe": "-",
+			"lpe": "-"
+		}
 	},
-	{
-		"id": "3",
-		"sex": "2",
-		"race": "100",
-		"screened": "",
-		"enrolled": "0",
-		"transfused": "1",
-		"transfused_date": "2020-01-03"
-
+	"sites": {
+		{
+			"name": "Site A",
+			"enrolled": 2,
+			"transfused": 1,
+			"fpe": "09/25/2020",
+			"lpe": "10/07/2020"
+		},
+		{
+			"name": "Site B",
+			"enrolled": 2,
+			"transfused": 0,
+			"fpe": "-",
+			"lpe": "-"
+		}
 	}
-]
+}

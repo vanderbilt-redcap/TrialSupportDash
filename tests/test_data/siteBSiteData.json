@@ -1,0 +1,19 @@
+{
+	"site_name": "Site B",
+	"rows": [
+		{
+			"id": "4",
+			"sex": "M",
+			"race": "White",
+			"screened": "2020-04-08",
+			"enrolled": "2020-04-08"
+		},
+		{
+			"id": "5",
+			"sex": "F",
+			"race": "Asian"
+			"screened": "2020-02-18",
+			"enrolled": ""
+		}
+	]
+}

@@ -33,6 +33,10 @@ final class PIOUnitTest extends \ExternalModules\ModuleBaseTest
 	// output from these functions should be very predictable given the constrained test inputs
 	public function testGetMySiteData() {
 		$this->module->getMySiteData();
+		// ensure results include what we want
+		
+		// ensure results exclude what we don't want
+		
 		$this->assertSame($this->module->my_site_data, self::$correctMySiteData);
 	}
 
