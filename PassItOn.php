@@ -6,6 +6,15 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 	public $screening_data;
 	public $uad_data;
 
+	public function __construct() {
+		parent::__construct();
+
+		define("CSS_PATH_1",$this->getUrl("css/style.css"));
+		define("LOGO_LINK", $this->getUrl("images/passItOnLogo.png"));
+
+		require_once(__DIR__."/vendor/autoload.php");
+	}
+
 	// LOW LEVEL methods - not unit testable -- directly interface with database -- no business logic allowed
 	public function getUser() {
 		
@@ -85,10 +94,10 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 	
 	// hooks
 	public function redcap_module_link_check_display($pid, $link) {
-		$this->getUser();
-		$this->authorizeUser();
-		if ($this->user->authorized !== true)
-			return false;
+//		$this->getUser();
+//		$this->authorizeUser();
+//		if ($this->user->authorized !== true)
+//			return false;
 		return $link;
 	}
 }

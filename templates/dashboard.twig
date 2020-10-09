@@ -1,0 +1,54 @@
+{% extends "base.twig" %}
+
+{% block content %}
+<table>
+	<thead>
+		<tr>
+			<th></th>
+			<th>Enrolled</th>
+			<th>Transfused</th>
+			<th>FPE</th>
+			<th>LPE</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr class="first_row">
+			<td>Entire Project</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>Target</td>
+			<td>2000</td>
+			<td>1000</td>
+			<td>-</td>
+			<td>-</td>
+		</tr>
+		<tr>
+			<td>Current Enrolled</td>
+			<td>{{ total["enrolled"] }}</td>
+			<td>{{ total["transfused"] }}</td>
+			<td>-</td>
+			<td>-</td>
+		</tr>
+		<tr class="first_row">
+			<td>By Site</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		{% for siteDetails in siteSummary %}
+			<tr>
+				<td>{{ siteDetails["site_name"] }}</td>
+				<td>{{ siteDetails["enrolled"] }}</td>
+				<td>{{ siteDetails["transfused"] }}</td>
+				<td>{{ siteDetails["first_enrolled"] }}</td>
+				<td>{{ siteDetails["last_enrolled"] }}</td>
+			</tr>
+		{% endfor %}
+	</tbody>
+</table>
+{% endblock %}
