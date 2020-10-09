@@ -2,9 +2,9 @@
 namespace Vanderbilt\PassItOn;
 
 class PassItOn extends \ExternalModules\AbstractExternalModule {
-	public $edcData;
-	public $screeningData;
-	public $uadData;
+	public $edc_data;
+	public $screening_data;
+	public $uad_data;
 
 	// LOW LEVEL methods - not unit testable -- directly interface with database -- no business logic allowed
 	public function getUser() {
@@ -19,36 +19,48 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 	public function getEventIDs() {
 		
 	}
-	public function getEdcData($projectId = false) {
-		if(!$projectId) {
-			$projectId = $_GET['pid'];
+	public function getEDCData($projectId = false) {
+		if(!$this->edc_data) {
+			if(!$projectId) {
+				$projectId = $_GET['pid'];
+			}
+
+			$this->edc_data = \REDCap::getData([
+				"project_id" => $projectId,
+			]);
 		}
 
-		$this->edcData = \REDCap::getData([
-			"project_id" => $projectId,
-		]);
+		return $this->edc_data;
 	}
 	public function getScreeningData($projectId = false) {
-		if(!$projectId) {
-			$projectId = $_GET['pid'];
+		if(!$this->screening_data) {
+			if(!$projectId) {
+				$projectId = $_GET['pid'];
+			}
+
+			$screeningProject = $this->getProjectSetting("screening_project", $projectId);
+
+			$this->screening_data = \REDCap::getData([
+					"project_id" => $screeningProject,
+			]);
 		}
 
-		$screeningProject = $this->getProjectSetting("screening_project", $projectId);
-
-		$this->screeningData = \REDCap::getData([
-				"project_id" => $screeningProject,
-		]);
+		return $this->screening_data;
 	}
-	public function getUadData($projectId = false) {
-		if(!$projectId) {
-			$projectId = $_GET['pid'];
+	public function getUADData($projectId = false) {
+		if(!$this->screening_data) {
+			if(!$projectId) {
+				$projectId = $_GET['pid'];
+			}
+
+			$uadProject = $this->getProjectSetting("user_access_project", $projectId);
+
+			$this->uad_data = \REDCap::getData([
+					"project_id" => $uadProject,
+			]);
 		}
 
-		$uadProject = $this->getProjectSetting("user_access_project", $projectId);
-
-		$this->uadData = \REDCap::getData([
-				"project_id" => $uadProject,
-		]);
+		return $this->uad_data;
 	}
 
 	// HIGHER LEVEL methods -- unit testable -- do NOT interface with external data sources (db)

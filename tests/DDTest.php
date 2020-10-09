@@ -76,7 +76,7 @@ final class DDTest extends \ExternalModules\ModuleBaseTest
 
 			$Proj = new \Project($project_id);
 
-			$siteData = $module->getAllSitesSummaryData();
+			$siteData = $module->getAllSitesData();
 
 			foreach($siteData->sites as $dagName => $dagData) {
 				$module->tabulateMySiteMetricsRows($dagData);
