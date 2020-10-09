@@ -1,0 +1,103 @@
+PassItOn interface:
+	
+LOW LEVEL
+	## These functions are NOT unit testable -- they only get data from database
+	getUser
+		needs (database)
+		makes $this->user
+	getDAGs
+		needs (database)
+		makes $this->dags
+	getProjectIDs
+		needs (database)
+		makes $this->project_ids
+	getEventIDs
+		needs (database)
+		makes $this->event_ids
+	getEDCData
+		needs (database)
+		makes $this->edc_data
+	getScreeningData
+		needs (database)
+		makes $this->screening_data
+	getUADData
+		needs (database)
+		makes $this->uad_data
+	
+MID LEVEL
+	## This function depends on lower level functions but requires database access too -- minimize business logic allowed
+		
+HIGH LEVEL
+	## The following functions ARE unit testable (after supplying instance with needed data)
+	getRecords
+		needs user, dags, project_ids, event_ids, edc_data, screening_data, uad_data
+		makes $this->records
+	authorizeUser
+		needs user
+		makes $this->user->authorized (t/f)
+	getMySiteData
+		needs records
+		makes $this->my_site_data
+	getAllSitesData
+		needs records
+		makes $this->all_sites_data
+	showMySite
+		needs my_site_data
+		makes (html to send to user's browser)
+	showAllSites
+		needs all_sites_data
+		makes (html to send to user's browser)
+
+## example dashboard/MySiteTab.php
+$module->getUser();
+$module->getDAGs();
+$module->getProjectIDs();
+$module->getEventIDs();
+$module->getRecords();
+
+$module->getMySiteData();
+$module->showMySite();
+
+## example dashboard/AllSitesTab.php
+$module->getUser();
+$module->getDAGs();
+$module->getProjectIDs();
+$module->getEventIDs();
+$module->getRecords();
+
+$module->getAllSitesData();
+$module->showAllSites();
+
+
+List of needed tests:
+	testAuthorizeUser
+	testGetRecords
+	testGetMySiteData
+	testGetAllSitesData
+	testShowMySite
+	testShowAllSites
+
+
+
+	public function testGetRecords() {
+		$this->module->getRecords();
+		$this->assertSame($this->module->records, self::$correctRecords);
+	}
+
+	public function testGetMySiteData() {
+		$this->module->getMySiteData();
+		$this->assertSame($this->module->my_site_data, self::$correctMySiteData);
+	}
+
+	public function testGetAllSitesData() {
+		$this->module->getAllSitesData();
+		$this->assertSame($this->module->all_sites_data, self::$correctAllSitesData);
+	}
+
+	public function testShowMySite() {
+		$this->module->showMySite();
+	}
+
+	public function testShowAllSites() {
+		$this->module->showAllSites();
+	}
