@@ -71,23 +71,16 @@ final class DDTest extends \ExternalModules\ModuleBaseTest
 		while($row = db_fetch_assoc($q)) {
 			$project_id = $row["project_id"];
 
-			$_GET["pid"] = $project_id;
-			global $Proj;
+			$edcData = $module->getEDCData($project_id);
+			$screeningData = $module->getScreeningData($project_id);
 
-			$Proj = new \Project($project_id);
-
-			$siteData = $module->getAllSitesData();
-
-			foreach($siteData->sites as $dagName => $dagData) {
-				$module->tabulateMySiteMetricsRows($dagData);
-				$mergedRecords = array_map(function($data) {
-					return $data["id"];
-				},$dagData->rows);
-
-				$edcRecords = array_keys($dagData->edc);
-
-				$this->assertEquals($edcRecords,$mergedRecords);
+			foreach($edcData as $recordId => $recordDetails) {
+				$this->assertArrayHasKey($recordId,$screeningData);
 			}
+
+			## Remove data from cache for future tests
+			$module->edc_data = false;
+			$module->screening_data = false;
 		}
 	}
 }
