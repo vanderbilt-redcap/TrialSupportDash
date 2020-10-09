@@ -1,104 +1,93 @@
-{
-	"1": {
-		"dag": "Site A",
+[
+	{
+		"dag": "001__site_a",
 		"demographics": {
-			"screen_id": "1",
+			"record_id": "1",
 			"sex": "F",
 			"race_ethnicity": "Declined",
-			"presentation_enrollment": "2020-01-01"
+			"screen_date": "01-01-2020",
+			"randomization_date": "01-02-2020"
 		},
 		"transfusion": {
 			"transfusion_given": "1"
-		},
-		"screening": {
-			"screening_id": "1",
-			"dos": "2020-01-01",
-			"enroll_yn": "1"
 		}
 	},
-	"3": {
-		"dag": "Site A",
+	{
+		"dag": "001__site_b",
 		"demographics": {
-			"screen_id": "5",
-			"sex": "F",
-			"race_ethnicity": "Declined",
-			"presentation_enrollment": "2020-01-01"
+			"record_id": "3",
+			"sex": "M",
+			"race_ethnicity": "Hispanic",
+			"screen_date": "01-06-2020",
+			"randomization_date": ""
 		},
 		"transfusion": {
-			"transfusion_given": "1"
-		},
-		"screening": {
-			"screening_id": "1",
-			"dos": "2020-01-01",
-			"enroll_yn": "1"
+			"transfusion_given": ""
 		}
 	},
-	"4": {
-		"dag": "Site B",
-		"demographics": {
-			"screen_id": "2",
-			"sex": "F",
-			"race_ethnicity": "Declined",
-			"presentation_enrollment": "2020-01-01"
-		},
-		"transfusion": {
-			"transfusion_given": "1"
-		},
-		"screening": {
-			"screening_id": "1",
-			"dos": "2020-01-01",
-			"enroll_yn": "1"
-		}
-	},
-	"5": {
-		"dag": "Site B",
-		"demographics": {
-			"screen_id": "6",
-			"sex": "F",
-			"race_ethnicity": "Declined",
-			"presentation_enrollment": "2020-01-01"
-		},
-		"transfusion": {
-			"transfusion_given": "1"
-		},
-		"screening": {
-			"screening_id": "1",
-			"dos": "2020-01-01",
-			"enroll_yn": "1"
-		}
-	},
-	"6": {
-		"dag": "Site B",
-		"demographics": {
-			"screen_id": "1",
-			"sex": "F",
-			"race_ethnicity": "Declined",
-			"presentation_enrollment": "2020-01-01"
-		},
-		"transfusion": {
-			"transfusion_given": "0"
-		},
-		"screening": {
-			"screening_id": "8",
-			"dos": "2020-01-01",
-			"enroll_yn": "0"
-		}
-	},
-	"7": {
+	{
 		"dag": "",
 		"demographics": {
-			"screen_id": "7",
-			"sex": "F",
-			"race_ethnicity": "Declined",
-			"presentation_enrollment": "2020-01-01"
+			"record_id": "4",
+			"sex": "M",
+			"race_ethnicity": "Asian",
+			"screen_date": "01-01-2020",
+			"randomization_date": "01-01-2020"
 		},
 		"transfusion": {
 			"transfusion_given": "1"
+		}
+	},
+	{
+		"dag": "001__site_b",
+		"demographics": {
+			"record_id": "5",
+			"sex": "F",
+			"race_ethnicity": "Other",
+			"screen_date": "",
+			"randomization_date": "01-01-2020"
 		},
-		"screening": {
-			"screening_id": "1",
-			"dos": "2020-01-01",
-			"enroll_yn": "1"
+		"transfusion": {
+			"transfusion_given": ""
+		}
+	},
+	{
+		"dag": "001__site_a",
+		"demographics": {
+			"record_id": "006",
+			"sex": "M",
+			"race_ethnicity": "Non-hispanic black",
+			"screen_date": "",
+			"randomization_date": ""
+		},
+		"transfusion": {
+			"transfusion_given": "1"
+		}
+	},
+	{
+		"dag": "001__site_b",
+		"demographics": {
+			"record_id": "9",
+			"sex": "M",
+			"race_ethnicity": "",
+			"screen_date": "",
+			"randomization_date": "03-01-2020"
+		},
+		"transfusion": {
+			"transfusion_given": ""
+		}
+	},
+	{
+		"dag": "001__site_c",
+		"demographics": {
+			"record_id": "10",
+			"sex": "F",
+			"race_ethnicity": "Non-hispanic white",
+			"screen_date": "",
+			"randomization_date": ""
+		},
+		"transfusion": {
+			"transfusion_given": "1"
 		}
 	}
-}
+]

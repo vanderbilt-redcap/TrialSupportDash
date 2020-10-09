@@ -2,15 +2,15 @@
 	"totals": {
 		{
 			"name": "Target",
-			"enrolled": 2000,
-			"transfused": 2000,
+			"enrolled": 1000,
+			"transfused": 500,
 			"fpe": "-",
 			"lpe": "-"
 		},
 		{
 			"name": "Current Enrolled",
-			"enrolled": 4,
-			"transfused": 1,
+			"enrolled": 2,
+			"transfused": 3,
 			"fpe": "-",
 			"lpe": "-"
 		}
@@ -19,14 +19,21 @@
 		{
 			"name": "Site A",
 			"enrolled": 2,
-			"transfused": 1,
-			"fpe": "09/25/2020",
-			"lpe": "10/07/2020"
+			"transfused": 2,
+			"fpe": "01-02-2020",
+			"lpe": "01-02-2020"
 		},
 		{
 			"name": "Site B",
 			"enrolled": 2,
 			"transfused": 0,
+			"fpe": "01-01-2020",
+			"lpe": "03-01-2020"
+		},
+		{
+			"name": "Site C",
+			"enrolled": 0,
+			"transfused": 1,
 			"fpe": "-",
 			"lpe": "-"
 		}
