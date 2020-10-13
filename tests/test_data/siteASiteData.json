@@ -4,16 +4,16 @@
 		{
 			"id": "1",
 			"sex": "F",
-			"race": "Black",
-			"screened": "",
-			"enrolled": ""
+			"race": "Declined",
+			"screened": "01-01-2020",
+			"enrolled": "01-02-2020"
 		},
 		{
-			"id": "3",
+			"id": "006",
 			"sex": "M",
-			"race": "Declined"
-			"screened": "2020-01-01",
-			"enrolled": "2020-01-02"
+			"race": "Non-hispanic black"
+			"screened": "",
+			"enrolled": ""
 		}
 	]
 }
