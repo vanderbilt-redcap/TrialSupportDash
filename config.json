@@ -34,13 +34,6 @@
 	"no-auth-pages": [],
 	"project-settings": [
 		{
-			"key": "screening_project",
-			"name": "PassItOn Screening Project ID",
-			"required": false,
-			"type": "project-id",
-			"repeatable": false
-		},
-		{
 			"key": "user_access_project",
 			"name": "PassItOn User Access Database Project ID",
 			"required": false,
@@ -49,13 +42,19 @@
 		},
 		{
 			"key": "demographics_event",
-			"name": "Event Containing Demographics",
+			"name": "Event Containing Demographics Fields",
 			"type": "event-list",
 			"repeatable": false
 		},
 		{
 			"key": "transfusion_event",
-			"name": "Event Containing Transfusion Status",
+			"name": "Event Containing Transfusion Field",
+			"type": "event-list",
+			"repeatable": false
+		},
+		{
+			"key": "screening_event",
+			"name": "Event Containing Screening Fields",
 			"type": "event-list",
 			"repeatable": false
 		}
