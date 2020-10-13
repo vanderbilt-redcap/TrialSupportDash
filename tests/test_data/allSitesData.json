@@ -1,5 +1,5 @@
 {
-	"totals": {
+	"totals": [
 		{
 			"name": "Target",
 			"enrolled": 1000,
@@ -14,8 +14,8 @@
 			"fpe": "-",
 			"lpe": "-"
 		}
-	},
-	"sites": {
+	],
+	"sites": [
 		{
 			"name": "Site A",
 			"enrolled": 2,
@@ -37,5 +37,5 @@
 			"fpe": "-",
 			"lpe": "-"
 		}
-	}
+	]
 }

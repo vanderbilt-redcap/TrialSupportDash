@@ -19,20 +19,17 @@
 			<td></td>
 			<td></td>
 		</tr>
-		<tr>
-			<td>Target</td>
-			<td>2000</td>
-			<td>1000</td>
-			<td>-</td>
-			<td>-</td>
-		</tr>
-		<tr>
-			<td>Current Enrolled</td>
-			<td>{{ total["enrolled"] }}</td>
-			<td>{{ total["transfused"] }}</td>
-			<td>-</td>
-			<td>-</td>
-		</tr>
+		{% for totalDetails in totals %}
+			<tr>
+				<tr>
+					<td>{{ totalDetails["name"] }}</td>
+					<td>{{ totalDetails["enrolled"] }}</td>
+					<td>{{ totalDetails["transfused"] }}</td>
+					<td>{{ totalDetails["fpe"] }}</td>
+					<td>{{ totalDetails["lpe"] }}</td>
+				</tr>
+			</tr>
+		{% endfor %}
 		<tr class="first_row">
 			<td>By Site</td>
 			<td></td>
@@ -40,13 +37,13 @@
 			<td></td>
 			<td></td>
 		</tr>
-		{% for siteDetails in siteSummary %}
+		{% for siteDetails in sites %}
 			<tr>
-				<td>{{ siteDetails["site_name"] }}</td>
+				<td>{{ siteDetails["name"] }}</td>
 				<td>{{ siteDetails["enrolled"] }}</td>
 				<td>{{ siteDetails["transfused"] }}</td>
-				<td>{{ siteDetails["first_enrolled"] }}</td>
-				<td>{{ siteDetails["last_enrolled"] }}</td>
+				<td>{{ siteDetails["fpe"] }}</td>
+				<td>{{ siteDetails["lpe"] }}</td>
 			</tr>
 		{% endfor %}
 	</tbody>

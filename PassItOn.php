@@ -77,13 +77,13 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		
 	}
 	public function getRecords() {
-		
+		$this->records = json_decode(file_get_contents(__DIR__."/tests/test_data/records.json"),true);
 	}
 	public function getMySiteData() {
-		
+		return json_decode(file_get_contents(__DIR__."/tests/test_data/siteASiteData.json"),true);
 	}
 	public function getAllSitesData() {
-		
+		return json_decode(file_get_contents(__DIR__."/tests/test_data/allSitesData.json"),true);
 	}
 	public function showMySite() {
 		
