@@ -5,8 +5,8 @@
 			"record_id": "1",
 			"sex": "F",
 			"race_ethnicity": "Declined",
-			"screen_date": "01-01-2020",
-			"randomization_date": "01-02-2020"
+			"screen_date": "2020-01-01",
+			"randomization_date": "2020-01-02"
 		},
 		"transfusion": {
 			"transfusion_given": "1"
@@ -18,7 +18,7 @@
 			"record_id": "3",
 			"sex": "M",
 			"race_ethnicity": "Hispanic",
-			"screen_date": "01-06-2020",
+			"screen_date": "2020-01-06",
 			"randomization_date": ""
 		},
 		"transfusion": {
@@ -31,8 +31,8 @@
 			"record_id": "4",
 			"sex": "M",
 			"race_ethnicity": "Asian",
-			"screen_date": "01-01-2020",
-			"randomization_date": "01-01-2020"
+			"screen_date": "2020-01-01",
+			"randomization_date": "2020-01-01"
 		},
 		"transfusion": {
 			"transfusion_given": "1"
@@ -45,7 +45,7 @@
 			"sex": "F",
 			"race_ethnicity": "Other",
 			"screen_date": "",
-			"randomization_date": "01-01-2020"
+			"randomization_date": "2020-01-01"
 		},
 		"transfusion": {
 			"transfusion_given": ""
@@ -71,7 +71,7 @@
 			"sex": "M",
 			"race_ethnicity": "",
 			"screen_date": "",
-			"randomization_date": "03-01-2020"
+			"randomization_date": "2020-03-01"
 		},
 		"transfusion": {
 			"transfusion_given": ""

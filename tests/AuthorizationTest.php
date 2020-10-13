@@ -18,7 +18,7 @@ final class AuthorizationTest extends \ExternalModules\ModuleBaseTest
 	public function testAuthorization() {
 		// ensure user with proper requirements authorizes successfully
 		$this->module->authorizeUser();
-		$this->assertTrue($this->module->user->authorized);
+		$this->assertTrue($this->module->user->authorized, "failed to authorize user with valid credentials");
 	}
 
 	public function testSuperUser() {
@@ -30,7 +30,7 @@ final class AuthorizationTest extends \ExternalModules\ModuleBaseTest
 		$this->module->user = $super_user;
 		
 		$this->module->authorizeUser();
-		$this->assertTrue($this->module->user->authorized);
+		$this->assertTrue($this->module->user->authorized, "failed to authorize super user");
 	}
 
 	public function testFailRole() {
@@ -38,7 +38,7 @@ final class AuthorizationTest extends \ExternalModules\ModuleBaseTest
 		$this->module->user->role_ext_2 = '1042';
 		
 		$this->module->authorizeUser();
-		$this->assertFalse($this->module->user->authorized);
+		$this->assertFalse($this->module->user->authorized, "authorized user with invalid [role_ext_2] role!");
 	}
 
 	public function testFailDashboard() {
@@ -46,6 +46,6 @@ final class AuthorizationTest extends \ExternalModules\ModuleBaseTest
 		$this->module->user->dashboard = '0';
 		
 		$this->module->authorizeUser();
-		$this->assertFalse($this->module->user->authorized);
+		$this->assertFalse($this->module->user->authorized, "authorized user with invalid [dashboard] value!");
 	}
 }

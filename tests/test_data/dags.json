@@ -1,30 +1,14 @@
 {
-	"edc": {
-		"210": {
-			"unique": "001__vanderbilt",
-			"display": "001 - Vanderbilt"
-		},
-		"211": {
-			"unique": "002__cleveland_cli",
-			"display": "002 - Cleveland CLI"
-		},
-		"232": {
-			"unique": "003__placeholder",
-			"display": "003 - PLACEHOLDER"
-		}
+	"210": {
+		"unique": "001__site_a",
+		"display": "001 - Site A"
 	},
-	"screening": {
-		"214": {
-			"unique": "002__cleveland_cli",
-			"display": "002 - Cleveland"
-		},
-		"218": {
-			"unique": "001__vanderbilt",
-			"display": "001 - Vandy"
-		},
-		"220": {
-			"unique": "003__other_site",
-			"display": "003 - Other Site"
-		}
+	"211": {
+		"unique": "001__site_b",
+		"display": "002 - Site B"
+	},
+	"232": {
+		"unique": "001__site_c",
+		"display": "003 - Site C"
 	}
 }

@@ -4,8 +4,5 @@
 	"role_ext_2": "1043",
 	"dashboard": "1",
 	"super_user": false,
-	"dags": {
-		"edc": "001__vanderbilt",
-		"screening": "001__vanderbilt"
-	}
+	"dag": "001__site_a"
 }
