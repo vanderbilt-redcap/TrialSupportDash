@@ -6,6 +6,7 @@ $twig = new \Twig\Environment($loader);
 $template = $twig->load("dashboard.twig");
 
 /** @var $module \Vanderbilt\PassItOn\PassItOn */
-$renderData = $module->getAllSitesData();
+$allSitesData = $module->getAllSitesData();
+$mySitesData = $module->getMySiteData();
 
-echo $template->render($renderData);
+echo $template->render(["allSites" => $allSitesData,"mySite" => $mySitesData]);

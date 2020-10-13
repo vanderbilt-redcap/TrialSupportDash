@@ -1,51 +1,103 @@
 {% extends "base.twig" %}
 
 {% block content %}
-<table>
-	<thead>
-		<tr>
-			<th></th>
-			<th>Enrolled</th>
-			<th>Transfused</th>
-			<th>FPE</th>
-			<th>LPE</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr class="first_row">
-			<td>Entire Project</td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-		</tr>
-		{% for totalDetails in totals %}
-			<tr>
+
+<div id="tabs" style="width:79%; float:left; margin-top:5px;">
+	<div class='row'>
+		<div id="event-tabs" style="background-color:#ffffff; margin-left:5px;text-align:left">
+			<a class="tab active" id="all-sites-button" onclick="hideAllTabs();$('#allSitesData').show();">
+				<div class='top-border'></div>
+				<div class='name'><b>Enrollment Statistics</b></div>
+			</a>
+			<a class="tab nonactive" id="my-site-button" onclick="hideAllTabs();$('#mySiteData').show();">
+				<div class='top-border'></div>
+				<div class='name'><b>My Site's Metrics</b></div>
+			</a>
+			<a class="tab nonactive" id="communications-button" onclick="hideAllTabs();$('#communications').show();">
+				<div class='top-border'></div>
+				<div class='name'><b>Communications</b></div>
+			</a>
+			{% if constant("TD_USER_PMD_ACCESS_LEVEL") is defined %}
+			{% endif %}
+		</div>
+	</div>
+	<div id="allSitesData">
+		<table>
+			<thead>
 				<tr>
-					<td>{{ totalDetails["name"] }}</td>
-					<td>{{ totalDetails["enrolled"] }}</td>
-					<td>{{ totalDetails["transfused"] }}</td>
-					<td>{{ totalDetails["fpe"] }}</td>
-					<td>{{ totalDetails["lpe"] }}</td>
+					<th></th>
+					<th>Enrolled</th>
+					<th>Transfused</th>
+					<th>FPE</th>
+					<th>LPE</th>
 				</tr>
-			</tr>
-		{% endfor %}
-		<tr class="first_row">
-			<td>By Site</td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-		</tr>
-		{% for siteDetails in sites %}
+			</thead>
+			<tbody>
+				<tr class="first_row">
+					<td>Entire Project</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				{% for totalDetails in allSites["totals"] %}
+					<tr>
+						<tr>
+							<td>{{ totalDetails["name"] }}</td>
+							<td>{{ totalDetails["enrolled"] }}</td>
+							<td>{{ totalDetails["transfused"] }}</td>
+							<td>{{ totalDetails["fpe"] }}</td>
+							<td>{{ totalDetails["lpe"] }}</td>
+						</tr>
+					</tr>
+				{% endfor %}
+				<tr class="first_row">
+					<td>By Site</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				{% for siteDetails in allSites["sites"] %}
+					<tr>
+						<td>{{ siteDetails["name"] }}</td>
+						<td>{{ siteDetails["enrolled"] }}</td>
+						<td>{{ siteDetails["transfused"] }}</td>
+						<td>{{ siteDetails["fpe"] }}</td>
+						<td>{{ siteDetails["lpe"] }}</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+	<div id="mySiteData">
+		<table>
+			<thead>
 			<tr>
-				<td>{{ siteDetails["name"] }}</td>
-				<td>{{ siteDetails["enrolled"] }}</td>
-				<td>{{ siteDetails["transfused"] }}</td>
-				<td>{{ siteDetails["fpe"] }}</td>
-				<td>{{ siteDetails["lpe"] }}</td>
+				<th>{{ mySite["site_name"] }}</th>
+				<th>Sex</th>
+				<th>Race</th>
+				<th>Screened</th>
+				<th>Enrolled</th>
 			</tr>
-		{% endfor %}
-	</tbody>
-</table>
+			</thead>
+			<tbody>
+			{% for personDetails in mySite["rows"] %}
+				<tr>
+					<tr>
+						<td>{{ personDetails["id"] }}</td>
+						<td>{{ personDetails["sex"] }}</td>
+						<td>{{ personDetails["race"] }}</td>
+						<td>{{ personDetails["screened"] }}</td>
+						<td>{{ personDetails["enrolled"] }}</td>
+					</tr>
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+	</div>
+	<div id="communications">
+
+	</div>
+</div>
 {% endblock %}
