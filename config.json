@@ -46,6 +46,18 @@
 			"required": false,
 			"type": "project-id",
 			"repeatable": false
+		},
+		{
+			"key": "demographics_event",
+			"name": "Event Containing Demographics",
+			"type": "event-list",
+			"repeatable": false
+		},
+		{
+			"key": "transfusion_event",
+			"name": "Event Containing Transfusion Status",
+			"type": "event-list",
+			"repeatable": false
 		}
 	],
 	"system-settings": [],

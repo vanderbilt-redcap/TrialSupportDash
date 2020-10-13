@@ -1,0 +1,26 @@
+{
+	"site_name": "Site B",
+	"rows": [
+		{
+			"id": "3",
+			"sex": "M",
+			"race": "Hispanic",
+			"screened": "01-06-2020",
+			"enrolled": ""
+		},
+		{
+			"id": "5",
+			"sex": "F",
+			"race": "Other"
+			"screened": "",
+			"enrolled": "01-01-2020"
+		}
+		{
+			"id": "9",
+			"sex": "M",
+			"race": ""
+			"screened": "",
+			"enrolled": "03-01-2020"
+		}
+	]
+}

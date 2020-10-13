@@ -2,8 +2,7 @@
 namespace Vanderbilt\PassItOn;
 
 class PassItOn extends \ExternalModules\AbstractExternalModule {
-	// LOW LEVEL methods - not unit testable -- directly interface with database -- no business logic allowed
-	
+	// LOW LEVEL methods
 	public function getProjectIDs() {
 		
 	}
@@ -23,7 +22,7 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		
 	}
 	
-	// HIGHER LEVEL methods -- unit testable -- do NOT interface with external data sources (db)
+	// HIGHER LEVEL methods
 	public function authorizeUser() {
 		
 	}
