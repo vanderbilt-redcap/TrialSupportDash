@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	{% block head %}
+		<link rel="stylesheet" href="{{ constant('APP_PATH_WEBPACK') }}css/bundle.css" />
+		{% if(constant("CSS_PATH_1")) %}
+		<link rel="stylesheet" href="{{ constant("CSS_PATH_1") }}" />
+		{% endif %}
+
+		<script type="text/javascript" src="{{ constant('APP_PATH_WEBPACK') }}js/bundle.js"></script>
+		<script type="text/javascript" src="{{ constant('APP_PATH_JS') }}Libraries/bundle.js"></script>
+		<script type="text/javascript" src="{{ constant('APP_PATH_JS') }}base.js"></script>
+		<script type="text/javascript" src="{{ constant("JS_PATH_1") }}"></script>
+		{{ constant('JS_VARS')|raw }}
+
+		<title>{% block title %}Pass It On Dashboard{%  endblock %}</title>
+	{% endblock %}
+</head>
+<body>
+<div class='main-wrapper'>
+	<div id="main-header" style="background-color: #747474;min-height: 100px;">
+		<div class='row'>
+			<div class="col-sm-6 col-logo">
+				<a href="">
+					<img class="mlogo" src="{{ constant("LOGO_LINK") }}">
+				</a>
+			</div>
+			<div class="col-sm-6 col-logo col-logo-right"><a href="" target="_blank"></a></div>
+		</div>
+	</div>
+</div>
+<div class='row' style='height:10px'></div>
+
+<div id="content" class="cols-xs-12" style="padding-left:15px">
+	{% block content %}{% endblock %}
+</div>
+<div>
+	{% block footer %}
+	{% endblock %}
+</div>
+</body>
+</html>

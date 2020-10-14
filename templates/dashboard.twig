@@ -1,0 +1,102 @@
+{% extends "base.twig" %}
+
+{% block content %}
+
+<div id="tabs" style="width:79%; float:left; margin-top:5px;">
+	<div class='row'>
+		<div id="event-tabs" style="background-color:#ffffff; margin-left:0px;text-align:left">
+			<a class="tab active" id="allSitesData-button" onclick="activateTab('allSitesData');">
+				<div class='top-border'></div>
+				<div class='name'><b>Enrollment Statistics</b></div>
+			</a>
+			<a class="tab nonactive" id="mySiteData-button" onclick="activateTab('mySiteData');">
+				<div class='top-border'></div>
+				<div class='name'><b>My Site's Metrics</b></div>
+			</a>
+			<a class="tab nonactive" id="communications-button" onclick="activateTab('communications');">
+				<div class='top-border'></div>
+				<div class='name'><b>Communications</b></div>
+			</a>
+		</div>
+	</div>
+	{#<div class='row' style="height:1px"></div>#}
+	<div id="allSitesData">
+		<table>
+			<thead>
+				<tr>
+					<th></th>
+					<th>Enrolled</th>
+					<th>Transfused</th>
+					<th>FPE</th>
+					<th>LPE</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="first_row">
+					<td>Entire Project</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				{% for totalDetails in allSites["totals"] %}
+					<tr>
+						<tr>
+							<td>{{ totalDetails["name"] }}</td>
+							<td>{{ totalDetails["enrolled"] }}</td>
+							<td>{{ totalDetails["transfused"] }}</td>
+							<td>{{ totalDetails["fpe"] }}</td>
+							<td>{{ totalDetails["lpe"] }}</td>
+						</tr>
+					</tr>
+				{% endfor %}
+				<tr class="first_row">
+					<td>By Site</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				{% for siteDetails in allSites["sites"] %}
+					<tr>
+						<td>{{ siteDetails["name"] }}</td>
+						<td>{{ siteDetails["enrolled"] }}</td>
+						<td>{{ siteDetails["transfused"] }}</td>
+						<td>{{ siteDetails["fpe"] }}</td>
+						<td>{{ siteDetails["lpe"] }}</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+	<div id="mySiteData">
+		<table>
+			<thead>
+			<tr>
+				<th>{{ mySite["site_name"] }}</th>
+				<th>Sex</th>
+				<th>Race</th>
+				<th>Screened</th>
+				<th>Enrolled</th>
+			</tr>
+			</thead>
+			<tbody>
+			{% for personDetails in mySite["rows"] %}
+				<tr>
+					<tr>
+						<td>{{ personDetails["id"] }}</td>
+						<td>{{ personDetails["sex"] }}</td>
+						<td>{{ personDetails["race"] }}</td>
+						<td>{{ personDetails["screened"] }}</td>
+						<td>{{ personDetails["enrolled"] }}</td>
+					</tr>
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+	</div>
+	<div id="communications" style="padding:10px">
+		<div><h3>Under Development</h3></div>
+	</div>
+</div>
+{% endblock %}
