@@ -2,8 +2,6 @@
 namespace Vanderbilt\PassItOn;
 
 class PassItOn extends \ExternalModules\AbstractExternalModule {
-	// LOW LEVEL methods
-	public function getProjectIDs() {
 	public $edc_data;
 	public $screening_data;
 	public $uad_data;
