@@ -4,23 +4,22 @@
 
 <div id="tabs" style="width:79%; float:left; margin-top:5px;">
 	<div class='row'>
-		<div id="event-tabs" style="background-color:#ffffff; margin-left:5px;text-align:left">
-			<a class="tab active" id="all-sites-button" onclick="hideAllTabs();$('#allSitesData').show();">
+		<div id="event-tabs" style="background-color:#ffffff; margin-left:0px;text-align:left">
+			<a class="tab active" id="allSitesData-button" onclick="activateTab('allSitesData');">
 				<div class='top-border'></div>
 				<div class='name'><b>Enrollment Statistics</b></div>
 			</a>
-			<a class="tab nonactive" id="my-site-button" onclick="hideAllTabs();$('#mySiteData').show();">
+			<a class="tab nonactive" id="mySiteData-button" onclick="activateTab('mySiteData');">
 				<div class='top-border'></div>
 				<div class='name'><b>My Site's Metrics</b></div>
 			</a>
-			<a class="tab nonactive" id="communications-button" onclick="hideAllTabs();$('#communications').show();">
+			<a class="tab nonactive" id="communications-button" onclick="activateTab('communications');">
 				<div class='top-border'></div>
 				<div class='name'><b>Communications</b></div>
 			</a>
-			{% if constant("TD_USER_PMD_ACCESS_LEVEL") is defined %}
-			{% endif %}
 		</div>
 	</div>
+	{#<div class='row' style="height:1px"></div>#}
 	<div id="allSitesData">
 		<table>
 			<thead>
@@ -96,8 +95,8 @@
 			</tbody>
 		</table>
 	</div>
-	<div id="communications">
-
+	<div id="communications" style="padding:10px">
+		<div><h3>Under Development</h3></div>
 	</div>
 </div>
 {% endblock %}

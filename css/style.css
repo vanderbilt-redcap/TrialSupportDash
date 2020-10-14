@@ -1,3 +1,50 @@
+#content {
+    padding:5px;
+}
+
+#event-tabs {
+    border-bottom: 1px solid #ebeded;
+    background: #f7f9f9;
+    text-align: center;
+    margin: auto;
+}
+#event-tabs .tab {
+    display: inline-block;
+    text-decoration: none;
+    color: #929597;
+    margin-right: -3px;
+}
+#event-tabs .tab .name {
+    margin-top: 2px;
+    padding: 11px 28px;
+    font-size: 16px;
+}
+#event-tabs .tab .name {
+    border-right: 2px solid #f1f2f3;
+}
+#event-tabs .tab:hover {
+    color: black;
+}
+#event-tabs .tab.active {
+    margin-top: -5px;
+    color: black;
+    background: white;
+    position: relative;
+    top: 1px;
+    border: 1px solid #055877;
+}
+#event-tabs .tab.active .top-border {
+    background: #055877;
+    height: 5px;
+}
+#event-tabs .tab.active .name {
+    border-right-width: 1px;
+}
+#event-tabs .tab:last-child .name {
+    border-right: none;
+}
+
+
 th {
     background-color:#055877;
     color: #ffffff;
@@ -21,7 +68,15 @@ tr > td {
 tr > td:nth-child(1) {
     text-align: left;
 }
+.row {
+    margin: 0;
+}
+button.nonactive {
+    background-color:#FFFFFF;
+    color: #000;
+    border: 1px solid black;
+}
 
-#content {
-    padding:5px;
+a.nonactive div.name {
+    background-color:#eeeeee;
 }
