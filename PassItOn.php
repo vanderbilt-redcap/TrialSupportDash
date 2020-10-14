@@ -69,9 +69,6 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		
 		return $this->uad_data;
 	}
-	public function getUser() {
-		
-	}
 	
 	// HIGHER LEVEL methods
 	public function authorizeUser() {
