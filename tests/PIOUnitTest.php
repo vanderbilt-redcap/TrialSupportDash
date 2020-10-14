@@ -10,10 +10,14 @@ final class PIOUnitTest extends \ExternalModules\ModuleBaseTest
 {
 	public function setUp() : void {
 		parent::setUp();
-
+		
+		$pids = $this->getProjectsWithModuleEnabled();
+		$_GET['pid'] = reset($pids);
+		
 		## Initialize module cached data here
-		$this->module->user = 			json_decode(file_get_contents(__DIR__."/test_data/user.json"),true);
-		$this->module->records = 		json_decode(file_get_contents(__DIR__."/test_data/records.json"),true);
+		$this->module->user = 			json_decode(file_get_contents(__DIR__."/test_data/user.json"));
+		$this->module->dags = 			json_decode(file_get_contents(__DIR__."/test_data/dags.json"));
+		$this->module->records = 		json_decode(file_get_contents(__DIR__."/test_data/records.json"));
 	}
 
 	// output from these functions should be very predictable given the constrained test inputs
@@ -29,20 +33,19 @@ final class PIOUnitTest extends \ExternalModules\ModuleBaseTest
 		
 		// ensure we have the correct number of rows
 		$row_count = count($result->rows);
-		$this->assertTrue($row_count > 2, "There are too few records in my_site_data->rows -- expected: 2, count: $row_count");
-		$this->assertTrue($row_count < 2, "There are too many records in my_site_data->rows -- expected: 2, count: $row_count");
+		$this->assertTrue($row_count == 2, "Expected 2 records, found $row_count");
 		
 		// ensure a selected record is structured as expected
 		$row1 = $result->rows[1];
 		$this->assertIsObject($row1, "my_site_data->rows[2] is not an object!");
 		$expected_fields = ['id', 'sex', 'race', 'screened', 'enrolled'];
 		foreach ($expected_fields as $field) {
-			$this->assertObjectHasAttribute($row1, $field, "my_site_data row object is missing it's '$field' property");
+			$this->assertObjectHasAttribute($field, $row1, "my_site_data row object is missing it's '$field' property");
 		}
 		
-		// finally, assert that what we have is exactly what we want -- by json string compare to file
-		// we expect this to catch all discrepancies not listed above
-		$this->assertJsonStringEqualsJsonFile(json_encode($result), __DIR__."/test_data/site_a_data.json");
+		// finally, assert equality to catch all discrepancies not listed above
+		$compare = json_decode(file_get_contents(__DIR__."/test_data/site_a_data.json"));
+		$this->assertEquals($result, $compare);
 	}
 	
 	// output from these functions should be very predictable given the constrained test inputs
@@ -58,19 +61,19 @@ final class PIOUnitTest extends \ExternalModules\ModuleBaseTest
 		
 		// ensure we have the correct number of rows
 		$row_count = count($result->rows);
-		$this->assertTrue($row_count > 3, "There are too few records in my_site_data->rows -- expected: 3, count: $row_count");
-		$this->assertTrue($row_count < 3, "There are too many records in my_site_data->rows -- expected: 3, count: $row_count");
+		$this->assertTrue($row_count == 3, "Expected 3 records, found $row_count");
 		
 		// ensure a selected record is structured as expected
 		$row2 = $result->rows[2];
 		$this->assertIsObject($row2, "my_site_data->rows[2] is not an object!");
 		$expected_fields = ['id', 'sex', 'race', 'screened', 'enrolled'];
 		foreach ($expected_fields as $field) {
-			$this->assertObjectHasAttribute($row2, $field, "my_site_data row object is missing its '$field' property");
+			$this->assertObjectHasAttribute($field, $row2, "my_site_data row object is missing its '$field' property");
 		}
 		
-		// compare to file
-		$this->assertJsonStringEqualsJsonFile(json_encode($result), __DIR__."/test_data/site_b_data.json");
+		// finally, assert equality to catch all discrepancies not listed above
+		$compare = json_decode(file_get_contents(__DIR__."/test_data/site_b_data.json"));
+		$this->assertEquals($result, $compare);
 	}
 
 	public function testGetAllSitesData() {
@@ -83,21 +86,22 @@ final class PIOUnitTest extends \ExternalModules\ModuleBaseTest
 		$this->assertIsArray($result->sites, "PassItOn->my_site_data->sites is not an object after calling ->getAllSitesData()");
 		
 		// ensure we have the correct number of rows
-		$total_row_count = count($result->rows);
-		$this->assertTrue($total_row_count == 2, "Expected 2 rows in my_site_data->rows -- actual count: $total_row_count");
-		$site_row_count = count($result->rows);
-		$this->assertTrue($site_row_count == 2, "Expected 3 rows in my_site_data->rows -- actual count: $site_row_count");
+		$totals_row_count = count($result->totals);
+		$this->assertTrue($totals_row_count == 2, "Expected 2 rows in my_site_data->rows -- actual count: $totals_row_count");
+		$site_row_count = count($result->sites);
+		$this->assertTrue($site_row_count == 3, "Expected 3 rows in my_site_data->rows -- actual count: $site_row_count");
 		
 		// ensure row objects are structured as expected
 		$all_rows = array_merge($result->totals, $result->sites);
 		$expected_fields = ['name', 'enrolled', 'transfused', 'fpe', 'lpe'];
 		foreach ($all_rows as $row) {
 			foreach ($expected_fields as $field) {
-				$this->assertObjectHasAttribute($row, $field, "all_sites_data row object is missing its '$field' property");
+				$this->assertObjectHasAttribute($field, $row, "all_sites_data row object is missing its '$field' property");
 			}
 		}
 		
-		// compare to file
-		$this->assertJsonStringEqualsJsonFile(json_encode($result), __DIR__."/test_data/allSitesData.json");
+		// finally, assert equality to catch all discrepancies not listed above
+		$compare = json_decode(file_get_contents(__DIR__."/test_data/all_sites_data.json"));
+		$this->assertEquals($result, $compare);
 	}
 }
