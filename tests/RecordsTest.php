@@ -39,6 +39,9 @@ final class RecordsTest extends \ExternalModules\ModuleBaseTest
 			foreach ($expected_properties as $property) {
 				$this->assertObjectHasAttribute($property, $record, "record #{$record->record_id} is missing its '$property' property");
 			}
+			
+			// make sure all records have a DAG property -- no DAG-less records allowed!
+			$this->assertNotEmpty($record->dag, "Found a record with empty 'dag' field");
 		}
 		
 		// compare to file for other discrepancies
