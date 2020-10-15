@@ -85,20 +85,22 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		if (!isset($this->uad_data)) {
 			$this->getProjectIDs();
 			
-			$params = [
-				'project_id' => $this->project_ids->uad,
-				'return_format' => 'json',
-				'fields' => [
-					'record_id',
-					'first_name',
-					'last_name',
-					'role_ext_2',
-					'dashboard',
-					'user_name',
-					'dag_group_name'
-				]
-			];
-			$uad_data = json_decode(\REDCap::getData($params));
+			if (!empty($this->project_ids->uad)) {
+				$params = [
+					'project_id' => $this->project_ids->uad,
+					'return_format' => 'json',
+					'fields' => [
+						'record_id',
+						'first_name',
+						'last_name',
+						'role_ext_2',
+						'dashboard',
+						'user_name',
+						'dag_group_name'
+					]
+				];
+				$uad_data = json_decode(\REDCap::getData($params));
+			}
 			$this->uad_data = $uad_data;
 		}
 		
@@ -379,8 +381,6 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 	public function redcap_module_link_check_display($pid, $link) {
 		$this->getUser();
 		$this->authorizeUser();
-		
-		\REDCap::logEvent("User Authorization Attempt", 'PassItOn->user: ' . print_r($this->user, true), null, null, null, null, $this->project_ids->edc);
 		
 		if ($this->user->authorized !== true)
 			return false;
