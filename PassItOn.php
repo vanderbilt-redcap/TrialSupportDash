@@ -379,6 +379,9 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 	public function redcap_module_link_check_display($pid, $link) {
 		$this->getUser();
 		$this->authorizeUser();
+		
+		\REDCap::logEvent("User Authorization Attempt", 'PassItOn->user: ' . print_r($this->user, true), null, null, null, null, $this->project_ids->edc);
+		
 		if ($this->user->authorized !== true)
 			return false;
 		return $link;
