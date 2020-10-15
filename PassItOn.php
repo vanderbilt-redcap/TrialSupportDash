@@ -265,14 +265,14 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		$this->getRecords();
 		$this->authorizeUser();
 		
+		if ($this->user->authorized == false or $this->user->authorized == '1') {
+			$this->my_site_data = false;
+			return $this->my_site_data;
+		}
+		
 		$site_data = new \stdClass();
 		$site_data->site_name = "";
 		$site_data->rows = [];
-		
-		if ($this->user->authorized == false or $this->user->authorized == '1') {
-			$this->my_site_data = $site_data;
-			return json_decode(json_encode($this->my_site_data), true);
-		}
 		
 		// get dag and site_name
 		$user_dag = $this->user->dag_group_name;
