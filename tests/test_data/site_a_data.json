@@ -5,8 +5,8 @@
 			"id": "1",
 			"sex": "F",
 			"race": "Declined",
-			"screened": "01-01-2020",
-			"enrolled": "01-02-2020"
+			"screened": "2020-01-01",
+			"enrolled": "2020-01-02"
 		},
 		{
 			"id": "006",
