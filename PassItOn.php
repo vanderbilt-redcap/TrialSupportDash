@@ -4,13 +4,22 @@ namespace Vanderbilt\PassItOn;
 class PassItOn extends \ExternalModules\AbstractExternalModule {
 	public $edc_data;
 	public $uad_data;
-	private $forbidden_roles = [
-		'1030',		//	Other
-		'1042',		//	Safety Reviewer/DSMB
-		'1045',		//	Medical Monitor
-		'1049',		//	IDS
-		'1050',		//	Blood Bank
-		'1051'		//	Lab Personnel
+	private $access_tier_by_role = [
+		'1042' => '1',		//	Safety Reviewer/DSMB
+		'1045' => '1',		//	Medical Monitor
+		'1028' => '3',		//	Principal Investigator (National)
+		'1039' => '2',		//	Principal Investigator (Site)
+		'1046' => '3',		//	Study Manager (National)
+		'1044' => '2',		//	Study Manager (Site)
+		'1043' => '3',		//	Statistical Team
+		'1041' => '2',		//	Site Study Team
+		'1040' => '2',		//	Sub-Investigator (Site)
+		'1047' => '3',		//	Financial Team/Administration
+		'1048' => '3',		//	Study Leadership/Steering Committee
+		'1049' => '1',		//	IDS
+		'1050' => '1',		//	Blood Bank
+		'1051' => '1',		//	Lab Personnel
+		'1030' => '1'		//	Other
 	];
 	public $record_fields = [
 		'record_id',
@@ -148,13 +157,6 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 					$this->user = $record;
 				}
 			}
-			
-			// create blank user object only if SUPER_USER
-			if (SUPER_USER and empty($this->user)) {
-				$this->user = new \stdClass();
-			}
-			
-			$this->user->super_user = empty(SUPER_USER) ? false : true;
 		}
 		
 		return $this->user;
@@ -162,29 +164,35 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 	
 	// HIGHER LEVEL methods
 	public function authorizeUser() {
-		// this method sets user->authorized to true or false
-		if (empty($this->user)) {
-			$this->getUser();
-		}
+		/*
+			there are multiple tiers of dashboard access
+			user->authorized == false
+				no dashboard access
+			user->authorized == '1'
+				user can access dashboard
+				user can see all sites data
+				user cannot see my site data
+			user->authorized == '2'
+				user can access dashboard
+				user can see all sites data
+				user can my site data -- results limited to records with DAG that matches user's DAG
+			user->authorized == '3'
+				user can access dashboard
+				user can see all sites data
+				user can see my site data -- including all patient rows from all sites
+		*/
+		$this->getUser();
 		
-		if ($this->user->super_user) {
-			$this->user->authorized = true;
-			return;
-		}
-		
-		// verify role is not forbidden
-		if (in_array($this->user->role_ext_2, $this->forbidden_roles)) {
-			$this->user->authorized = false;
-			return;
-		}
-		
-		// verify dashboard access granted
 		if (empty($this->user->dashboard)) {
 			$this->user->authorized = false;
 			return;
 		}
 		
-		$this->user->authorized = true;
+		if (!empty($access_level = $this->access_tier_by_role[$this->user->role_ext_2])) {
+			$this->user->authorized = $access_level;
+		} else {
+			$this->user->authorized = false;
+		}
 	}
 	public function getRecords() {
 		if (!isset($this->records)) {
@@ -385,7 +393,7 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		if ($link['name'] == 'PassItOn Dashboard') {
 			$this->getUser();
 			$this->authorizeUser();
-			if ($this->user->authorized !== true) {
+			if ($this->user->authorized === false) {
 				return false;
 			} else {
 				return $link;

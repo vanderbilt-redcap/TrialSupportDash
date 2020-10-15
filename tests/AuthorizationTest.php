@@ -18,45 +18,33 @@ final class AuthorizationTest extends \ExternalModules\ModuleBaseTest
 		$this->module->user = json_decode(file_get_contents(__DIR__."/test_data/user.json"));
 	}
 
-	public function testAuthorization() {
-		// ensure user with proper requirements authorizes successfully
+	public function testAuthorizationFailDashboard() {
+		$this->module->user->dashboard = "";
 		$this->module->authorizeUser();
-		
-		if (SUPER_USER)
-			unset($this->module->user->super_user);
-		
-		$this->assertTrue($this->module->user->authorized, "failed to authorize user with valid credentials");
+		$this->assertSame(false, $this->module->user->authorized, "authorized user with empty [dashboard] value");
 	}
 
-	public function testSuperUser() {
-		// ensure SUPER_USERs are authorized
-		$user = $this->module->user;
-		unset($user->dashboard, $user->role_ext_2);
-		$user->super_user = true;
-		
+	public function testAuthorizationFailRole() {
+		$this->module->user->role_ext_2 = "";
 		$this->module->authorizeUser();
-		$this->assertTrue($this->module->user->authorized, "failed to authorize super user");
+		$this->assertSame(false, $this->module->user->authorized, "authorized user with invalid [role_ext_2] value");
 	}
 
-	public function testFailRole() {
-		// set the user's role to one that we know should be forbidden
-		$this->module->user->role_ext_2 = '1042';
-		
-		if (SUPER_USER)
-			unset($this->module->user->super_user);
-		
+	public function testAuthorizationValid_1() {
+		$this->module->user->role_ext_2 = "1042";
 		$this->module->authorizeUser();
-		$this->assertFalse($this->module->user->authorized, "authorized user with invalid [role_ext_2] role!");
+		$this->assertSame('1', $this->module->user->authorized, "authorized user with invalid credentials");
 	}
 
-	public function testFailDashboard() {
-		// set the user's dashboard value to something other than '1'
-		$this->module->user->dashboard = '0';
-		
-		if (SUPER_USER)
-			unset($this->module->user->super_user);
-		
+	public function testAuthorizationValid_2() {
+		$this->module->user->role_ext_2 = "1039";
 		$this->module->authorizeUser();
-		$this->assertFalse($this->module->user->authorized, "authorized user with invalid [dashboard] value!");
+		$this->assertSame('2', $this->module->user->authorized, "authorized user with invalid credentials");
+	}
+
+	public function testAuthorizationValid_3() {
+		$this->module->user->role_ext_2 = "1028";
+		$this->module->authorizeUser();
+		$this->assertSame('3', $this->module->user->authorized, "authorized user with invalid credentials");
 	}
 }
