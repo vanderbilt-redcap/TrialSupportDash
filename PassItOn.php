@@ -269,6 +269,7 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		}
 		
 		$this->my_site_data = $site_data;
+		return json_decode(json_encode($this->my_site_data), true);
 	}
 	public function getAllSitesData() {
 		$this->getDAGs();
@@ -343,6 +344,7 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		}
 		
 		$this->all_sites_data = $data;
+		return json_decode(json_encode($this->all_sites_data), true);
 	}
 	
 	// utility
