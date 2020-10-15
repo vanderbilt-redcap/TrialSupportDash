@@ -263,10 +263,16 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		$this->getDAGs();
 		$this->getUser();
 		$this->getRecords();
+		$this->authorizeUser();
 		
 		$site_data = new \stdClass();
 		$site_data->site_name = "";
 		$site_data->rows = [];
+		
+		if ($this->user->authorized == false or $this->user->authorized == '1') {
+			$this->my_site_data = $site_data;
+			return json_decode(json_encode($this->my_site_data), true);
+		}
 		
 		// get dag and site_name
 		$user_dag = $this->user->dag;
@@ -280,7 +286,7 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		
 		// add record rows
 		foreach ($this->records as $record) {
-			if ($record->dag == $group_id) {
+			if (($this->user->authorized == '2' and $record->dag == $group_id) or $this->user->authorized == '3') {
 				$row = new \stdClass();
 				$row->id = $record->record_id;
 				$row->sex = $record->sex;
