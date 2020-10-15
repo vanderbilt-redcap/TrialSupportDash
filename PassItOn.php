@@ -255,9 +255,15 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		$user_dag = $this->user->dag;
 		$site_data->site_name = $this->getDAGSiteName($user_dag);
 		
+		// determine group id
+		foreach ($this->dags as $gid => $dag) {
+			if ($dag->unique == $user_dag)
+				$group_id = $gid;
+		}
+		
 		// add record rows
 		foreach ($this->records as $record) {
-			if ($record->dag == $user_dag) {
+			if ($record->dag == $group_id) {
 				$row = new \stdClass();
 				$row->id = $record->record_id;
 				$row->sex = $record->sex;
