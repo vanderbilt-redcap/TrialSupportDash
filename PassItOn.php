@@ -255,7 +255,7 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 	}
 	public function getMySiteData() {
 		if($_GET['TESTING']) {
-			return json_decode(file_get_contents(__DIR__."/tests/test_data/siteASiteData.json"),true);
+			return json_decode(file_get_contents(__DIR__."/tests/test_data/site_a_data.json"),true);
 		}
 		
 		$this->getDAGs();
@@ -287,7 +287,7 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 	}
 	public function getAllSitesData() {
 		if($_GET['TESTING']) {
-			return json_decode(file_get_contents(__DIR__."/tests/test_data/allSitesData.json"),true);
+			return json_decode(file_get_contents(__DIR__."/tests/test_data/all_sites_data.json"),true);
 		}
 		$this->getDAGs();
 		$this->getRecords();
