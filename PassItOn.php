@@ -190,6 +190,12 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 	}
 	public function getRecords() {
 		if (!isset($this->records)) {
+			if($_GET['TESTING']) {
+				$this->records = json_decode(file_get_contents(__DIR__."/tests/test_data/records.json"),true);
+				
+				return $this->records;
+			}
+			
 			$this->getEDCData();
 			
 			$records = [];
@@ -243,6 +249,9 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		return $this->records;
 	}
 	public function getMySiteData() {
+		if($_GET['TESTING']) {
+			return json_decode(file_get_contents(__DIR__."/tests/test_data/site_a_data.json"),true);
+		}
 		$this->getDAGs();
 		$this->getUser();
 		$this->getRecords();
@@ -278,6 +287,9 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		return json_decode(json_encode($this->my_site_data), true);
 	}
 	public function getAllSitesData() {
+		if($_GET['TESTING']) {
+			return json_decode(file_get_contents(__DIR__."/tests/test_data/all_sites_data.json"),true);
+		}
 		$this->getDAGs();
 		$this->getRecords();
 		
