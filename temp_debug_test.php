@@ -1,6 +1,7 @@
 <?php
 
 echo "<pre>";
+echo "USERID: " . USERID . "<br>";
 $module->getUser();
 $module->authorizeUser();
 echo 'user:<br>';

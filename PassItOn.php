@@ -143,21 +143,18 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 			$this->getUADData();
 			foreach ($this->uad_data as $record) {
 				if ($record->user_name === constant("USERID")) {
+					unset($record->redcap_repeat_instrument);
+					unset($record->redcap_repeat_instance);
 					$this->user = $record;
-					unset($this->redcap_repeat_instrument);
-					unset($this->redcap_repeat_instance);
 				}
 			}
 			
 			// create blank user object only if SUPER_USER
 			if (SUPER_USER and empty($this->user)) {
-				$user = new \stdClass();
+				$this->user = new \stdClass();
 			}
 			
-			// set ->super_user
-			$user->super_user = empty(SUPER_USER) ? false : true;
-			
-			$this->user = $user;
+			$this->user->super_user = empty(SUPER_USER) ? false : true;
 		}
 		
 		return $this->user;
