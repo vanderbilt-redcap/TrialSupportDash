@@ -27,11 +27,6 @@
 				"name": "PassItOn Dashboard",
 				"icon": "report",
 				"url": "dashboard.php"
-			},
-			{
-				"name": "Auth debugging",
-				"icon": "report",
-				"url": "temp_debug_test.php"
 			}
 		],
 		"control-center": []
