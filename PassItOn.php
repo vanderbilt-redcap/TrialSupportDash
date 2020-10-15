@@ -238,8 +238,10 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 			}
 			
 			foreach ($temp_records_obj as $record) {
-				$records[] = $record;
+				if (!empty($record->dag))
+					$records[] = $record;
 			}
+			
 			$this->records = $records;
 		}
 		
@@ -368,8 +370,12 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		$this->getDAGs();
 		foreach ($this->dags as $dag) {
 			if ($dag->unique == $dag_unique_name) {
-				$dag_name_pieces = explode(" - ", $dag->display);
-				return trim($dag_name_pieces[1]);
+				if (strpos($dag->display, " - ") != false) {
+					$dag_name_pieces = explode(" - ", $dag->display);
+					return trim($dag_name_pieces[1]);
+				} else {
+					return $dag->display;
+				}
 			}
 		}
 	}

@@ -18,15 +18,6 @@
 		"transfusion_given": ""
 	},
 	{
-		"record_id": "4",
-		"dag": "",
-		"sex": "M",
-		"race_ethnicity": "Asian",
-		"screen_date": "2020-01-01",
-		"randomization_date": "2020-01-01",
-		"transfusion_given": "1"
-	},
-	{
 		"record_id": "5",
 		"dag": "211",
 		"sex": "F",

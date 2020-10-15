@@ -14,6 +14,9 @@ final class RecordsTest extends \ExternalModules\ModuleBaseTest
 	public function setUp() : void {
 		parent::setUp();
 
+		$pids = $this->getProjectsWithModuleEnabled();
+		$_GET['pid'] = reset($pids);
+		
 		## Initialize module cached data here
 		$this->module->dags = 				json_decode(file_get_contents(__DIR__."/test_data/dags.json"));
 		$this->module->project_ids = 		json_decode(file_get_contents(__DIR__."/test_data/project_ids.json"));
@@ -31,7 +34,7 @@ final class RecordsTest extends \ExternalModules\ModuleBaseTest
 		
 		// ensure we have the correct number of rows
 		$record_count = count($records);
-		$this->assertTrue($record_count == 7, "Expected 7 records in ->records -- actual count: $record_count");
+		$this->assertTrue($record_count == 6, "Expected 6 records in ->records -- actual count: $record_count");
 		
 		// ensure each record is structured as expected
 		$expected_properties = ['record_id', 'dag', 'sex', 'race_ethnicity', 'screen_date', 'randomization_date', 'transfusion_given'];
