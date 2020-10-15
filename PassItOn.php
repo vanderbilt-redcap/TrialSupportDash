@@ -3,8 +3,24 @@ namespace Vanderbilt\PassItOn;
 
 class PassItOn extends \ExternalModules\AbstractExternalModule {
 	public $edc_data;
-	public $screening_data;
 	public $uad_data;
+	private $forbidden_roles = [
+		'1030',		//	Other
+		'1042',		//	Safety Reviewer/DSMB
+		'1045',		//	Medical Monitor
+		'1049',		//	IDS
+		'1050',		//	Blood Bank
+		'1051'		//	Lab Personnel
+	];
+	public $record_fields = [
+		'record_id',
+		'dag',
+		'sex',
+		'race_ethnicity',
+		'screen_date',
+		'randomization_date',
+		'transfusion_given'
+	];
 
 	public function __construct() {
 		parent::__construct();
@@ -15,28 +31,6 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 
 		require_once(__DIR__."/vendor/autoload.php");
 	}
-
-	private $forbidden_roles = [
-		'1030',		//	Other
-		'1042',		//	Safety Reviewer/DSMB
-		'1045',		//	Medical Monitor
-		'1049',		//	IDS
-		'1050',		//	Blood Bank
-		'1051'		//	Lab Personnel
-	];
-	
-	public $record_fields = [
-		'record_id',
-		'dag',
-		'sex',
-		'race_ethnicity',
-		'screen_date',
-		'randomization_date',
-		'transfusion_given'
-	];
-	
-	private $enrollment_goal = 1000;
-	private $transfused_goal = 500;
 	
 	// LOW LEVEL methods
 	public function getProjectIDs() {
@@ -198,9 +192,8 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 			if($_GET['TESTING']) {
 				$this->records = json_decode(file_get_contents(__DIR__."/tests/test_data/records.json"),true);
 				
-				return $this->records;			
+				return $this->records;
 			}
-		
 			$this->getEDCData();
 			
 			$records = [];
@@ -270,9 +263,15 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		$user_dag = $this->user->dag;
 		$site_data->site_name = $this->getDAGSiteName($user_dag);
 		
+		// determine group id
+		foreach ($this->dags as $gid => $dag) {
+			if ($dag->unique == $user_dag)
+				$group_id = $gid;
+		}
+		
 		// add record rows
 		foreach ($this->records as $record) {
-			if ($record->dag == $user_dag) {
+			if ($record->dag == $group_id) {
 				$row = new \stdClass();
 				$row->id = $record->record_id;
 				$row->sex = $record->sex;
@@ -284,6 +283,7 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		}
 		
 		$this->my_site_data = $site_data;
+		return json_decode(json_encode($this->my_site_data), true);
 	}
 	public function getAllSitesData() {
 		if($_GET['TESTING']) {
@@ -321,7 +321,7 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 			if (!$site = $sites->$patient_dag) {
 				$sites->$patient_dag = new \stdClass();
 				$site = $sites->$patient_dag;
-				$site->name = $this->getDAGSiteName($patient_dag);
+				$site->name = $this->getDAGSiteName($this->dags->$patient_dag->unique);
 				$site->enrolled = 0;
 				$site->transfused = 0;
 				$site->fpe = '-';
@@ -361,6 +361,7 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		}
 		
 		$this->all_sites_data = $data;
+		return json_decode(json_encode($this->all_sites_data), true);
 	}
 	
 	// utility
