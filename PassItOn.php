@@ -379,11 +379,16 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 	
 	// hooks
 	public function redcap_module_link_check_display($pid, $link) {
-		$this->getUser();
-		$this->authorizeUser();
-		
-		if ($this->user->authorized !== true)
-			return false;
-		return $link;
+		if ($link['name' == 'PassItOn Dashboard') {
+			$this->getUser();
+			$this->authorizeUser();
+			if ($this->user->authorized !== true) {
+				return false;
+			} else {
+				return $link;
+			}
+		} else {
+			return $link;
+		}
 	}
 }
