@@ -23,7 +23,7 @@ final class PIOUnitTest extends \ExternalModules\ModuleBaseTest
 	// output from these functions should be very predictable given the constrained test inputs
 	public function testGetSiteAData() {
 		$this->module->user->role_ext_2 = "1039";
-		$this->module->user->dag = "001__site_a";
+		$this->module->user->dag_group_name = "001__site_a";
 		$this->module->getMySiteData();
 		$result = $this->module->my_site_data;
 		
@@ -52,7 +52,7 @@ final class PIOUnitTest extends \ExternalModules\ModuleBaseTest
 	// output from these functions should be very predictable given the constrained test inputs
 	public function testGetSiteBData() {
 		$this->module->user->role_ext_2 = "1028";
-		$this->module->user->dag = "001__site_b";
+		$this->module->user->dag_group_name = "001__site_b";
 		$this->module->getMySiteData();
 		$result = $this->module->my_site_data;
 		
