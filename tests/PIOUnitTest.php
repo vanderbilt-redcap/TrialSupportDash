@@ -22,6 +22,7 @@ final class PIOUnitTest extends \ExternalModules\ModuleBaseTest
 
 	// output from these functions should be very predictable given the constrained test inputs
 	public function testGetSiteAData() {
+		$this->module->user->role_ext_2 = "1039";
 		$this->module->user->dag = "001__site_a";
 		$this->module->getMySiteData();
 		$result = $this->module->my_site_data;
@@ -50,6 +51,7 @@ final class PIOUnitTest extends \ExternalModules\ModuleBaseTest
 	
 	// output from these functions should be very predictable given the constrained test inputs
 	public function testGetSiteBData() {
+		$this->module->user->role_ext_2 = "1028";
 		$this->module->user->dag = "001__site_b";
 		$this->module->getMySiteData();
 		$result = $this->module->my_site_data;
@@ -59,9 +61,9 @@ final class PIOUnitTest extends \ExternalModules\ModuleBaseTest
 		$this->assertEquals($result->site_name, "Site B", "getMySiteData() didn't correctly determine site name property");
 		$this->assertIsArray($result->rows, "PassItOn->my_site_data->rows is not an object after calling ->getMySiteData()");
 		
-		// ensure we have the correct number of rows
+		// ensure we have the correct number of rows (all 6 since we set user to have level 3 access role)
 		$row_count = count($result->rows);
-		$this->assertTrue($row_count == 3, "Expected 3 records, found $row_count");
+		$this->assertTrue($row_count == 6, "Expected 6 records, found $row_count");
 		
 		// ensure a selected record is structured as expected
 		$row2 = $result->rows[2];
