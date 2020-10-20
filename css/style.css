@@ -46,7 +46,7 @@
 }
 
 table {
-	width: 100%;
+	width: calc(100% - 16px);
 }
 th {
     background-color:#055877;
