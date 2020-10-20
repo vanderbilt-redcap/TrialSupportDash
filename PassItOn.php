@@ -297,6 +297,17 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 			}
 		}
 		
+		// sort site level data
+		if (!function_exists(__NAMESPACE__ . '\sortSiteData')) {
+			function sortSiteData($a, $b) {
+				if ($a->enrolled == $b->enrolled)
+					return 0;
+				return $a->enrolled > $b->enrolled ? -1 : 1;
+			}
+		}
+		uasort($site_data->rows, __NAMESPACE__ . '\sortSiteData');
+		
+		// return
 		$this->my_site_data = $site_data;
 		return json_decode(json_encode($this->my_site_data), true);
 	}
@@ -375,6 +386,21 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 			$data->sites[] = $site;
 		}
 		
+		// sort all sites, FPE ascending
+		if (!function_exists(__NAMESPACE__ . '\sortAllSitesData')) {
+			function sortAllSitesData($a, $b) {
+				if ($a->fpe == $b->fpe)
+					return 0;
+				if ($a->fpe == '-')
+					return 1;
+				if ($b->fpe == '-')
+					return -1;
+				return $a->fpe < $b->fpe ? -1 : 1;
+			}
+		}
+		uasort($data->sites, __NAMESPACE__ . '\sortAllSitesData');
+		
+		// return
 		$this->all_sites_data = $data;
 		return json_decode(json_encode($this->all_sites_data), true);
 	}
