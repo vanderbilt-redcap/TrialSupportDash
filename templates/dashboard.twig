@@ -41,13 +41,11 @@
 				</tr>
 				{% for totalDetails in allSites["totals"] %}
 					<tr>
-						<tr>
-							<td>{{ totalDetails["name"] }}</td>
-							<td>{{ totalDetails["enrolled"] }}</td>
-							<td>{{ totalDetails["transfused"] }}</td>
-							<td>{{ totalDetails["fpe"] }}</td>
-							<td>{{ totalDetails["lpe"] }}</td>
-						</tr>
+						<td>{{ totalDetails["name"] }}</td>
+						<td>{{ totalDetails["enrolled"] }}</td>
+						<td>{{ totalDetails["transfused"] }}</td>
+						<td>{{ totalDetails["fpe"] }}</td>
+						<td>{{ totalDetails["lpe"] }}</td>
 					</tr>
 				{% endfor %}
 				<tr class="first_row">
@@ -83,13 +81,11 @@
 			<tbody>
 			{% for personDetails in mySite["rows"] %}
 				<tr>
-					<tr>
-						<td>{{ personDetails["id"] }}</td>
-						<td>{{ personDetails["sex"] }}</td>
-						<td>{{ personDetails["race"] }}</td>
-						<td>{{ personDetails["screened"] }}</td>
-						<td>{{ personDetails["enrolled"] }}</td>
-					</tr>
+					<td>{{ personDetails["id"] }}</td>
+					<td>{{ personDetails["sex"] }}</td>
+					<td>{{ personDetails["race"] }}</td>
+					<td>{{ personDetails["screened"] }}</td>
+					<td>{{ personDetails["enrolled"] }}</td>
 				</tr>
 			{% endfor %}
 			</tbody>

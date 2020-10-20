@@ -1,5 +1,6 @@
 #content {
     padding:5px;
+	font-size: 1.25rem;
 }
 
 #event-tabs {
@@ -17,7 +18,7 @@
 #event-tabs .tab .name {
     margin-top: 2px;
     padding: 11px 28px;
-    font-size: 16px;
+    font-size: 1.5rem;
 }
 #event-tabs .tab .name {
     border-right: 2px solid #f1f2f3;
@@ -44,7 +45,9 @@
     border-right: none;
 }
 
-
+table {
+	width: 100%;
+}
 th {
     background-color:#055877;
     color: #ffffff;
@@ -61,12 +64,18 @@ tr.first_row > td {
     color: #ffffff;
     font-weight:bold;
 }
+tr:nth-child(even):not(.first_row) > td {
+    background-color:#d9d9d9;
+}
 tr > td {
     text-align: center;
     padding:2px 10px;
 }
 tr > td:nth-child(1) {
     text-align: left;
+}
+#allSitesData td:nth-child(2) {
+	font-weight: 600;
 }
 .row {
     margin: 0;
