@@ -11,7 +11,9 @@
 		<script type="text/javascript" src="{{ constant('APP_PATH_JS') }}Libraries/bundle.js"></script>
 		<script type="text/javascript" src="{{ constant('APP_PATH_JS') }}base.js"></script>
 		<script type="text/javascript" src="{{ constant("JS_PATH_1") }}"></script>
-		{{ constant('JS_VARS')|raw }}
+		<script type="text/javascript">
+			var APP_PATH_WEBROOT = "{{ constant("APP_PATH_WEBROOT") }}";
+		</script>
 
 		<title>{% block title %}Pass It On Dashboard{%  endblock %}</title>
 	{% endblock %}
@@ -29,7 +31,11 @@
 		</div>
 	</div>
 </div>
-<div class='row' style='height:10px'></div>
+<div class='row' style='height:20px'>
+	<div style="padding-left:20px">
+		Welcome {{ constant("PIO_USER_DISPLAY_NAME") }} - <a onclick="logout();">Logout</a>
+	</div>
+</div>
 
 <div id="content" class="cols-xs-12" style="padding-left:15px">
 	{% block content %}{% endblock %}
