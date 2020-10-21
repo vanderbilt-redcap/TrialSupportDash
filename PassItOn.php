@@ -155,6 +155,7 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 					unset($record->redcap_repeat_instrument);
 					unset($record->redcap_repeat_instance);
 					$this->user = $record;
+					define("PIO_USER_DISPLAY_NAME",$record->first_name." ".$record->last_name);
 				}
 			}
 		}
@@ -182,7 +183,7 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 				user can see my site data -- including all patient rows from all sites
 		*/
 		$this->getUser();
-		
+
 		if (empty($this->user->dashboard)) {
 			$this->user->authorized = false;
 			return;

@@ -14,6 +14,11 @@ function activateTab(tabSelector) {
     $("#" + tabSelector + "-button").removeClass('nonactive').addClass('active');
 }
 
+function logout() {
+    $.ajax(APP_PATH_WEBROOT + "?logout=1");
+//    window.location="https://passitonstudy.org";
+}
+
 $("document").ready(function() {
     activateTab("allSitesData");
 });
