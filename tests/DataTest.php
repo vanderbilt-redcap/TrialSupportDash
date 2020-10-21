@@ -4,7 +4,7 @@ namespace Vanderbilt\PassItOn;
 
 // For now, the path to "redcap_connect.php" on your system must be hard coded.
 require_once dirname(dirname(dirname(__DIR__))) . '/redcap_connect.php';
-require_once APP_PATH_DOCROOT . '/ExternalModules/tests/ModuleBaseTest.php';
+// require_once APP_PATH_DOCROOT . '/ExternalModules/tests/ModuleBaseTest.php';
 
 final class DataTest extends \ExternalModules\ModuleBaseTest
 {
