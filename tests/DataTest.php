@@ -26,8 +26,8 @@ final class DataTest extends \ExternalModules\ModuleBaseTest
 	
 	function testUADUsersHaveDAG() {
 		$module = $this->module;
-		file_put_contents("C:/vumc/log.txt", print_r($module->project_ids->uad, true) . "\n", FILE_APPEND);
 		$this->assertNotEmpty($module->project_ids->uad, "Can't run integration test without UAD project ID specified");
+		unset($module->uad_data);
 		$module->getUADData();
 		
 		$user_records = $module->uad_data;
@@ -41,8 +41,8 @@ final class DataTest extends \ExternalModules\ModuleBaseTest
 	
 	function testEDCPatientRecordsHaveDAG() {
 		$module = $this->module;
-		file_put_contents("C:/vumc/log.txt", print_r($module->project_ids->edc, true) . "\n", FILE_APPEND);
 		$this->assertNotEmpty($module->project_ids->edc, "Can't run integration test without EDC project ID specified");
+		unset($module->edc_data);
 		$module->getEDCData();
 		
 		$records = $module->edc_data;
@@ -51,6 +51,6 @@ final class DataTest extends \ExternalModules\ModuleBaseTest
 		foreach ($records as $record) {
 			$this->assertNotEmpty($record->dag, "Found patient record with empty 'dag' field: record {$record->record_id}");
 		}
-		unset($module->uad_data);
+		unset($module->edc_data);
 	}
 }

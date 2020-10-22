@@ -344,11 +344,20 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 			if (!$patient_dag = $record->dag)
 				continue;
 			
+			// determine dag display name from unique
+			$dag_display_name = "";
+			foreach ($this->dags as $group_id => $dag) {
+				if ($group_id == $patient_dag) {
+					$dag_display_name = $dag->display;
+					break;
+				}
+			}
+			
 			// get or make site object
 			if (!$site = $sites->$patient_dag) {
 				$sites->$patient_dag = new \stdClass();
 				$site = $sites->$patient_dag;
-				$site->name = $this->getDAGSiteName($this->dags->$patient_dag->unique);
+				$site->name = $dag_display_name;
 				$site->enrolled = 0;
 				$site->transfused = 0;
 				$site->fpe = '-';
@@ -404,21 +413,6 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		// return
 		$this->all_sites_data = $data;
 		return json_decode(json_encode($this->all_sites_data), true);
-	}
-	
-	// utility
-	public function getDAGSiteName($dag_unique_name="") {
-		$this->getDAGs();
-		foreach ($this->dags as $dag) {
-			if ($dag->unique == $dag_unique_name) {
-				if (strpos($dag->display, " - ") != false) {
-					$dag_name_pieces = explode(" - ", $dag->display);
-					return trim($dag_name_pieces[1]);
-				} else {
-					return $dag->display;
-				}
-			}
-		}
 	}
 	
 	// hooks

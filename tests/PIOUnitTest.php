@@ -23,13 +23,12 @@ final class PIOUnitTest extends \ExternalModules\ModuleBaseTest
 	// output from these functions should be very predictable given the constrained test inputs
 	public function testGetSiteAData() {
 		$this->module->user->role_ext_2 = "1039";
-		$this->module->user->dag_group_name = "001__site_a";
 		$this->module->getMySiteData();
 		$result = $this->module->my_site_data;
 		
 		// ensure our result is structured as expected
 		$this->assertIsObject($result, "PassItOn->my_site_data is not an object after calling ->getMySiteData()");
-		$this->assertEquals($result->site_name, "Site A", "getMySiteData() didn't correctly determine site name property");
+		$this->assertEquals("001 - Site A", $result->site_name, "getMySiteData() didn't correctly determine site name property");
 		$this->assertIsArray($result->rows, "PassItOn->my_site_data->rows is not an object after calling ->getMySiteData()");
 		
 		// ensure we have the correct number of rows
@@ -46,19 +45,19 @@ final class PIOUnitTest extends \ExternalModules\ModuleBaseTest
 		
 		// finally, assert equality to catch all discrepancies not listed above
 		$compare = json_decode(file_get_contents(__DIR__."/test_data/site_a_data.json"));
-		$this->assertEquals($result, $compare);
+		$this->assertEquals($compare, $result);
 	}
 	
 	// output from these functions should be very predictable given the constrained test inputs
 	public function testGetSiteBData() {
 		$this->module->user->role_ext_2 = "1028";
-		$this->module->user->dag_group_name = "001__site_b";
+		$this->module->user->dag_group_name = "002 - Site B";
 		$this->module->getMySiteData();
 		$result = $this->module->my_site_data;
 		
 		// ensure our result is structured as expected
 		$this->assertIsObject($result, "PassItOn->my_site_data is not an object after calling ->getMySiteData()");
-		$this->assertEquals($result->site_name, "Site B", "getMySiteData() didn't correctly determine site name property");
+		$this->assertEquals("002 - Site B", $result->site_name, "getMySiteData() didn't correctly determine site name property");
 		$this->assertIsArray($result->rows, "PassItOn->my_site_data->rows is not an object after calling ->getMySiteData()");
 		
 		// ensure we have the correct number of rows (all 6 since we set user to have level 3 access role)
@@ -75,7 +74,7 @@ final class PIOUnitTest extends \ExternalModules\ModuleBaseTest
 		
 		// finally, assert equality to catch all discrepancies not listed above
 		$compare = json_decode(file_get_contents(__DIR__."/test_data/site_b_data.json"));
-		$this->assertEquals($result, $compare);
+		$this->assertEquals($compare, $result);
 	}
 
 	public function testGetAllSitesData() {
@@ -104,6 +103,6 @@ final class PIOUnitTest extends \ExternalModules\ModuleBaseTest
 		
 		// finally, assert equality to catch all discrepancies not listed above
 		$compare = json_decode(file_get_contents(__DIR__."/test_data/all_sites_data.json"));
-		$this->assertEquals($result, $compare);
+		$this->assertEquals($compare, $result);
 	}
 }
