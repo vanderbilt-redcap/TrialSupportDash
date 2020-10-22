@@ -277,11 +277,11 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		
 		// get dag and site_name
 		$user_dag = $this->user->dag_group_name;
-		$site_data->site_name = $this->getDAGSiteName($user_dag);
+		$site_data->site_name = $user_dag;
 		
 		// determine group id
 		foreach ($this->dags as $gid => $dag) {
-			if ($dag->unique == $user_dag)
+			if ($dag->display == $user_dag)
 				$group_id = $gid;
 		}
 		
