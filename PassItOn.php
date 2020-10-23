@@ -175,6 +175,8 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 
 	public function getUser() {
 		if (!isset($this->user)) {
+		    $this->user = false;
+
 			$this->getUADData();
 			foreach ($this->uad_data as $record) {
 				if ($record->user_name === constant("USERID")) {
@@ -210,7 +212,7 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		*/
 		$this->getUser();
 
-		if (empty($this->user->dashboard)) {
+		if ($this->user === false || empty($this->user->dashboard)) {
 			$this->user->authorized = false;
 			return;
 		}
