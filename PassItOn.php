@@ -52,6 +52,7 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		
 		return $this->project_ids;
 	}
+
 	public function getEventIDs() {
 		if (!isset($this->event_ids)) {
 			$event_ids = new \stdClass();
@@ -63,6 +64,7 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		
 		return $this->event_ids;
 	}
+
 	public function getDAGs() {
 		if (!isset($this->dags)) {
 			$this->getProjectIDs();
@@ -90,6 +92,7 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		
 		return $this->dags;
 	}
+
 	public function getUADData() {
 		if (!isset($this->uad_data)) {
 			$this->getProjectIDs();
@@ -115,6 +118,7 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		
 		return $this->uad_data;
 	}
+
 	public function getEDCData() {
 		if (!isset($this->edc_data)) {
 			$this->getProjectIDs();
@@ -131,22 +135,33 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 					'race_ethnicity',
 					'screen_date'
 				],
-				'events' => (array) $this->event_ids
+				'events' => (array) $this->event_ids,
+                'exportDataAccessGroups' => true
 			];
 			$edc_data = json_decode(\REDCap::getData($params));
-			
-			// add dag property to each based on its record_id
-			foreach ($edc_data as $record) {
-				$get_record_dag = $this->query("SELECT value FROM redcap_data WHERE project_id = ? AND field_name = '__GROUPID__' AND record = ? LIMIT 1", [$this->project_ids->edc, $record->record_id]);
-				$row = $get_record_dag->fetch_assoc();
-				$record->dag = @$row['value'];
-			}
 			
 			$this->edc_data = $edc_data;
 		}
 		
 		return $this->edc_data;
 	}
+
+    public function getScreeningData($projectId = false) {
+        if(!$this->screening_data) {
+            if(!$projectId) {
+                $projectId = $_GET['pid'];
+            }
+
+            $screeningProject = $this->getProjectSetting("screening_project", $projectId);
+
+            $this->screening_data = \REDCap::getData([
+                "project_id" => $screeningProject,
+            ]);
+        }
+
+        return $this->screening_data;
+    }
+
 	public function getUser() {
 		if (!isset($this->user)) {
 			$this->getUADData();
@@ -247,7 +262,7 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 			}
 			
 			foreach ($temp_records_obj as $record) {
-				if (!empty($record->dag))
+				if (!empty($record->redcap_data_access_group))
 					$records[] = $record;
 			}
 			
@@ -287,7 +302,7 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		
 		// add record rows
 		foreach ($this->records as $record) {
-			if (($this->user->authorized == '2' and $record->dag == $group_id) or $this->user->authorized == '3') {
+			if (($this->user->authorized == '2' and $record->redcap_data_access_group == $group_id) or $this->user->authorized == '3') {
 				$row = new \stdClass();
 				$row->id = $record->record_id;
 				$row->sex = $record->sex;
@@ -341,7 +356,7 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		// create temporary sites container
 		$sites = new \stdClass();
 		foreach ($this->records as $record) {
-			if (!$patient_dag = $record->dag)
+			if (!$patient_dag = $record->redcap_data_access_group)
 				continue;
 			
 			// get or make site object
