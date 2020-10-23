@@ -8,6 +8,9 @@ require_once dirname(dirname(dirname(__DIR__))) . '/redcap_connect.php';
 
 final class PIOUnitTest extends \ExternalModules\ModuleBaseTest
 {
+    /** @var PassItOn $module */
+    public $module;
+
 	public function setUp() : void {
 		parent::setUp();
 		
@@ -23,13 +26,13 @@ final class PIOUnitTest extends \ExternalModules\ModuleBaseTest
 	// output from these functions should be very predictable given the constrained test inputs
 	public function testGetSiteAData() {
 		$this->module->user->role_ext_2 = "1039";
-		$this->module->user->dag_group_name = "001__site_a";
+		$this->module->user->dag_group_name = "001 - Site A";
 		$this->module->getMySiteData();
 		$result = $this->module->my_site_data;
 		
 		// ensure our result is structured as expected
 		$this->assertIsObject($result, "PassItOn->my_site_data is not an object after calling ->getMySiteData()");
-		$this->assertEquals($result->site_name, "Site A", "getMySiteData() didn't correctly determine site name property");
+		$this->assertEquals($result->site_name, "001 - Site A", "getMySiteData() didn't correctly determine site name property");
 		$this->assertIsArray($result->rows, "PassItOn->my_site_data->rows is not an object after calling ->getMySiteData()");
 		
 		// ensure we have the correct number of rows
@@ -52,13 +55,13 @@ final class PIOUnitTest extends \ExternalModules\ModuleBaseTest
 	// output from these functions should be very predictable given the constrained test inputs
 	public function testGetSiteBData() {
 		$this->module->user->role_ext_2 = "1028";
-		$this->module->user->dag_group_name = "001__site_b";
+        $this->module->user->dag_group_name = "002 - Site B";
 		$this->module->getMySiteData();
 		$result = $this->module->my_site_data;
 		
 		// ensure our result is structured as expected
 		$this->assertIsObject($result, "PassItOn->my_site_data is not an object after calling ->getMySiteData()");
-		$this->assertEquals($result->site_name, "Site B", "getMySiteData() didn't correctly determine site name property");
+		$this->assertEquals($result->site_name, "002 - Site B", "getMySiteData() didn't correctly determine site name property");
 		$this->assertIsArray($result->rows, "PassItOn->my_site_data->rows is not an object after calling ->getMySiteData()");
 		
 		// ensure we have the correct number of rows (all 6 since we set user to have level 3 access role)
