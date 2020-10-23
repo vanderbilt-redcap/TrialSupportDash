@@ -135,6 +135,20 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
                 'exportDataAccessGroups' => true
 			];
 			$edc_data = json_decode(\REDCap::getData($params));
+
+			$projectDags = $this->getDAGs($project_id);
+
+			// add dag property to each based on its record_id
+			foreach ($edc_data as $record) {
+				foreach($projectDags as $groupId => $thisDag) {
+				    if($thisDag->unique == $record->redcap_data_access_group) {
+                        $record->dag = $groupId;
+                        $record->dag_name = $thisDag->display;
+                        break;
+                    }
+                }
+			}
+
 			$this->edc_data = $edc_data;
 		}
 		
@@ -292,7 +306,7 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		// get dag and site_name
 		$user_dag = $this->user->dag_group_name;
 		$site_data->site_name = $user_dag;
-		
+		## TODO May be able to remove this somewhat
 		// determine group id
 		foreach ($this->dags as $gid => $dag) {
 			if ($dag->display == $user_dag)
@@ -338,7 +352,7 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 			{
 				"name": "Target",
 				"enrolled": 1000,
-				"transfused": 500,
+				"transfused": 1000,
 				"fpe": "-",
 				"lpe": "-"
 			},
@@ -355,23 +369,14 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		// create temporary sites container
 		$sites = new \stdClass();
 		foreach ($this->records as $record) {
-			if (!$patient_dag = $record->redcap_data_access_group)
+			if (!$patient_dag = $record->dag)
 				continue;
-			
-			// determine dag display name from unique
-			$dag_display_name = "";
-			foreach ($this->dags as $group_id => $dag) {
-				if ($group_id == $patient_dag) {
-					$dag_display_name = $dag->display;
-					break;
-				}
-			}
 			
 			// get or make site object
 			if (!$site = $sites->$patient_dag) {
 				$sites->$patient_dag = new \stdClass();
 				$site = $sites->$patient_dag;
-				$site->name = $patient_dag;
+				$site->name = $record->dag_name;
 				$site->enrolled = 0;
 				$site->transfused = 0;
 				$site->fpe = '-';
