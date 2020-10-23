@@ -371,7 +371,7 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 			if (!$site = $sites->$patient_dag) {
 				$sites->$patient_dag = new \stdClass();
 				$site = $sites->$patient_dag;
-				$site->name = $dag_display_name;
+				$site->name = $patient_dag;
 				$site->enrolled = 0;
 				$site->transfused = 0;
 				$site->fpe = '-';
