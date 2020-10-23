@@ -84,7 +84,7 @@ final class PIOUnitTest extends \ExternalModules\ModuleBaseTest
 	public function testGetAllSitesData() {
 		$this->module->getAllSitesData();
 		$result = $this->module->all_sites_data;
-
+		
 		// ensure our result is structured as expected
 		$this->assertIsObject($result, "PassItOn->all_sites_data is not an object after calling ->getAllSitesData()");
 		$this->assertIsArray($result->totals, "PassItOn->my_site_data->totals is not an object after calling ->getAllSitesData()");

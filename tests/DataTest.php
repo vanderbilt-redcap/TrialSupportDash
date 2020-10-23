@@ -23,6 +23,7 @@ final class DataTest extends \ExternalModules\ModuleBaseTest
 		$module = $this->module;
 
 		$this->assertNotEmpty($_GET['pid'], "Can't run integration test without UAD project ID specified");
+		unset($module->uad_data);
 		$module->getUADData();
 		
 		$user_records = $module->uad_data;
@@ -38,13 +39,14 @@ final class DataTest extends \ExternalModules\ModuleBaseTest
 		$module = $this->module;
 
 		$this->assertNotEmpty($_GET['pid'], "Can't run integration test without EDC project ID specified");
-        $records = $module->getEDCData();
+        unset($module->edc_data);
+		$records = $module->getEDCData();
 
 		$this->assertNotEmpty($records, "No patient records found");
 		
 		foreach ($records as $record) {
 			$this->assertNotEmpty($record->redcap_data_access_group, "Found patient record with empty 'dag' field: record {$record->record_id}");
 		}
-		unset($module->uad_data);
+		unset($module->edc_data);
 	}
 }
