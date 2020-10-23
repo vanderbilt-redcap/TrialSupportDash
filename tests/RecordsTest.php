@@ -37,14 +37,14 @@ final class RecordsTest extends \ExternalModules\ModuleBaseTest
 		$this->assertTrue($record_count == 6, "Expected 6 records in ->records -- actual count: $record_count");
 		
 		// ensure each record is structured as expected
-		$expected_properties = ['record_id', 'dag', 'sex', 'race_ethnicity', 'screen_date', 'randomization_date', 'transfusion_given'];
+		$expected_properties = ['record_id', 'redcap_data_access_group', 'sex', 'race_ethnicity', 'screen_date', 'randomization_date', 'transfusion_given'];
 		foreach($records as $record) {
 			foreach ($expected_properties as $property) {
 				$this->assertObjectHasAttribute($property, $record, "record #{$record->record_id} is missing its '$property' property");
 			}
 			
 			// make sure all records have a DAG property -- no DAG-less records allowed!
-			$this->assertNotEmpty($record->dag, "Found a record with empty 'dag' field");
+			$this->assertNotEmpty($record->redcap_data_access_group, "Found a record with empty 'dag' field");
 		}
 		
 		// compare to file for other discrepancies

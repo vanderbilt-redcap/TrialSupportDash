@@ -1,7 +1,7 @@
 [
 	{
 		"record_id": "1",
-		"dag": "210",
+		"redcap_data_access_group": "210",
 		"sex": "F",
 		"race_ethnicity": "Declined",
 		"screen_date": "2020-01-01",
@@ -10,7 +10,7 @@
 	},
 	{
 		"record_id": "3",
-		"dag": "211",
+		"redcap_data_access_group": "211",
 		"sex": "M",
 		"race_ethnicity": "Hispanic",
 		"screen_date": "2020-01-06",
@@ -19,7 +19,7 @@
 	},
 	{
 		"record_id": "5",
-		"dag": "211",
+		"redcap_data_access_group": "211",
 		"sex": "F",
 		"race_ethnicity": "Other",
 		"screen_date": "",
@@ -28,7 +28,7 @@
 	},
 	{
 		"record_id": "006",
-		"dag": "210",
+		"redcap_data_access_group": "210",
 		"sex": "M",
 		"race_ethnicity": "Non-hispanic black",
 		"screen_date": "",
@@ -37,7 +37,7 @@
 	},
 	{
 		"record_id": "9",
-		"dag": "211",
+		"redcap_data_access_group": "211",
 		"sex": "M",
 		"race_ethnicity": "",
 		"screen_date": "",
@@ -46,7 +46,7 @@
 	},
 	{
 		"record_id": "10",
-		"dag": "232",
+		"redcap_data_access_group": "232",
 		"sex": "F",
 		"race_ethnicity": "Non-hispanic white",
 		"screen_date": "",

@@ -11,11 +11,11 @@ final class PIOUnitTest extends \ExternalModules\ModuleBaseTest
 	public function setUp() : void {
 		parent::setUp();
 		
-		$pids = $this->getProjectsWithModuleEnabled();
+		$pids = $this->module->getProjectsWithModuleEnabled();
 		$_GET['pid'] = reset($pids);
 		
 		## Initialize module cached data here
-		$this->module->user = 			json_decode(file_get_contents(__DIR__."/test_data/user.json"));
+        $this->module->user = 			json_decode(file_get_contents(__DIR__."/test_data/user.json"));
 		$this->module->dags = 			json_decode(file_get_contents(__DIR__."/test_data/dags.json"));
 		$this->module->records = 		json_decode(file_get_contents(__DIR__."/test_data/records.json"));
 	}
@@ -81,7 +81,7 @@ final class PIOUnitTest extends \ExternalModules\ModuleBaseTest
 	public function testGetAllSitesData() {
 		$this->module->getAllSitesData();
 		$result = $this->module->all_sites_data;
-		
+
 		// ensure our result is structured as expected
 		$this->assertIsObject($result, "PassItOn->all_sites_data is not an object after calling ->getAllSitesData()");
 		$this->assertIsArray($result->totals, "PassItOn->my_site_data->totals is not an object after calling ->getAllSitesData()");

@@ -74,11 +74,13 @@ final class DDTest extends \ExternalModules\ModuleBaseTest
 			$project_id = $row["project_id"];
 
 			$edcData = $module->getEDCData($project_id);
-			 $screeningData = $module->getScreeningData($project_id);
+			$screeningData = $module->getScreeningData($project_id);
 
-			 foreach($edcData as $recordId => $recordDetails) {
-				 $this->assertArrayHasKey($recordId,$screeningData);
-			 }
+			foreach($edcData as $recordDetails) {
+			    $recordId = $recordDetails->record_id;
+
+			    $this->assertArrayHasKey($recordId,$screeningData);
+			}
 
 			## Remove data from cache for future tests
 			$module->edc_data = false;

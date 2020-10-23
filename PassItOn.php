@@ -23,7 +23,7 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 	];
 	public $record_fields = [
 		'record_id',
-		'dag',
+		'redcap_data_access_group',
 		'sex',
 		'race_ethnicity',
 		'screen_date',
@@ -42,17 +42,6 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 	}
 	
 	// LOW LEVEL methods
-	public function getProjectIDs() {
-		if (!isset($this->project_ids)) {
-			$project_ids = new \stdClass();
-			$project_ids->edc = $this->getProjectId();
-			$project_ids->uad = $this->getProjectSetting('user_access_project');
-			$this->project_ids = $project_ids;
-		}
-		
-		return $this->project_ids;
-	}
-
 	public function getEventIDs() {
 		if (!isset($this->event_ids)) {
 			$event_ids = new \stdClass();
@@ -65,12 +54,14 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		return $this->event_ids;
 	}
 
-	public function getDAGs() {
+	public function getDAGs($project_id = false) {
 		if (!isset($this->dags)) {
-			$this->getProjectIDs();
+		    if(!$project_id) {
+		        $project_id = $_GET['pid'];
+            }
 			
 			// create global $Proj that REDCap class uses to generate DAG info
-			$EDCProject = new \Project($this->project_ids->edc);
+			$EDCProject = new \Project($project_id);
 			$dags_unique = $EDCProject->getUniqueGroupNames();
 			$dags_display = $EDCProject->getGroups();
 			$dags = new \stdClass();
@@ -93,13 +84,16 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		return $this->dags;
 	}
 
-	public function getUADData() {
+	public function getUADData($project_id = false) {
 		if (!isset($this->uad_data)) {
-			$this->getProjectIDs();
+		    if(!$project_id) {
+		        $project_id = $_GET['pid'];
+            }
+		    $uadProject = $this->getProjectSetting("user_access_project",$project_id);
 			
-			if (!empty($this->project_ids->uad)) {
+			if (!empty($uadProject)) {
 				$params = [
-					'project_id' => $this->project_ids->uad,
+					'project_id' => $uadProject,
 					'return_format' => 'json',
 					'fields' => [
 						'record_id',
@@ -119,13 +113,15 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		return $this->uad_data;
 	}
 
-	public function getEDCData() {
-		if (!isset($this->edc_data)) {
-			$this->getProjectIDs();
+	public function getEDCData($project_id = false) {
+		if (!isset($this->edc_data) || !$this->edc_data) {
+            if(!$project_id) {
+                $project_id = $_GET['pid'];
+            }
 			$this->getEventIDs();
 			
 			$params = [
-				'project_id' => $this->project_ids->edc,
+				'project_id' => $project_id,
 				'return_format' => 'json',
 				'fields' => [
 					'record_id',
@@ -139,7 +135,6 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
                 'exportDataAccessGroups' => true
 			];
 			$edc_data = json_decode(\REDCap::getData($params));
-			
 			$this->edc_data = $edc_data;
 		}
 		
@@ -210,20 +205,24 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 			$this->user->authorized = false;
 		}
 	}
-	public function getRecords() {
+	public function getRecords($project_id = false) {
 		if (!isset($this->records)) {
 			if($_GET['TESTING']) {
 				$this->records = json_decode(file_get_contents(__DIR__."/tests/test_data/records.json"),true);
 				
 				return $this->records;
 			}
-			$this->getEDCData();
+
+            if(!$project_id) {
+                $project_id = $_GET['pid'];
+            }
+			$this->getEDCData($project_id);
 			
 			$records = [];
 			$temp_records_obj = new \stdClass();
 			$labeled_fields = ['sex', 'race_ethnicity'];
 			$label_params = [
-				'project_id' => $this->project_ids->edc
+				'project_id' => $project_id
 			];
 			
 			// iterate over edc_data, collating data into record objects
