@@ -24,6 +24,8 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 	public $record_fields = [
 		'record_id',
 		'redcap_data_access_group',
+        'dag',
+        'dag_name',
 		'sex',
 		'race_ethnicity',
 		'screen_date',
