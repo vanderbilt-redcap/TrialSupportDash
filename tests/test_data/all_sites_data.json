@@ -3,7 +3,7 @@
 		{
 			"name": "Target",
 			"enrolled": 1000,
-			"transfused": 500,
+			"transfused": 1000,
 			"fpe": "-",
 			"lpe": "-"
 		},

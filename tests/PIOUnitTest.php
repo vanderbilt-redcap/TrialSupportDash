@@ -20,7 +20,8 @@ final class PIOUnitTest extends \ExternalModules\ModuleBaseTest
 		## Initialize module cached data here
         $this->module->user = 			json_decode(file_get_contents(__DIR__."/test_data/user.json"));
 		$this->module->dags = 			json_decode(file_get_contents(__DIR__."/test_data/dags.json"));
-		$this->module->records = 		json_decode(file_get_contents(__DIR__."/test_data/records.json"));
+		$this->module->edc_data = 		json_decode(file_get_contents(__DIR__."/test_data/edc_data.json"));
+		$this->module->mappings = 		json_decode(file_get_contents(__DIR__."/test_data/field_mappings.json"),true);
 	}
 
 	// output from these functions should be very predictable given the constrained test inputs
@@ -34,7 +35,7 @@ final class PIOUnitTest extends \ExternalModules\ModuleBaseTest
 		$this->assertIsObject($result, "PassItOn->my_site_data is not an object after calling ->getMySiteData()");
 		$this->assertEquals($result->site_name, "001 - Site A", "getMySiteData() didn't correctly determine site name property");
 		$this->assertIsArray($result->rows, "PassItOn->my_site_data->rows is not an object after calling ->getMySiteData()");
-		
+
 		// ensure we have the correct number of rows
 		$row_count = count($result->rows);
 		$this->assertTrue($row_count == 2, "Expected 2 records, found $row_count");
@@ -58,7 +59,7 @@ final class PIOUnitTest extends \ExternalModules\ModuleBaseTest
         $this->module->user->dag_group_name = "002 - Site B";
 		$this->module->getMySiteData();
 		$result = $this->module->my_site_data;
-		
+
 		// ensure our result is structured as expected
 		$this->assertIsObject($result, "PassItOn->my_site_data is not an object after calling ->getMySiteData()");
 		$this->assertEquals($result->site_name, "002 - Site B", "getMySiteData() didn't correctly determine site name property");

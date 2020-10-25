@@ -86,6 +86,31 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		return $this->dags;
 	}
 
+	public function getFieldLabelMapping($fieldName = false) {
+		if(!isset($this->mappings)) {
+			$this->mappings = [];
+			foreach($this->record_fields as $thisField) {
+				$choices = $this->getChoiceLabels($thisField);
+
+				if($choices && (count($choices) > 1 || reset($choices)) != "") {
+					$this->mappings[$thisField] = $choices;
+				}
+			}
+		}
+
+		if($fieldName) {
+			if(isset($this->mappings[$fieldName])) {
+				return $this->mappings[$fieldName];
+			}
+			else {
+				return false;
+			}
+		}
+		else {
+			return $this->mappings;
+		}
+	}
+
 	public function getUADData($project_id = false) {
 		if (!isset($this->uad_data)) {
 		    if(!$project_id) {
@@ -238,11 +263,10 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 			
 			$records = [];
 			$temp_records_obj = new \stdClass();
-			$labeled_fields = ['sex', 'race_ethnicity'];
 			$label_params = [
 				'project_id' => $project_id
 			];
-			
+
 			// iterate over edc_data, collating data into record objects
 			foreach ($this->edc_data as $record_event) {
 				// establish $record and $rid
@@ -262,17 +286,18 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 				// set non-empty fields
 				foreach ($this->record_fields as $field) {
 					if (!empty($record_event->$field)) {
-						if (in_array($field, $labeled_fields)) {
-							$label_params['field_name'] = $field;
-							$label_params['record_id'] = $rid;
-							$label_params['value'] = $record_event->$field;
-							$record->$field = $this->getChoiceLabel($label_params);
-							
-							if ($field == 'sex') {
-								$record->$field = substr($record->$field, 0, 1);
-							}
-						} else {
+						$labels = $this->getFieldLabelMapping($field);
+
+						if($labels) {
+							$record->$field = $labels[$record_event->$field];
+						}
+						else {
 							$record->$field = $record_event->$field;
+						}
+
+						## Special shortening for certain fields
+						if($field == "sex") {
+							$record->$field = substr($record->$field, 0, 1);
 						}
 					}
 				}
@@ -306,20 +331,11 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		$site_data = new \stdClass();
 		$site_data->site_name = "";
 		$site_data->rows = [];
-		
-		// get dag and site_name
-		$user_dag = $this->user->dag_group_name;
-		$site_data->site_name = $user_dag;
-		## TODO May be able to remove this somewhat
-		// determine group id
-		foreach ($this->dags as $gid => $dag) {
-			if ($dag->display == $user_dag)
-				$group_id = $gid;
-		}
-		
+		$site_data->site_name = $this->user->dag_group_name;
+
 		// add record rows
 		foreach ($this->records as $record) {
-			if (($this->user->authorized == '2' and $record->redcap_data_access_group == $group_id) or $this->user->authorized == '3') {
+			if (($this->user->authorized == '2' and $record->dag_name == $this->user->dag_group_name) or $this->user->authorized == '3') {
 				$row = new \stdClass();
 				$row->id = $record->record_id;
 				$row->sex = $record->sex;

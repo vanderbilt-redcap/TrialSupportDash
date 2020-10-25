@@ -1,7 +1,9 @@
 [
 	{
 		"record_id": "1",
-		"redcap_data_access_group": "210",
+		"redcap_data_access_group": "001__site_a",
+	"dag": "210",
+	"dag_name": "001 - Site A",
 		"sex": "F",
 		"race_ethnicity": "Declined",
 		"screen_date": "2020-01-01",
@@ -10,7 +12,9 @@
 	},
 	{
 		"record_id": "3",
-		"redcap_data_access_group": "211",
+		"redcap_data_access_group": "002__site_b",
+	"dag": "211",
+	"dag_name": "002 - Site B",
 		"sex": "M",
 		"race_ethnicity": "Hispanic",
 		"screen_date": "2020-01-06",
@@ -19,7 +23,9 @@
 	},
 	{
 		"record_id": "5",
-		"redcap_data_access_group": "211",
+		"redcap_data_access_group": "002__site_b",
+	"dag": "211",
+	"dag_name": "002 - Site B",
 		"sex": "F",
 		"race_ethnicity": "Other",
 		"screen_date": "",
@@ -28,7 +34,9 @@
 	},
 	{
 		"record_id": "006",
-		"redcap_data_access_group": "210",
+		"redcap_data_access_group": "001__site_a",
+	"dag": "210",
+	"dag_name": "001 - Site A",
 		"sex": "M",
 		"race_ethnicity": "Non-hispanic black",
 		"screen_date": "",
@@ -37,7 +45,9 @@
 	},
 	{
 		"record_id": "9",
-		"redcap_data_access_group": "211",
+		"redcap_data_access_group": "002__site_b",
+	"dag": "211",
+	"dag_name": "002 - Site B",
 		"sex": "M",
 		"race_ethnicity": "",
 		"screen_date": "",
@@ -46,7 +56,9 @@
 	},
 	{
 		"record_id": "10",
-		"redcap_data_access_group": "232",
+		"redcap_data_access_group": "003__site_c",
+	"dag": "232",
+	"dag_name": "003 - Site C",
 		"sex": "F",
 		"race_ethnicity": "Non-hispanic white",
 		"screen_date": "",
