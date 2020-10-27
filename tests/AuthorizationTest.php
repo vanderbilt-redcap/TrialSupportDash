@@ -17,6 +17,12 @@ final class AuthorizationTest extends \ExternalModules\ModuleBaseTest
 		## Initialize module cached data here
 		$this->module->user = json_decode(file_get_contents(__DIR__."/test_data/user.json"));
 	}
+	
+	public function testAuthorizationNoRecord() {
+		$this->module->user = new \stdClass();
+		$this->module->authorizeUser();
+		$this->assertSame(false, $this->module->user->authorized, "authorized empty object user (no UAD record)");
+	}
 
 	public function testAuthorizationFailDashboard() {
 		$this->module->user->dashboard = "";

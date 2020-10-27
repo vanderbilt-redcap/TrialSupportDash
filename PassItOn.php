@@ -152,6 +152,8 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 					define("PIO_USER_DISPLAY_NAME",$record->first_name." ".$record->last_name);
 				}
 			}
+			if (empty($this->user))
+				$this->user = new \stdClass();
 		}
 		
 		return $this->user;
@@ -420,7 +422,7 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		if ($link['name'] == 'PassItOn Dashboard') {
 			$this->getUser();
 			$this->authorizeUser();
-			if ($this->user->authorized === false) {
+			if (empty($this->user->authorized)) {
 				return false;
 			} else {
 				return $link;
