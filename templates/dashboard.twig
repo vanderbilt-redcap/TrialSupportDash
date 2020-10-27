@@ -71,7 +71,12 @@
 		<table>
 			<thead>
 			<tr>
-				<th>{{ mySite["site_name"] }}</th>
+				{% if authorized == '3' %}
+					<th>Record</th>
+					<th>Site</th>
+				{% else %}
+					<th>{{ mySite["site_name"] }}</th>
+				{% endif %}
 				<th>Sex</th>
 				<th>Race</th>
 				<th>Enrolled</th>
@@ -82,6 +87,9 @@
 			{% for personDetails in mySite["rows"] %}
 				<tr>
 					<td>{{ personDetails["id"] }}</td>
+					{% if authorized == '3' %}
+						<td>{{ personDetails["site"] }}</td>
+					{% endif %}
 					<td>{{ personDetails["sex"] }}</td>
 					<td>{{ personDetails["race"] }}</td>
 					<td>{{ personDetails["enrolled"] }}</td>

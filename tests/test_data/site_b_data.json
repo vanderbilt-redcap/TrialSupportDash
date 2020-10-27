@@ -2,13 +2,6 @@
 	"site_name": "002 - Site B",
 	"rows": [
 		{
-			"id": "1",
-			"sex": "F",
-			"race": "Declined",
-			"enrolled": "2020-01-02",
-			"treated": "2020-01-01"
-		},
-		{
 			"id": "3",
 			"sex": "M",
 			"race": "Hispanic",
@@ -23,24 +16,10 @@
 			"treated": ""
 		},
 		{
-			"id": "006",
-			"sex": "M",
-			"race": "Non-hispanic black",
-			"enrolled": "",
-			"treated": ""
-		},
-		{
 			"id": "9",
 			"sex": "M",
 			"race": "",
 			"enrolled": "2020-03-01",
-			"treated": ""
-		},
-		{
-			"id": "10",
-			"sex": "F",
-			"race": "Non-hispanic white",
-			"enrolled": "",
 			"treated": ""
 		}
 	]

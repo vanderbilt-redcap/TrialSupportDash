@@ -8,5 +8,6 @@ $template = $twig->load("dashboard.twig");
 /** @var $module \Vanderbilt\PassItOn\PassItOn */
 $allSitesData = $module->getAllSitesData();
 $mySitesData = $module->getMySiteData();
+$authorized = $module->user->authorized;
 
-echo $template->render(["allSites" => $allSitesData,"mySite" => $mySitesData]);
+echo $template->render(["allSites" => $allSitesData,"mySite" => $mySitesData, "authorized" => $authorized]);

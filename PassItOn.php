@@ -286,6 +286,9 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 			if (($this->user->authorized == '2' and $record->dag == $group_id) or $this->user->authorized == '3') {
 				$row = new \stdClass();
 				$row->id = $record->record_id;
+				if ($this->user->authorized == '3') {
+					$row->site = $this->dags->{$record->dag}->display;
+				}
 				$row->sex = $record->sex;
 				$row->race = $record->race_ethnicity;
 				$row->enrolled = $record->randomization_date;

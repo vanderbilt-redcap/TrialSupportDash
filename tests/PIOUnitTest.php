@@ -50,7 +50,7 @@ final class PIOUnitTest extends \ExternalModules\ModuleBaseTest
 	
 	// output from these functions should be very predictable given the constrained test inputs
 	public function testGetSiteBData() {
-		$this->module->user->role_ext_2 = "1028";
+		$this->module->user->role_ext_2 = "1044";
 		$this->module->user->dag_group_name = "002 - Site B";
 		$this->module->getMySiteData();
 		$result = $this->module->my_site_data;
@@ -62,7 +62,7 @@ final class PIOUnitTest extends \ExternalModules\ModuleBaseTest
 		
 		// ensure we have the correct number of rows (all 6 since we set user to have level 3 access role)
 		$row_count = count($result->rows);
-		$this->assertTrue($row_count == 6, "Expected 6 records, found $row_count");
+		$this->assertSame(3, $row_count, "Expected 3 records, found $row_count");
 		
 		// ensure a selected record is structured as expected
 		$row2 = $result->rows[2];
@@ -74,6 +74,32 @@ final class PIOUnitTest extends \ExternalModules\ModuleBaseTest
 		
 		// finally, assert equality to catch all discrepancies not listed above
 		$compare = json_decode(file_get_contents(__DIR__."/test_data/site_b_data.json"));
+		$this->assertEquals($compare, $result);
+	}
+	
+	public function testMySiteSuperAccess() {
+		$this->module->user->role_ext_2 = "1048";
+		$this->module->getMySiteData();
+		$result = $this->module->my_site_data;
+		
+		// ensure our result is structured as expected
+		$this->assertIsObject($result, "PassItOn->my_site_data is not an object after calling ->getMySiteData()");
+		$this->assertIsArray($result->rows, "PassItOn->my_site_data->rows is not an object after calling ->getMySiteData()");
+		
+		// ensure we have the correct number of rows (all 6 since we set user to have level 3 access role)
+		$row_count = count($result->rows);
+		$this->assertTrue($row_count == 6, "Expected 6 records, found $row_count");
+		
+		// ensure a selected record is structured as expected
+		$row2 = $result->rows[2];
+		$this->assertIsObject($row2, "my_site_data->rows[2] is not an object!");
+		$expected_fields = ['id', 'site', 'sex', 'race', 'treated', 'enrolled'];
+		foreach ($expected_fields as $field) {
+			$this->assertObjectHasAttribute($field, $row2, "my_site_data row object is missing its '$field' property");
+		}
+		
+		// finally, assert equality to catch all discrepancies not listed above
+		$compare = json_decode(file_get_contents(__DIR__."/test_data/site_all_super_access.json"));
 		$this->assertEquals($compare, $result);
 	}
 
