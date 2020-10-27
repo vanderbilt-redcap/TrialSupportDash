@@ -6,7 +6,8 @@
 		"race_ethnicity": "Declined",
 		"transfusion_datetime": "2020-01-01 05:13",
 		"randomization_date": "2020-01-02",
-		"transfusion_given": "1"
+		"transfusion_given": "1",
+		"randomization": "1"
 	},
 	{
 		"record_id": "3",
@@ -15,7 +16,8 @@
 		"race_ethnicity": "Hispanic",
 		"transfusion_datetime": "2020-01-06 14:18",
 		"randomization_date": "",
-		"transfusion_given": ""
+		"transfusion_given": "",
+		"randomization": ""
 	},
 	{
 		"record_id": "5",
@@ -24,7 +26,8 @@
 		"race_ethnicity": "Other",
 		"transfusion_datetime": "",
 		"randomization_date": "2020-01-01",
-		"transfusion_given": ""
+		"transfusion_given": "",
+		"randomization": "1"
 	},
 	{
 		"record_id": "006",
@@ -33,7 +36,8 @@
 		"race_ethnicity": "Non-hispanic black",
 		"transfusion_datetime": "",
 		"randomization_date": "",
-		"transfusion_given": "1"
+		"transfusion_given": "1",
+		"randomization": ""
 	},
 	{
 		"record_id": "9",
@@ -42,7 +46,8 @@
 		"race_ethnicity": "",
 		"transfusion_datetime": "",
 		"randomization_date": "2020-03-01",
-		"transfusion_given": ""
+		"transfusion_given": "",
+		"randomization": "2"
 	},
 	{
 		"record_id": "10",
@@ -51,6 +56,7 @@
 		"race_ethnicity": "Non-hispanic white",
 		"transfusion_datetime": "",
 		"randomization_date": "",
-		"transfusion_given": "1"
+		"transfusion_given": "1",
+		"randomization": ""
 	}
 ]

@@ -28,6 +28,7 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		'race_ethnicity',
 		'transfusion_datetime',
 		'randomization_date',
+		'randomization',
 		'transfusion_given'
 	];
 
@@ -123,14 +124,7 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 			$params = [
 				'project_id' => $this->project_ids->edc,
 				'return_format' => 'json',
-				'fields' => [
-					'record_id',
-					'transfusion_given',
-					'randomization_date',
-					'sex',
-					'race_ethnicity',
-					'transfusion_datetime'
-				],
+				'fields' => $this->record_fields,
 				'events' => (array) $this->event_ids
 			];
 			$edc_data = json_decode(\REDCap::getData($params));
@@ -369,11 +363,13 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 			}
 			
 			// update using patient data
-			$enroll_date = $record->randomization_date;
-			if (!empty($enroll_date)) {
+			if (!empty($record->randomization)) {
 				$data->totals[1]->enrolled++;
 				$site->enrolled = $site->enrolled + 1;
-				
+			}
+			
+			$enroll_date = $record->randomization_date;
+			if (!empty($enroll_date)) {
 				if ($site->fpe == '-') {
 					$site->fpe = $enroll_date;
 				} else {
