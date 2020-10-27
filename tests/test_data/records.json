@@ -4,7 +4,7 @@
 		"dag": "210",
 		"sex": "F",
 		"race_ethnicity": "Declined",
-		"screen_date": "2020-01-01",
+		"transfusion_datetime": "2020-01-01 05:13",
 		"randomization_date": "2020-01-02",
 		"transfusion_given": "1"
 	},
@@ -13,7 +13,7 @@
 		"dag": "211",
 		"sex": "M",
 		"race_ethnicity": "Hispanic",
-		"screen_date": "2020-01-06",
+		"transfusion_datetime": "2020-01-06 14:18",
 		"randomization_date": "",
 		"transfusion_given": ""
 	},
@@ -22,7 +22,7 @@
 		"dag": "211",
 		"sex": "F",
 		"race_ethnicity": "Other",
-		"screen_date": "",
+		"transfusion_datetime": "",
 		"randomization_date": "2020-01-01",
 		"transfusion_given": ""
 	},
@@ -31,7 +31,7 @@
 		"dag": "210",
 		"sex": "M",
 		"race_ethnicity": "Non-hispanic black",
-		"screen_date": "",
+		"transfusion_datetime": "",
 		"randomization_date": "",
 		"transfusion_given": "1"
 	},
@@ -40,7 +40,7 @@
 		"dag": "211",
 		"sex": "M",
 		"race_ethnicity": "",
-		"screen_date": "",
+		"transfusion_datetime": "",
 		"randomization_date": "2020-03-01",
 		"transfusion_given": ""
 	},
@@ -49,7 +49,7 @@
 		"dag": "232",
 		"sex": "F",
 		"race_ethnicity": "Non-hispanic white",
-		"screen_date": "",
+		"transfusion_datetime": "",
 		"randomization_date": "",
 		"transfusion_given": "1"
 	}

@@ -38,7 +38,7 @@ final class PIOUnitTest extends \ExternalModules\ModuleBaseTest
 		// ensure a selected record is structured as expected
 		$row1 = $result->rows[1];
 		$this->assertIsObject($row1, "my_site_data->rows[2] is not an object!");
-		$expected_fields = ['id', 'sex', 'race', 'screened', 'enrolled'];
+		$expected_fields = ['id', 'sex', 'race', 'treated', 'enrolled'];
 		foreach ($expected_fields as $field) {
 			$this->assertObjectHasAttribute($field, $row1, "my_site_data row object is missing it's '$field' property");
 		}
@@ -67,7 +67,7 @@ final class PIOUnitTest extends \ExternalModules\ModuleBaseTest
 		// ensure a selected record is structured as expected
 		$row2 = $result->rows[2];
 		$this->assertIsObject($row2, "my_site_data->rows[2] is not an object!");
-		$expected_fields = ['id', 'sex', 'race', 'screened', 'enrolled'];
+		$expected_fields = ['id', 'sex', 'race', 'treated', 'enrolled'];
 		foreach ($expected_fields as $field) {
 			$this->assertObjectHasAttribute($field, $row2, "my_site_data row object is missing its '$field' property");
 		}
@@ -94,7 +94,7 @@ final class PIOUnitTest extends \ExternalModules\ModuleBaseTest
 		
 		// ensure row objects are structured as expected
 		$all_rows = array_merge($result->totals, $result->sites);
-		$expected_fields = ['name', 'enrolled', 'transfused', 'fpe', 'lpe'];
+		$expected_fields = ['name', 'enrolled', 'treated', 'fpe', 'lpe'];
 		foreach ($all_rows as $row) {
 			foreach ($expected_fields as $field) {
 				$this->assertObjectHasAttribute($field, $row, "all_sites_data row object is missing its '$field' property");

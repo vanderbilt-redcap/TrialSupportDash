@@ -26,7 +26,7 @@
 				<tr>
 					<th></th>
 					<th>Enrolled</th>
-					<th>Transfused</th>
+					<th>Treated</th>
 					<th>FPE</th>
 					<th>LPE</th>
 				</tr>
@@ -43,7 +43,7 @@
 					<tr>
 						<td>{{ totalDetails["name"] }}</td>
 						<td>{{ totalDetails["enrolled"] }}</td>
-						<td>{{ totalDetails["transfused"] }}</td>
+						<td>{{ totalDetails["treated"] }}</td>
 						<td>{{ totalDetails["fpe"] }}</td>
 						<td>{{ totalDetails["lpe"] }}</td>
 					</tr>
@@ -59,7 +59,7 @@
 					<tr>
 						<td>{{ siteDetails["name"] }}</td>
 						<td>{{ siteDetails["enrolled"] }}</td>
-						<td>{{ siteDetails["transfused"] }}</td>
+						<td>{{ siteDetails["treated"] }}</td>
 						<td>{{ siteDetails["fpe"] }}</td>
 						<td>{{ siteDetails["lpe"] }}</td>
 					</tr>
@@ -74,8 +74,8 @@
 				<th>{{ mySite["site_name"] }}</th>
 				<th>Sex</th>
 				<th>Race</th>
-				<th>Screened</th>
 				<th>Enrolled</th>
+				<th>Treated</th>
 			</tr>
 			</thead>
 			<tbody>
@@ -84,8 +84,8 @@
 					<td>{{ personDetails["id"] }}</td>
 					<td>{{ personDetails["sex"] }}</td>
 					<td>{{ personDetails["race"] }}</td>
-					<td>{{ personDetails["screened"] }}</td>
 					<td>{{ personDetails["enrolled"] }}</td>
+					<td>{{ personDetails["treated"] }}</td>
 				</tr>
 			{% endfor %}
 			</tbody>

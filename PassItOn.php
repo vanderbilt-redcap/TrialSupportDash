@@ -26,7 +26,7 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		'dag',
 		'sex',
 		'race_ethnicity',
-		'screen_date',
+		'transfusion_datetime',
 		'randomization_date',
 		'transfusion_given'
 	];
@@ -129,7 +129,7 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 					'randomization_date',
 					'sex',
 					'race_ethnicity',
-					'screen_date'
+					'transfusion_datetime'
 				],
 				'events' => (array) $this->event_ids
 			];
@@ -292,8 +292,12 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 				$row->id = $record->record_id;
 				$row->sex = $record->sex;
 				$row->race = $record->race_ethnicity;
-				$row->screened = $record->screen_date;
 				$row->enrolled = $record->randomization_date;
+				$row->treated = "";
+				// convert transfusion_datetime from Y-m-d H:m to Y-m-d
+				if (!empty($record->transfusion_datetime))
+					$row->treated = date("Y-m-d", strtotime($record->transfusion_datetime));
+				
 				$site_data->rows[] = $row;
 			}
 		}
@@ -324,14 +328,14 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 			{
 				"name": "Target",
 				"enrolled": 1000,
-				"transfused": 500,
+				"treated": 1000,
 				"fpe": "-",
 				"lpe": "-"
 			},
 			{
 				"name": "Current Enrolled",
 				"enrolled": 0,
-				"transfused": 0,
+				"treated": 0,
 				"fpe": "-",
 				"lpe": "-"
 			}
@@ -359,7 +363,7 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 				$site = $sites->$patient_dag;
 				$site->name = $dag_display_name;
 				$site->enrolled = 0;
-				$site->transfused = 0;
+				$site->treated = 0;
 				$site->fpe = '-';
 				$site->lpe = '-';
 			}
@@ -385,8 +389,8 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 			}
 			
 			if (!empty($record->transfusion_given)) {
-				$data->totals[1]->transfused++;
-				$site->transfused = $site->transfused + 1;
+				$data->totals[1]->treated++;
+				$site->treated = $site->treated + 1;
 			}
 		}
 		

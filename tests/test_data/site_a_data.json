@@ -5,15 +5,15 @@
 			"id": "1",
 			"sex": "F",
 			"race": "Declined",
-			"screened": "2020-01-01",
-			"enrolled": "2020-01-02"
+			"enrolled": "2020-01-02",
+			"treated": "2020-01-01"
 		},
 		{
 			"id": "006",
 			"sex": "M",
 			"race": "Non-hispanic black",
-			"screened": "",
-			"enrolled": ""
+			"enrolled": "",
+			"treated": ""
 		}
 	]
 }
