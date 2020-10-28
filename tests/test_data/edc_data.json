@@ -8,8 +8,10 @@
 	"race_ethnicity": "8",
 	"randomization_date": "",
 	"transfusion_given": "",
+	"randomization": "",
+	"redcap_data_access_group": "001__site_a",
 	"dag": "210",
-	"randomization": ""
+	"dag_name": "001 - Site A"
 }, {
 	"record_id": "1",
 	"redcap_event_name": "baseline_arm_1",
@@ -20,8 +22,10 @@
 	"race_ethnicity": "",
 	"randomization_date": "2020-01-02",
 	"transfusion_given": "",
+	"randomization": "1",
+	"redcap_data_access_group": "001__site_a",
 	"dag": "210",
-	"randomization": "1"
+	"dag_name": "001 - Site A"
 }, {
 	"record_id": "1",
 	"redcap_event_name": "transfusion_arm_1",
@@ -32,8 +36,10 @@
 	"race_ethnicity": "",
 	"randomization_date": "",
 	"transfusion_given": "1",
+	"randomization": "",
+	"redcap_data_access_group": "001__site_a",
 	"dag": "210",
-	"randomization": ""
+	"dag_name": "001 - Site A"
 }, {
 	"record_id": "3",
 	"redcap_event_name": "screening_arm_1",
@@ -44,8 +50,10 @@
 	"race_ethnicity": "3",
 	"randomization_date": "",
 	"transfusion_given": "",
+	"randomization": "",
+	"redcap_data_access_group": "002__site_b",
 	"dag": "211",
-	"randomization": ""
+	"dag_name": "002 - Site B"
 }, {
 	"record_id": "3",
 	"redcap_event_name": "baseline_arm_1",
@@ -56,8 +64,10 @@
 	"race_ethnicity": "",
 	"randomization_date": "",
 	"transfusion_given": "",
+	"randomization": "",
+	"redcap_data_access_group": "002__site_b",
 	"dag": "211",
-	"randomization": ""
+	"dag_name": "002 - Site B"
 }, {
 	"record_id": "3",
 	"redcap_event_name": "transfusion_arm_1",
@@ -68,8 +78,10 @@
 	"race_ethnicity": "",
 	"randomization_date": "",
 	"transfusion_given": "",
+	"randomization": "",
+	"redcap_data_access_group": "002__site_b",
 	"dag": "211",
-	"randomization": ""
+	"dag_name": "002 - Site B"
 }, {
 	"record_id": "4",
 	"redcap_event_name": "screening_arm_1",
@@ -80,8 +92,10 @@
 	"race_ethnicity": "4",
 	"randomization_date": "",
 	"transfusion_given": "",
+	"randomization": "",
+	"redcap_data_access_group": "",
 	"dag": "",
-	"randomization": ""
+	"dag_name": ""
 }, {
 	"record_id": "4",
 	"redcap_event_name": "baseline_arm_1",
@@ -92,8 +106,10 @@
 	"race_ethnicity": "",
 	"randomization_date": "2020-01-01",
 	"transfusion_given": "",
+	"randomization": "1",
+	"redcap_data_access_group": "",
 	"dag": "",
-	"randomization": "1"
+	"dag_name": ""
 }, {
 	"record_id": "4",
 	"redcap_event_name": "transfusion_arm_1",
@@ -104,8 +120,10 @@
 	"race_ethnicity": "",
 	"randomization_date": "",
 	"transfusion_given": "1",
+	"randomization": "",
+	"redcap_data_access_group": "",
 	"dag": "",
-	"randomization": ""
+	"dag_name": ""
 }, {
 	"record_id": "5",
 	"redcap_event_name": "screening_arm_1",
@@ -116,8 +134,10 @@
 	"race_ethnicity": "7",
 	"randomization_date": "",
 	"transfusion_given": "",
+	"randomization": "",
+	"redcap_data_access_group": "002__site_b",
 	"dag": "211",
-	"randomization": ""
+	"dag_name": "002 - Site B"
 }, {
 	"record_id": "5",
 	"redcap_event_name": "baseline_arm_1",
@@ -128,8 +148,10 @@
 	"race_ethnicity": "",
 	"randomization_date": "2020-01-01",
 	"transfusion_given": "",
+	"randomization": "1",
+	"redcap_data_access_group": "002__site_b",
 	"dag": "211",
-	"randomization": "1"
+	"dag_name": "002 - Site B"
 }, {
 	"record_id": "5",
 	"redcap_event_name": "transfusion_arm_1",
@@ -140,8 +162,10 @@
 	"race_ethnicity": "",
 	"randomization_date": "",
 	"transfusion_given": "",
+	"randomization": "",
+	"redcap_data_access_group": "002__site_b",
 	"dag": "211",
-	"randomization": ""
+	"dag_name": "002 - Site B"
 }, {
 	"record_id": "006",
 	"redcap_event_name": "screening_arm_1",
@@ -152,8 +176,10 @@
 	"race_ethnicity": "2",
 	"randomization_date": "",
 	"transfusion_given": "",
+	"randomization": "",
+	"redcap_data_access_group": "001__site_a",
 	"dag": "210",
-	"randomization": ""
+	"dag_name": "001 - Site A"
 }, {
 	"record_id": "006",
 	"redcap_event_name": "baseline_arm_1",
@@ -164,8 +190,10 @@
 	"race_ethnicity": "",
 	"randomization_date": "",
 	"transfusion_given": "",
+	"randomization": "",
+	"redcap_data_access_group": "001__site_a",
 	"dag": "210",
-	"randomization": ""
+	"dag_name": "001 - Site A"
 }, {
 	"record_id": "006",
 	"redcap_event_name": "transfusion_arm_1",
@@ -176,8 +204,10 @@
 	"race_ethnicity": "",
 	"randomization_date": "",
 	"transfusion_given": "1",
+	"randomization": "",
+	"redcap_data_access_group": "001__site_a",
 	"dag": "210",
-	"randomization": ""
+	"dag_name": "001 - Site A"
 }, {
 	"record_id": "9",
 	"redcap_event_name": "screening_arm_1",
@@ -188,8 +218,10 @@
 	"race_ethnicity": "",
 	"randomization_date": "",
 	"transfusion_given": "",
+	"randomization": "",
+	"redcap_data_access_group": "002__site_b",
 	"dag": "211",
-	"randomization": ""
+	"dag_name": "002 - Site B"
 }, {
 	"record_id": "9",
 	"redcap_event_name": "baseline_arm_1",
@@ -200,8 +232,10 @@
 	"race_ethnicity": "",
 	"randomization_date": "",
 	"transfusion_given": "",
+	"randomization": "",
+	"redcap_data_access_group": "002__site_b",
 	"dag": "211",
-	"randomization": ""
+	"dag_name": "002 - Site B"
 }, {
 	"record_id": "9",
 	"redcap_event_name": "transfusion_arm_1",
@@ -212,8 +246,10 @@
 	"race_ethnicity": "",
 	"randomization_date": "2020-03-01",
 	"transfusion_given": "",
+	"randomization": "2",
+	"redcap_data_access_group": "002__site_b",
 	"dag": "211",
-	"randomization": "2"
+	"dag_name": "002 - Site B"
 }, {
 	"record_id": "10",
 	"redcap_event_name": "screening_arm_1",
@@ -224,8 +260,10 @@
 	"race_ethnicity": "1",
 	"randomization_date": "",
 	"transfusion_given": "",
+	"randomization": "",
+	"redcap_data_access_group": "003__site_c",
 	"dag": "232",
-	"randomization": ""
+	"dag_name": "003 - Site C"
 }, {
 	"record_id": "10",
 	"redcap_event_name": "baseline_arm_1",
@@ -236,8 +274,10 @@
 	"race_ethnicity": "",
 	"randomization_date": "",
 	"transfusion_given": "",
+	"randomization": "",
+	"redcap_data_access_group": "003__site_c",
 	"dag": "232",
-	"randomization": ""
+	"dag_name": "003 - Site C"
 }, {
 	"record_id": "10",
 	"redcap_event_name": "transfusion_arm_1",
@@ -248,6 +288,8 @@
 	"race_ethnicity": "",
 	"randomization_date": "",
 	"transfusion_given": "1",
+	"randomization": "",
+	"redcap_data_access_group": "003__site_c",
 	"dag": "232",
-	"randomization": ""
+	"dag_name": "003 - Site C"
 }]

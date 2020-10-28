@@ -42,18 +42,20 @@ final class DDTest extends \ExternalModules\ModuleBaseTest
 
 			$demoEvent = $module->getProjectSetting("demographics_event",$project_id);
 			$transfusionEvent = $module->getProjectSetting("transfusion_event",$project_id);
+			$screeningEvent = $module->getProjectSetting("screening_event",$project_id);
 
 			$this->assertNotEquals($demoEvent,NULL);
 			$this->assertNotEquals($transfusionEvent,NULL);
 
 			$demographicsEventFields = \REDCap::getValidFieldsByEvents($project_id,[$demoEvent]);
 			$transfusionEventFields = \REDCap::getValidFieldsByEvents($project_id,[$transfusionEvent]);
+			$screeningEventFields = \REDCap::getValidFieldsByEvents($project_id,[$screeningEvent]);
 
 			$this->assertContains("sex",$demographicsEventFields);
 			$this->assertContains("race_ethnicity",$demographicsEventFields);
+			$this->assertContains("screen_date",$demographicsEventFields);
 
-			## TODO Add additional fields
-			## TODO Check fields on screening project too
+			$this->assertContains("randomization_date",$screeningEventFields);
 
 			$this->assertContains("transfusion_given",$transfusionEventFields);
 			$this->assertContains("transfusion_datetime",$transfusionEventFields);
@@ -72,11 +74,13 @@ final class DDTest extends \ExternalModules\ModuleBaseTest
 			$project_id = $row["project_id"];
 
 			$edcData = $module->getEDCData($project_id);
-			// $screeningData = $module->getScreeningData($project_id);
+			$screeningData = $module->getScreeningData($project_id);
 
-			// foreach($edcData as $recordId => $recordDetails) {
-				// $this->assertArrayHasKey($recordId,$screeningData);
-			// }
+			foreach($edcData as $recordDetails) {
+			    $recordId = $recordDetails->record_id;
+
+			    $this->assertArrayHasKey($recordId,$screeningData);
+			}
 
 			## Remove data from cache for future tests
 			$module->edc_data = false;

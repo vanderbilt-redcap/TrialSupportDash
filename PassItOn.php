@@ -23,7 +23,9 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 	];
 	public $record_fields = [
 		'record_id',
-		'dag',
+		'redcap_data_access_group',
+        'dag',
+        'dag_name',
 		'sex',
 		'race_ethnicity',
 		'transfusion_datetime',
@@ -43,16 +45,6 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 	}
 	
 	// LOW LEVEL methods
-	public function getProjectIDs() {
-		if (!isset($this->project_ids)) {
-			$project_ids = new \stdClass();
-			$project_ids->edc = $this->getProjectId();
-			$project_ids->uad = $this->getProjectSetting('user_access_project');
-			$this->project_ids = $project_ids;
-		}
-		
-		return $this->project_ids;
-	}
 	public function getEventIDs() {
 		if (!isset($this->event_ids)) {
 			$event_ids = new \stdClass();
@@ -64,12 +56,15 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		
 		return $this->event_ids;
 	}
-	public function getDAGs() {
+
+	public function getDAGs($project_id = false) {
 		if (!isset($this->dags)) {
-			$this->getProjectIDs();
+		    if(!$project_id) {
+		        $project_id = $_GET['pid'];
+            }
 			
 			// create global $Proj that REDCap class uses to generate DAG info
-			$EDCProject = new \Project($this->project_ids->edc);
+			$EDCProject = new \Project($project_id);
 			$dags_unique = $EDCProject->getUniqueGroupNames();
 			$dags_display = $EDCProject->getGroups();
 			$dags = new \stdClass();
@@ -91,13 +86,42 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		
 		return $this->dags;
 	}
-	public function getUADData() {
+
+	public function getFieldLabelMapping($fieldName = false) {
+		if(!isset($this->mappings)) {
+			$this->mappings = [];
+			foreach($this->record_fields as $thisField) {
+				$choices = $this->getChoiceLabels($thisField);
+
+				if($choices && (count($choices) > 1 || reset($choices)) != "") {
+					$this->mappings[$thisField] = $choices;
+				}
+			}
+		}
+
+		if($fieldName) {
+			if(isset($this->mappings[$fieldName])) {
+				return $this->mappings[$fieldName];
+			}
+			else {
+				return false;
+			}
+		}
+		else {
+			return $this->mappings;
+		}
+	}
+
+	public function getUADData($project_id = false) {
 		if (!isset($this->uad_data)) {
-			$this->getProjectIDs();
+		    if(!$project_id) {
+		        $project_id = $_GET['pid'];
+            }
+		    $uadProject = $this->getProjectSetting("user_access_project",$project_id);
 			
-			if (!empty($this->project_ids->uad)) {
+			if (!empty($uadProject)) {
 				$params = [
-					'project_id' => $this->project_ids->uad,
+					'project_id' => $uadProject,
 					'return_format' => 'json',
 					'fields' => [
 						'record_id',
@@ -116,33 +140,62 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		
 		return $this->uad_data;
 	}
-	public function getEDCData() {
-		if (!isset($this->edc_data)) {
-			$this->getProjectIDs();
+
+	public function getEDCData($project_id = false) {
+		if (!isset($this->edc_data) || !$this->edc_data) {
+            if(!$project_id) {
+                $project_id = $_GET['pid'];
+            }
 			$this->getEventIDs();
 			
 			$params = [
-				'project_id' => $this->project_ids->edc,
+				'project_id' => $project_id,
 				'return_format' => 'json',
 				'fields' => $this->record_fields,
-				'events' => (array) $this->event_ids
+				'events' => (array) $this->event_ids,
+                'exportDataAccessGroups' => true
 			];
 			$edc_data = json_decode(\REDCap::getData($params));
-			
+
+			$projectDags = $this->getDAGs($project_id);
+
 			// add dag property to each based on its record_id
 			foreach ($edc_data as $record) {
-				$get_record_dag = $this->query("SELECT value FROM redcap_data WHERE project_id = ? AND field_name = '__GROUPID__' AND record = ? LIMIT 1", [$this->project_ids->edc, $record->record_id]);
-				$row = $get_record_dag->fetch_assoc();
-				$record->dag = @$row['value'];
+				foreach($projectDags as $groupId => $thisDag) {
+				    if($thisDag->unique == $record->redcap_data_access_group) {
+                        $record->dag = $groupId;
+                        $record->dag_name = $thisDag->display;
+                        break;
+                    }
+                }
 			}
-			
+
 			$this->edc_data = $edc_data;
 		}
 		
 		return $this->edc_data;
 	}
+
+    public function getScreeningData($projectId = false) {
+        if(!$this->screening_data) {
+            if(!$projectId) {
+                $projectId = $_GET['pid'];
+            }
+
+            $screeningProject = $this->getProjectSetting("screening_project", $projectId);
+
+            $this->screening_data = \REDCap::getData([
+                "project_id" => $screeningProject,
+            ]);
+        }
+
+        return $this->screening_data;
+    }
+
 	public function getUser() {
 		if (!isset($this->user)) {
+		    $this->user = false;
+
 			$this->getUADData();
 			foreach ($this->uad_data as $record) {
 				if ($record->user_name === constant("USERID")) {
@@ -152,8 +205,6 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 					define("PIO_USER_DISPLAY_NAME",$record->first_name." ".$record->last_name);
 				}
 			}
-			if (empty($this->user))
-				$this->user = new \stdClass();
 		}
 		
 		return $this->user;
@@ -180,7 +231,7 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		*/
 		$this->getUser();
 
-		if (empty($this->user->dashboard)) {
+		if ($this->user === false || empty($this->user->dashboard)) {
 			$this->user->authorized = false;
 			return;
 		}
@@ -191,22 +242,25 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 			$this->user->authorized = false;
 		}
 	}
-	public function getRecords() {
+	public function getRecords($project_id = false) {
 		if (!isset($this->records)) {
 			if($_GET['TESTING']) {
 				$this->records = json_decode(file_get_contents(__DIR__."/tests/test_data/records.json"),true);
 				
 				return $this->records;
 			}
-			$this->getEDCData();
+
+            if(!$project_id) {
+                $project_id = $_GET['pid'];
+            }
+			$this->getEDCData($project_id);
 			
 			$records = [];
 			$temp_records_obj = new \stdClass();
-			$labeled_fields = ['sex', 'race_ethnicity'];
 			$label_params = [
-				'project_id' => $this->project_ids->edc
+				'project_id' => $project_id
 			];
-			
+
 			// iterate over edc_data, collating data into record objects
 			foreach ($this->edc_data as $record_event) {
 				// establish $record and $rid
@@ -226,24 +280,25 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 				// set non-empty fields
 				foreach ($this->record_fields as $field) {
 					if (!empty($record_event->$field)) {
-						if (in_array($field, $labeled_fields)) {
-							$label_params['field_name'] = $field;
-							$label_params['record_id'] = $rid;
-							$label_params['value'] = $record_event->$field;
-							$record->$field = $this->getChoiceLabel($label_params);
-							
-							if ($field == 'sex') {
-								$record->$field = substr($record->$field, 0, 1);
-							}
-						} else {
+						$labels = $this->getFieldLabelMapping($field);
+
+						if($labels) {
+							$record->$field = $labels[$record_event->$field];
+						}
+						else {
 							$record->$field = $record_event->$field;
+						}
+
+						## Special shortening for certain fields
+						if($field == "sex") {
+							$record->$field = substr($record->$field, 0, 1);
 						}
 					}
 				}
 			}
 			
 			foreach ($temp_records_obj as $record) {
-				if (!empty($record->dag))
+				if (!empty($record->redcap_data_access_group))
 					$records[] = $record;
 			}
 			
@@ -270,24 +325,15 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		$site_data = new \stdClass();
 		$site_data->site_name = "";
 		$site_data->rows = [];
-		
-		// get dag and site_name
-		$user_dag = $this->user->dag_group_name;
-		$site_data->site_name = $user_dag;
-		
-		// determine group id
-		foreach ($this->dags as $gid => $dag) {
-			if ($dag->display == $user_dag)
-				$group_id = $gid;
-		}
-		
+		$site_data->site_name = $this->user->dag_group_name;
+
 		// add record rows
 		foreach ($this->records as $record) {
-			if (($this->user->authorized == '2' and $record->dag == $group_id) or $this->user->authorized == '3') {
+			if (($this->user->authorized == '2' and $record->dag_name == $this->user->dag_group_name) or $this->user->authorized == '3') {
 				$row = new \stdClass();
 				$row->id = $record->record_id;
 				if ($this->user->authorized == '3') {
-					$row->site = $this->dags->{$record->dag}->display;
+					$row->site = $record->dag_name;
 				}
 				$row->sex = $record->sex;
 				$row->race = $record->race_ethnicity;
@@ -296,7 +342,7 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 				// convert transfusion_datetime from Y-m-d H:m to Y-m-d
 				if (!empty($record->transfusion_datetime))
 					$row->treated = date("Y-m-d", strtotime($record->transfusion_datetime));
-				
+
 				$site_data->rows[] = $row;
 			}
 		}
@@ -346,21 +392,12 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		foreach ($this->records as $record) {
 			if (!$patient_dag = $record->dag)
 				continue;
-			
-			// determine dag display name from unique
-			$dag_display_name = "";
-			foreach ($this->dags as $group_id => $dag) {
-				if ($group_id == $patient_dag) {
-					$dag_display_name = $dag->display;
-					break;
-				}
-			}
-			
+
 			// get or make site object
 			if (!$site = $sites->$patient_dag) {
 				$sites->$patient_dag = new \stdClass();
 				$site = $sites->$patient_dag;
-				$site->name = $dag_display_name;
+				$site->name = $record->dag_name;
 				$site->enrolled = 0;
 				$site->treated = 0;
 				$site->fpe = '-';
@@ -372,7 +409,7 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 				$data->totals[1]->enrolled++;
 				$site->enrolled = $site->enrolled + 1;
 			}
-			
+
 			$enroll_date = $record->randomization_date;
 			if (!empty($enroll_date)) {
 				if ($site->fpe == '-') {
@@ -425,7 +462,7 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		if ($link['name'] == 'PassItOn Dashboard') {
 			$this->getUser();
 			$this->authorizeUser();
-			if (empty($this->user->authorized)) {
+			if ($this->user->authorized === false) {
 				return false;
 			} else {
 				return $link;
