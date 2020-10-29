@@ -42,7 +42,7 @@ final class DataTest extends \ExternalModules\ModuleBaseTest
         unset($module->edc_data);
 		$records = $module->getEDCData();
 
-		$this->assertNotEmpty($records, "No patient records found");
+		$this->assertNotCount(0,$records, "No patient records found");
 		
 		foreach ($records as $record) {
 			$this->assertNotEmpty($record->redcap_data_access_group, "Found patient record with empty 'dag' field: record {$record->record_id}");
