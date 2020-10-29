@@ -21,4 +21,6 @@ function logout() {
 
 $("document").ready(function() {
     activateTab("allSitesData");
+
+	$('.sortable').tablesorter();
 });

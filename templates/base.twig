@@ -11,9 +11,26 @@
 		<script type="text/javascript" src="{{ constant('APP_PATH_JS') }}Libraries/bundle.js"></script>
 		<script type="text/javascript" src="{{ constant('APP_PATH_JS') }}base.js"></script>
 		<script type="text/javascript" src="{{ constant("JS_PATH_1") }}"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.1/js/jquery.tablesorter.min.js"></script>
 		<script type="text/javascript">
 			var APP_PATH_WEBROOT = "{{ constant("APP_PATH_WEBROOT") }}";
 		</script>
+
+		<style>
+			th.tablesorter-header {
+				background-image:url("{{ constant("APP_PATH_WEBPACK") }}images/sort_both.png");
+				background-repeat: no-repeat;
+				background-position: center right;
+			}
+
+			th.tablesorter-headerDesc {
+				background-image:url("{{ constant("APP_PATH_WEBPACK") }}images/sort_desc.png");
+			}
+
+			th.tablesorter-headerAsc {
+				background-image:url("{{ constant("APP_PATH_WEBPACK") }}images/sort_asc.png");
+			}
+		</style>
 
 		<title>{% block title %}Pass It On Dashboard{%  endblock %}</title>
 	{% endblock %}
