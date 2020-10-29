@@ -8,6 +8,9 @@ require_once dirname(dirname(dirname(__DIR__))) . '/redcap_connect.php';
 
 final class DataTest extends \ExternalModules\ModuleBaseTest
 {
+    /** @var PassItOn $module */
+    public $module;
+
 	public function setUp() : void {
 		parent::setUp();
 		
@@ -25,13 +28,10 @@ final class DataTest extends \ExternalModules\ModuleBaseTest
 		$this->assertNotEmpty($_GET['pid'], "Can't run integration test without UAD project ID specified");
 		unset($module->uad_data);
 		$module->getUADData();
-		
+
 		$user_records = $module->uad_data;
-		$this->assertNotEmpty($user_records, "No user records found");
-		
-		foreach ($user_records as $record) {
-			$this->assertNotEmpty($record->dag_group_name, "Found user record with empty 'dag_group_name' field: record {$record->record_id}");
-		}
+		$this->assertNotCount(0,$user_records, "No user records found");
+
 		unset($module->uad_data);
 	}
 	
