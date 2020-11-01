@@ -10,4 +10,3 @@ if [ ! $? -eq 0 ]; then
     echo ''
     echo "$unitTestOutput"
 fi
-~
