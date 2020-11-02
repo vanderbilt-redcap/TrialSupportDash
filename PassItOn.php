@@ -456,6 +456,15 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		$this->all_sites_data = $data;
 		return json_decode(json_encode($this->all_sites_data), true);
 	}
+	public function getScreeningLogData() {
+		
+	}
+	public function getExclusionReportData() {
+		
+	}
+	public function getScreenFailData() {
+		
+	}
 	
 	// hooks
 	public function redcap_module_link_check_display($pid, $link) {

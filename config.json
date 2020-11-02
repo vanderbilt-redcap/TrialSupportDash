@@ -48,6 +48,13 @@
 			"repeatable": false
 		},
 		{
+			"key": "site_regulation_project",
+			"name": "PassItOn Site Regulation Project ID",
+			"required": false,
+			"type": "project-id",
+			"repeatable": false
+		},
+		{
 			"key": "demographics_event",
 			"name": "Event Containing Demographics Fields",
 			"type": "event-list",
