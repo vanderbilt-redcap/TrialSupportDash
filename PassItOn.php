@@ -184,9 +184,11 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 
             $screeningProject = $this->getProjectSetting("screening_project", $projectId);
 
-            $this->screening_data = \REDCap::getData([
+            $this->screening_data = json_decode(\REDCap::getData([
                 "project_id" => $screeningProject,
-            ]);
+				"return_format" => "json",
+                'exportDataAccessGroups' => true
+            ]));
         }
 
         return $this->screening_data;
@@ -456,8 +458,82 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		$this->all_sites_data = $data;
 		return json_decode(json_encode($this->all_sites_data), true);
 	}
-	public function getScreeningLogData() {
+	public function getScreeningLogData($site = null) {
+		// // currently not caching this function
+		// if (!isset($this->screening_log_data)) {
+			
+		// }
 		
+		// return $this->screening_log_data;
+		
+		// determine earliest screened date (upon which weeks array will be based)
+		$screening_data = $this->getScreeningData();
+		$first_date = date("Y-m-d");
+		$last_date = date("Y-m-d", 0);
+		foreach ($screening_data as $record) {
+			$site_match_or_null = $site === null ? true : $record->redcap_data_access_group == $site;
+			if (!empty($record->dos) and $site_match_or_null) {
+				if (strtotime($record->dos) < strtotime($first_date))
+					$first_date = date("Y-m-d", strtotime($record->dos));
+				if (strtotime($record->dos) > strtotime($last_date))
+					$last_date = date("Y-m-d", strtotime($record->dos));
+			}
+		}
+		if (strtotime($last_date) == 0)
+			$last_date = $first_date;
+		
+		// determine date of Monday on or before first_date found
+		$day_of_week = date("N", strtotime($first_date));
+		$rewind_x_days = $day_of_week - 1;
+		$first_monday = date("Y-m-d", strtotime("-$rewind_x_days days", strtotime($first_date)));
+		
+		// make report data object and rows
+		$screening_log_data = new \stdClass();
+		$screening_log_data->rows = [
+			["Week", "Sum of Prescreened", "Prescreened Cumulative"]
+		];
+		$total_screened = 0;
+		$iterations = 0;
+		while (true) {
+			$screened_this_week = 0;
+			
+			// determine week boundary dates
+			$day_offset1 = ($iterations) * 7;
+			$day_offset2 = $day_offset1 + 4;
+			$date1 = date("Y-m-d", strtotime("+$day_offset1 days", strtotime($first_monday)));
+			$date2 = date("Y-m-d", strtotime("+$day_offset2 days", strtotime($first_monday)));
+			
+			$row = [];
+			$row[0] = date("n/j", strtotime($date1)) . "-" . date("n/j", strtotime($date2));
+			$row[0] = str_replace("\\", "", $row[0]);
+			
+			// count records that were screened this week
+			$ts_a = strtotime($date1);
+			$ts_b = strtotime("+24 hours", strtotime($date2));
+			// echo "\$date1, \$date2, \$ts_a, \$ts_b: $date1, $date2, $ts_a, $ts_b\n";
+			foreach ($screening_data as $record) {
+				$ts_x = strtotime($record->dos);
+				$site_match_or_null = $site === null ? true : $record->redcap_data_access_group == $site;
+				if ($ts_a <= $ts_x and $ts_x <= $ts_b and $site_match_or_null)
+					$screened_this_week++;
+			}
+			$total_screened += $screened_this_week;
+			
+			$row[1] = $screened_this_week;
+			$row[2] = $total_screened;
+			
+			$screening_log_data->rows[] = $row;
+			
+			$iterations++;
+			
+			// see if the week row just created captures the last screened date
+			// if so, break here
+			$cutoff_timestamp = strtotime("+1 days", $ts_b);
+			if ($cutoff_timestamp > strtotime($last_date) or $iterations > 999)
+				break;
+		}
+		$screening_log_data->rows[] = ["Grand Total", $total_screened, $total_screened];
+		return $screening_log_data;
 	}
 	public function getExclusionReportData() {
 		
