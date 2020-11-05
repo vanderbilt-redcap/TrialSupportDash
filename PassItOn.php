@@ -489,9 +489,7 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		
 		// make report data object and rows
 		$screening_log_data = new \stdClass();
-		$screening_log_data->rows = [
-			["Week", "Sum of Prescreened", "Prescreened Cumulative"]
-		];
+		$screening_log_data->rows = [];
 		$total_screened = 0;
 		$iterations = 0;
 		while (true) {
@@ -539,9 +537,7 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		if (!isset($this->exclusion_data)) {
 			// create data object
 			$exclusion_data = new \stdClass();
-			$exclusion_data->rows = [
-				["Criteria", "Description", "#"]
-			];
+			$exclusion_data->rows = [];
 			
 			// get labels, init exclusion counts
 			$screening_pid = $this->getProjectSetting('screening_project');
@@ -573,14 +569,13 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 	public function getScreenFailData() {
 		if (!isset($this->screen_fail_data)) {
 			$screen_fail_data = new \stdClass();
-			$screen_fail_data->rows = [
-				["Criteria", "Description", "#"]
-			];
-			$labels = $module->getChoiceLabels("not_enrolled_reason", $module->getProjectSetting('screening_project'));
+			$screen_fail_data->rows = [];
+			$labels = $this->getChoiceLabels("not_enrolled_reason", $this->getProjectSetting('screening_project'));
 			$screen_fail_counts = [];
 			foreach ($labels as $i => $label) {
 				$screen_fail_counts[$i] = 0;
 			}
+			$screening_data = $this->getScreeningData();
 			foreach ($screening_data as $record) {
 				if (!empty($record->not_enrolled_reason) and isset($screen_fail_counts[$record->not_enrolled_reason]))
 					$screen_fail_counts[$record->not_enrolled_reason]++;
