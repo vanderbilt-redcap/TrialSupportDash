@@ -3,8 +3,8 @@ function hideAllTabs() {
     $("#allSitesData-button").removeClass('active').addClass('nonactive');
     $("#mySiteData").hide();
     $("#mySiteData-button").removeClass('active').addClass('nonactive');
-    $("#communications").hide();
-    $("#communications-button").removeClass('active').addClass('nonactive');
+    $("#screening").hide();
+    $("#screening-button").removeClass('active').addClass('nonactive');
 }
 
 function activateTab(tabSelector) {
@@ -12,6 +12,18 @@ function activateTab(tabSelector) {
 
     $("#" + tabSelector).show();
     $("#" + tabSelector + "-button").removeClass('nonactive').addClass('active');
+	
+	if (tabSelector == "screening") {
+		// show buttons, hide reports
+		$(".screening_report").hide();
+		$(".report_switch").show();
+	}
+}
+
+function showReport(report_name) {
+	$(".report_switch").hide();
+	$(".screening_report").hide();
+	$("#" + report_name).show();
 }
 
 function logout() {
@@ -20,7 +32,9 @@ function logout() {
 }
 
 $("document").ready(function() {
-    activateTab("allSitesData");
-
+    // activateTab("allSitesData");
+		activateTab("screening");
+		showReport('screening_log');
+	
 	$('.sortable').tablesorter();
 });

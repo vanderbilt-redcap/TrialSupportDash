@@ -89,3 +89,20 @@ button.nonactive {
 a.nonactive div.name {
     background-color:#eeeeee;
 }
+
+/* screening reports */
+.report_switch {
+	padding: 32px;
+	margin: 8px;
+	border-color: #aaaaaa;
+	border-style: solid;
+	border-radius: 16px;
+}
+span.report_title {
+    background-color:#138085;
+    color: #ffffff;
+    padding: 2px 15px;
+	display: block;
+	font-weight: bold;
+	font-size: 1.5rem;
+}

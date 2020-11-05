@@ -13,9 +13,9 @@
 				<div class='top-border'></div>
 				<div class='name'><b>My Site's Metrics</b></div>
 			</a>
-			<a class="tab nonactive" id="communications-button" onclick="activateTab('communications');">
+			<a class="tab nonactive" id="screening-button" onclick="activateTab('screening');">
 				<div class='top-border'></div>
-				<div class='name'><b>Communications</b></div>
+				<div class='name'><b>Screening</b></div>
 			</a>
 		</div>
 	</div>
@@ -99,8 +99,50 @@
 			</tbody>
 		</table>
 	</div>
-	<div id="communications" style="padding:10px">
-		<div><h3>Under Development</h3></div>
+	<div id="screening" style="padding:10px">
+		<button onclick="showReport('screening_log')" class="report_switch">Screening Log Report</button>
+		<button onclick="showReport('exclusion')" class="report_switch">Exclusion Report</button>
+		<button onclick="showReport('screen_fail')" class="report_switch">Screening Fail Report</button>
+		<div class="screening_report" id="screening_log">
+			{# title div #}
+			<span class="report_title">Screening Log Report</span>
+			<div class="col-6">
+				{# dropdown #}
+				<select name="site" id="site">
+					<option selected="selected">Choose institution</option>
+					{% for site_name in site_names %}
+					<option>{{ site_name }}</option>
+					{% endfor %}
+				</select>
+				
+				{# table #}
+				<table>
+					<thead>
+						<tr>
+							<th>{{ screeningLog.0.0 }}</th>
+							<th>Week</th>
+							<th>Sum of Prescreened</th>
+							<th>Cumulative Prescreened</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+			{# chart #}
+		</div>
+		<div class="screening_report" id="exclusion">
+			{# title div #}
+			<span class="report_title">Exclusion Report</span>
+			{# table #}
+			{# chart #}
+		</div>
+		<div class="screening_report" id="screen_fail">
+			{# title div #}
+			<span class="report_title">Screen Fail Report</span>
+			{# table #}
+			{# chart #}
+		</div>
 	</div>
 </div>
 {% endblock %}
