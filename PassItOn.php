@@ -536,10 +536,66 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		return $screening_log_data;
 	}
 	public function getExclusionReportData() {
-		
+		if (!isset($this->exclusion_data)) {
+			// create data object
+			$exclusion_data = new \stdClass();
+			$exclusion_data->rows = [
+				["Criteria", "Description", "#"]
+			];
+			
+			// get labels, init exclusion counts
+			$screening_pid = $this->getProjectSetting('screening_project');
+			$labels = $this->getChoiceLabels("exclude_primary_reason", $screening_pid);
+			$exclusion_counts = [];
+			foreach ($labels as $i => $label) {
+				$exclusion_counts[$i] = 0;
+			}
+			
+			// iterate through screening records, summing exclusion reasons
+			$screening_data = $this->getScreeningData();
+			foreach ($screening_data as $record) {
+				if (!empty($record->exclude_primary_reason) and isset($exclusion_counts[$record->exclude_primary_reason]))
+					$exclusion_counts[$record->exclude_primary_reason]++;
+			}
+			
+			// add rows to data object
+			foreach ($labels as $i => $label) {
+				$exclusion_data->rows[] = [
+					"#$i",
+					$label,
+					$exclusion_counts[$i]
+				];
+			}
+			$this->exclusion_data = $exclusion_data;
+		}
+		return $this->exclusion_data;
 	}
 	public function getScreenFailData() {
+		if (!isset($this->screen_fail_data)) {
+			$screen_fail_data = new \stdClass();
+			$screen_fail_data->rows = [
+				["Criteria", "Description", "#"]
+			];
+			$labels = $module->getChoiceLabels("not_enrolled_reason", $module->getProjectSetting('screening_project'));
+			$screen_fail_counts = [];
+			foreach ($labels as $i => $label) {
+				$screen_fail_counts[$i] = 0;
+			}
+			foreach ($screening_data as $record) {
+				if (!empty($record->not_enrolled_reason) and isset($screen_fail_counts[$record->not_enrolled_reason]))
+					$screen_fail_counts[$record->not_enrolled_reason]++;
+			}
+			foreach ($labels as $i => $label) {
+				$screen_fail_data->rows[] = [
+					"#$i",
+					$label,
+					$screen_fail_counts[$i]
+				];
+			}
+			$this->screen_fail_data = $screen_fail_data;
+		}
 		
+		return $this->screen_fail_data;
 	}
 	
 	// hooks

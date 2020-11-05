@@ -38,7 +38,7 @@ final class ScreeningLogTest extends \ExternalModules\ModuleBaseTest
 	}
 	
 	public function testGetScreeningFailData() {
-		$result = $this->module->getExclusionReportData();
+		$result = $this->module->getScreenFailData();
 		$compare = json_decode(file_get_contents(__DIR__."/test_data/screening_fail_data.json"));
 		$this->assertEquals($compare, $result);
 	}
