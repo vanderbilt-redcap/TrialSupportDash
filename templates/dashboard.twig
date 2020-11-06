@@ -170,12 +170,18 @@
 									{# backgroundColor: 'rgba(255, 99, 132, 0.2)', #}
 									borderColor: 'rgba(13, 127, 133, 1)',
 									borderWidth: 2,
-									type: 'line'
+									type: 'line',
+									datalabels: {
+										anchor: 'center'
+									}
 								},{
 									label: 'Cumulative Screened',
 									data: data2,
 									backgroundColor: 'rgba(180, 199, 231, 1)',
-									borderWidth: 1
+									borderWidth: 1,
+									datalabels: {
+										offset: 12
+									}
 								}]
 							},
 							options: {

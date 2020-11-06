@@ -13,10 +13,19 @@
 		<script type="text/javascript" src="{{ constant("JS_PATH_1") }}"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.1/js/jquery.tablesorter.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+		<!-- <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@1.1.2"></script> -->
+		<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0/dist/chartjs-plugin-datalabels.min.js"></script>
 		
 		<script type="text/javascript">
 			var APP_PATH_WEBROOT = "{{ constant("APP_PATH_WEBROOT") }}";
 			var SCREENING_LOG_DATA_AJAX_URL = "{{ constant("SCREENING_LOG_DATA_AJAX_URL")|raw }}";
+			
+			// set chart.js datalabels plugin options globally
+			Chart.helpers.merge(Chart.defaults.global.plugins.datalabels, {
+				align: 'top',
+				anchor: 'end',
+				font: {size: "16"}
+			});
 		</script>
 
 		<style>
