@@ -1,5 +1,6 @@
 <?php
 
+define("SCREENING_LOG_DATA_AJAX_URL", $module->getUrl('ajax/getScreeningLogData.php'));
 $loader = new \Twig\Loader\FilesystemLoader(__DIR__."/templates");
 $twig = new \Twig\Environment($loader);
 
@@ -17,6 +18,7 @@ foreach ($module->dags as $dag) {
 }
 
 $screeningLogData = $module->getScreeningLogData();
+// echo "<pre>" . json_encode($screeningLogData->rows, JSON_PRETTY_PRINT) . "</pre>";
 // $exclusionData = $module->getExclusionReportData();
 // $screenFailData = $module->getScreenFailData();
 

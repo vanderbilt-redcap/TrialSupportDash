@@ -36,5 +36,33 @@ $("document").ready(function() {
 		activateTab("screening");
 		showReport('screening_log');
 	
+	// get new Screening Log Report when select#site changes
+	$("select#site").change('change', function() {
+		var selected_site = "";
+		$(this).find("option:selected").each(function() {
+			selected_site += $( this ).text() + " ";
+		});
+		
+		$.ajax({
+			url: SCREENING_LOG_DATA_AJAX_URL,
+			type: "POST",
+			data: {site_name: selected_site},
+			cache: false,
+			dataType: "json"
+		})
+		.done(function(json) {
+			console.log('data pull response', json)
+			if (json.rows && json.rows.length > 1) {
+				// replace table rows with new data
+				$("#screening_log div table tbody").empty();
+				json.rows.forEach(function(row) {
+					var tablerow = "<tr><td>" + row[0] + "</td><td>" + row[1] + "</td><td>" + row[2] + "</td></tr>";
+					$("#screening_log div table tbody").append(tablerow);
+				})
+			}
+			
+		});
+	})
+	
 	$('.sortable').tablesorter();
 });

@@ -109,7 +109,7 @@
 			<div class="col-6">
 				{# dropdown #}
 				<select name="site" id="site">
-					<option selected="selected">Choose institution</option>
+					<option>Choose institution</option>
 					{% for site_name in site_names %}
 					<option>{{ site_name }}</option>
 					{% endfor %}
@@ -119,13 +119,19 @@
 				<table>
 					<thead>
 						<tr>
-							<th>{{ screeningLog.0.0 }}</th>
 							<th>Week</th>
 							<th>Sum of Prescreened</th>
 							<th>Cumulative Prescreened</th>
 						</tr>
 					</thead>
 					<tbody>
+					{% for row in screeningLog.rows %}
+						<tr>
+							<td>{{ row.0 }}</td>
+							<td>{{ row.1 }}</td>
+							<td>{{ row.2 }}</td>
+						</tr>
+					{% endfor %}
 					</tbody>
 				</table>
 			</div>
