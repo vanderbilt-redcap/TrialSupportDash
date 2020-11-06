@@ -99,7 +99,7 @@
 			</tbody>
 		</table>
 	</div>
-	<div id="screening" style="padding:10px">
+	<div id="screening">
 		{# blue bar #}
 		<div class="blue_bar"></div>
 		{# green title bar #}
@@ -259,6 +259,13 @@
 									text: 'Total Excluded; n=' + exclusion_sum
 								},
 								scales: {
+									xAxes: [{
+										ticks: {
+											fontColor: '#8c4cbc',
+											fontSize: 18,
+											fontStyle: 'bold'
+										}
+									}],
 									yAxes: [{
 										ticks: {
 											beginAtZero: true
@@ -332,6 +339,13 @@
 									text: 'Total Excluded; n=' + fail_sum
 								},
 								scales: {
+									xAxes: [{
+										ticks: {
+											fontColor: '#8c4cbc',
+											fontSize: 18,
+											fontStyle: 'bold'
+										}
+									}],
 									yAxes: [{
 										ticks: {
 											beginAtZero: true

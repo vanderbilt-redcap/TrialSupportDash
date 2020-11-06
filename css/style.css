@@ -93,6 +93,7 @@ a.nonactive div.name {
 /* screening reports */
 div.blue_bar {
 	height: 36px;
+	margin-bottom: 4px;
     background-color:#055877;
 }
 span#report_title {
@@ -117,6 +118,22 @@ div.buttons {
 	border-radius: 16px;
 }
 
+#screening table, #screening th, #screening td {
+	text-align: center;
+	border: 1px solid black;
+}
+#screening tr:nth-child(even):not(.first_row) > td {
+    background-color:#fff;
+}
+#screening thead th {
+    background-color:#138085;
+	font-weight: normal;
+}
+
+.screening_report div.col-6 * {
+	margin-top: 20px;
+}
+
 #screening_log table tr:last-child {
     color: #ffffff;
 	font-weight: bold;
@@ -132,6 +149,13 @@ div.buttons {
 #screening_log div.col-6 > select {
 	margin: 20px 0px;
 }
-.screening_report div.col-6 * {
-	margin-top: 20px;
+#exclusion td:nth-child(1) {
+	font-weight: bold;
+	color: #8c4cbc;
+}
+#exclusion tbody td:nth-child(2) {
+	text-align: left;
+}
+#screen_fail tbody td:nth-child(2) {
+	text-align: left;
 }

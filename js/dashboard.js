@@ -39,9 +39,7 @@ function logout() {
 }
 
 $("document").ready(function() {
-    // activateTab("allSitesData");
-		activateTab("screening");
-		showReport("screening_log");
+    activateTab("allSitesData");
 		
 	// get new Screening Log Report when select#site changes
 	$("select#site").change('change', function() {
