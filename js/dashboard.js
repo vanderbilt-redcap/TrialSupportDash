@@ -59,6 +59,21 @@ $("document").ready(function() {
 					var tablerow = "<tr><td>" + row[0] + "</td><td>" + row[1] + "</td><td>" + row[2] + "</td></tr>";
 					$("#screening_log div table tbody").append(tablerow);
 				})
+				
+				// update chart with new data (after removing last line)
+				json.rows.pop()
+				var week_labels = [];
+				var data1 = [];
+				var data2 = [];
+				json.rows.forEach(function(row) {
+					week_labels.push(row[0]);
+					data1.push(row[1]);
+					data2.push(row[2]);
+				})
+				screening_log_chart.data.labels = week_labels;
+				screening_log_chart.data.datasets[0].data = data1;
+				screening_log_chart.data.datasets[1].data = data2;
+				screening_log_chart.update();
 			}
 			
 		});

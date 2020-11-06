@@ -103,9 +103,9 @@
 		<button onclick="showReport('screening_log')" class="report_switch">Screening Log Report</button>
 		<button onclick="showReport('exclusion')" class="report_switch">Exclusion Report</button>
 		<button onclick="showReport('screen_fail')" class="report_switch">Screening Fail Report</button>
+		{# title div #}
+		<span class="report_title">Screening Log Report</span>
 		<div class="screening_report" id="screening_log">
-			{# title div #}
-			<span class="report_title">Screening Log Report</span>
 			<div class="col-6">
 				{# dropdown #}
 				<select name="site" id="site">
@@ -136,6 +136,61 @@
 				</table>
 			</div>
 			{# chart #}
+			<div class="col-6">
+				<canvas id="screening_log_chart" width="400" height="400"></canvas>
+				<script>
+					var week_labels = [
+						{% for row in screeningLog.rows|slice(0,-1) %}
+							'{{ row.0 }}',
+						{% endfor %}
+					];
+					var data1 = [
+						{% for row in screeningLog.rows|slice(0,-1) %}
+							{{ row.1 }},
+						{% endfor %}
+					];
+					var data2 = [
+						{% for row in screeningLog.rows|slice(0,-1) %}
+							{{ row.2 }},
+						{% endfor %}
+					];
+					var ctx = document.getElementById('screening_log_chart').getContext('2d');
+					var screening_log_chart = new Chart(ctx, {
+						type: 'bar',
+						data: {
+							labels: week_labels,
+							datasets: [{
+								label: 'Participants Screened',
+								data: data1,
+								{# backgroundColor: 'rgba(255, 99, 132, 0.2)', #}
+								borderColor: 'rgba(13, 127, 133, 1)',
+								borderWidth: 2,
+								type: 'line'
+							},{
+								label: 'Cumulative Screened',
+								data: data2,
+								backgroundColor: 'rgba(180, 199, 231, 1)',
+								borderWidth: 1
+							}]
+						},
+						options: {
+							title: {
+								display: true,
+								fontSize: 24,
+								fontStyle: 'normal',
+								text: 'Participant Screening'
+							},
+							scales: {
+								yAxes: [{
+									ticks: {
+										beginAtZero: true
+									}
+								}]
+							}
+						}
+					});
+				</script>
+			</div>
 		</div>
 		<div class="screening_report" id="exclusion">
 			{# title div #}
