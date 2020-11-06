@@ -13,8 +13,12 @@ $authorized = $module->user->authorized;
 
 // prepare site names for Screening Log Report dropdown
 $site_names = [];
-foreach ($module->dags as $dag) {
-	$site_names[] = $dag->display;
+if ($authorized == 3) {
+	foreach ($module->dags as $dag) {
+		$site_names[] = $dag->display;
+	}
+} else {
+	$site_names[] = $module->user->dag_group_name;
 }
 
 $screeningLogData = $module->getScreeningLogData();
