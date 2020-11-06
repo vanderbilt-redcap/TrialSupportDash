@@ -100,12 +100,16 @@
 		</table>
 	</div>
 	<div id="screening" style="padding:10px">
-		<button onclick="showReport('screening_log')" class="report_switch">Screening Log Report</button>
-		<button onclick="showReport('exclusion')" class="report_switch">Exclusion Report</button>
-		<button onclick="showReport('screen_fail')" class="report_switch">Screening Fail Report</button>
+		{# blue bar #}
+		<div class="blue_bar"></div>
+		{# green title bar #}
+		<div class="report_title_bar"><span id="report_title"></span></div>
+		<div class="buttons">
+			<button onclick="showReport('screening_log')" class="report_switch">Screening Log Report</button>
+			<button onclick="showReport('exclusion')" class="report_switch">Exclusion Report</button>
+			<button onclick="showReport('screen_fail')" class="report_switch">Screening Fail Report</button>
+		</div>
 		<div class="screening_report" id="screening_log">
-		{# title div #}
-		<span class="report_title">Screening Log Report</span>
 			<div class="row">
 				<div class="col-6">
 					{# dropdown #}
@@ -195,16 +199,150 @@
 			</div>
 		</div>
 		<div class="screening_report" id="exclusion">
-			{# title div #}
-			<span class="report_title">Exclusion Report</span>
-			{# table #}
-			{# chart #}
+			<div class="row">
+				<div class="col-6">
+					{# table #}
+					<table>
+						<thead>
+							<tr>
+								<th>Criteria</th>
+								<th>Description</th>
+								<th>Count</th>
+							</tr>
+						</thead>
+						<tbody>
+						{% for row in exclusion.rows %}
+							<tr>
+								<td>{{ row.0 }}</td>
+								<td>{{ row.1 }}</td>
+								<td>{{ row.2 }}</td>
+							</tr>
+						{% endfor %}
+						</tbody>
+					</table>
+				</div>
+				{# chart #}
+				<div class="col-6">
+					<canvas id="exclusion_chart" width="400" height="300"></canvas>
+					<script>
+						var excl_labels = [
+							{% for row in exclusion.rows %}
+								'{{ row.0 }}',
+							{% endfor %}
+						];
+						var exclusion_counts = [
+							{% for row in exclusion.rows %}
+								{{ row.2 }},
+							{% endfor %}
+						];
+						var exclusion_sum = 0;
+						exclusion_counts.forEach(function(count) {exclusion_sum = exclusion_sum + count;});
+						
+						var ctx_excl = document.getElementById('exclusion_chart').getContext('2d');
+						var exclusion_chart = new Chart(ctx_excl, {
+							type: 'bar',
+							data: {
+								labels: excl_labels,
+								datasets: [{
+									label: 'Participants Excluded',
+									data: exclusion_counts,
+									borderColor: 'rgba(13, 127, 133, 1)',
+									backgroundColor: 'rgba(13, 127, 133, 1)',
+									borderWidth: 1
+								}]
+							},
+							options: {
+								title: {
+									display: true,
+									fontSize: 24,
+									fontStyle: 'normal',
+									text: 'Total Excluded; n=' + exclusion_sum
+								},
+								scales: {
+									yAxes: [{
+										ticks: {
+											beginAtZero: true
+										}
+									}]
+								}
+							}
+						});
+					</script>
+				</div>
+			</div>
 		</div>
 		<div class="screening_report" id="screen_fail">
-			{# title div #}
-			<span class="report_title">Screen Fail Report</span>
-			{# table #}
-			{# chart #}
+			<div class="row">
+				<div class="col-6">
+					{# table #}
+					<table>
+						<thead>
+							<tr>
+								<th>Criteria</th>
+								<th>Description</th>
+								<th>Count</th>
+							</tr>
+						</thead>
+						<tbody>
+						{% for row in screenFail.rows %}
+							<tr>
+								<td>{{ row.0 }}</td>
+								<td>{{ row.1 }}</td>
+								<td>{{ row.2 }}</td>
+							</tr>
+						{% endfor %}
+						</tbody>
+					</table>
+				</div>
+				{# chart #}
+				<div class="col-6">
+					<canvas id="screen_fail_chart" width="400" height="300"></canvas>
+					<script>
+						var fail_labels = [
+							{% for row in screenFail.rows %}
+								'{{ row.0 }}',
+							{% endfor %}
+						];
+						var fail_counts = [
+							{% for row in screenFail.rows %}
+								{{ row.2 }},
+							{% endfor %}
+						];
+						var fail_sum = 0;
+						fail_counts.forEach(function(count) {fail_sum = fail_sum + count;});
+						
+						var ctx_fail = document.getElementById('screen_fail_chart').getContext('2d');
+						var fail_chart = new Chart(ctx_fail, {
+							type: 'bar',
+							data: {
+								labels: fail_labels,
+								datasets: [{
+									label: 'Screening Failures',
+									data: fail_counts,
+									borderColor: 'rgba(13, 127, 133, 1)',
+									backgroundColor: 'rgba(13, 127, 133, 1)',
+									borderWidth: 1
+								}]
+							},
+							options: {
+								title: {
+									display: true,
+									fontSize: 24,
+									fontStyle: 'normal',
+									text: 'Total Excluded; n=' + fail_sum
+								},
+								scales: {
+									yAxes: [{
+										ticks: {
+											beginAtZero: true
+										}
+									}]
+								}
+							}
+						});
+					</script>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

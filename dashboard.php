@@ -18,16 +18,15 @@ foreach ($module->dags as $dag) {
 }
 
 $screeningLogData = $module->getScreeningLogData();
-// echo "<pre>" . json_encode($screeningLogData->rows, JSON_PRETTY_PRINT) . "</pre>";
-// $exclusionData = $module->getExclusionReportData();
-// $screenFailData = $module->getScreenFailData();
+$exclusionData = $module->getExclusionReportData();
+$screenFailData = $module->getScreenFailData();
 
 echo $template->render([
 	"allSites" => $allSitesData,
 	"mySite" => $mySitesData,
 	"authorized" => $authorized,
 	"site_names" => $site_names,
-	"screeningLog" => $screeningLogData
-	// "exclusion" => $exclusionData,
-	// "screenFail" => $screenFailData,
+	"screeningLog" => $screeningLogData,
+	"exclusion" => $exclusionData,
+	"screenFail" => $screenFailData
 ]);

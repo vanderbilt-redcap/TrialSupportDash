@@ -91,25 +91,32 @@ a.nonactive div.name {
 }
 
 /* screening reports */
-.report_switch {
-	padding: 32px;
-	margin: 8px;
-	border-color: #aaaaaa;
-	border-style: solid;
-	border-radius: 16px;
+div.blue_bar {
+	height: 36px;
+    background-color:#055877;
 }
-span.report_title {
+span#report_title {
     background-color:#138085;
     color: #ffffff;
     padding: 2px 15px;
 	display: block;
 	font-weight: bold;
 	font-size: 1.5rem;
+	min-height: 36px;
 }
-div.row {
+
+div.buttons {
 	display: flex;
-	flex-direction: row;
+	justify-content: center;
 }
+.report_switch {
+	padding: 96px 32px;
+	margin: 16px;
+	border-color: #aaaaaa;
+	border-style: solid;
+	border-radius: 16px;
+}
+
 #screening_log table tr:last-child {
     color: #ffffff;
 	font-weight: bold;
@@ -125,6 +132,6 @@ div.row {
 #screening_log div.col-6 > select {
 	margin: 20px 0px;
 }
-#screening_log canvas {
-	margin: 40px 0px;
+.screening_report div.col-6 * {
+	margin-top: 20px;
 }

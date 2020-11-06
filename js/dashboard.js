@@ -17,13 +17,20 @@ function activateTab(tabSelector) {
 		// show buttons, hide reports
 		$(".screening_report").hide();
 		$(".report_switch").show();
+		$("span#report_title").text("");
 	}
 }
 
 function showReport(report_name) {
+	// hide buttons and report divs
 	$(".report_switch").hide();
 	$(".screening_report").hide();
+	
+	// show report div
 	$("#" + report_name).show();
+	// set report title
+	var titles = {screening_log: "Screening Log Report", exclusion: "Exclusion Report", screen_fail: "Screen Fail Report"};
+	$("span#report_title").text(titles[report_name]);
 }
 
 function logout() {
@@ -34,8 +41,8 @@ function logout() {
 $("document").ready(function() {
     // activateTab("allSitesData");
 		activateTab("screening");
-		showReport('screening_log');
-	
+		showReport("screening_log");
+		
 	// get new Screening Log Report when select#site changes
 	$("select#site").change('change', function() {
 		var selected_site = "";
