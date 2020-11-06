@@ -106,7 +106,7 @@ span.report_title {
 	font-weight: bold;
 	font-size: 1.5rem;
 }
-#screening_log {
+div.row {
 	display: flex;
 	flex-direction: row;
 }
@@ -117,12 +117,12 @@ span.report_title {
 #screening_log table tr:last-child td {
     background-color:#138085;
 }
-#screening_log > div.col-6 {
+#screening_log div.col-6 {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 }
-#screening_log > div.col-6 > select {
+#screening_log div.col-6 > select {
 	margin: 20px 0px;
 }
 #screening_log canvas {
