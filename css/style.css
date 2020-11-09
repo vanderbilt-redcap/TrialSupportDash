@@ -122,7 +122,7 @@ div.buttons {
 	text-align: center;
 	border: 1px solid black;
 }
-#screening tr:nth-child(even):not(.first_row) > td {
+#screening tr:nth-child(even):not(.first_row):not(:last-child) > td {
     background-color:#fff;
 }
 #screening thead th {
@@ -158,4 +158,14 @@ div.buttons {
 }
 #screen_fail tbody td:nth-child(2) {
 	text-align: left;
+}
+button.main_page {
+	color: #ffffff;
+	background-color: #239095;
+	margin-bottom: 40px;
+	padding: 12px;
+	border: none;
+	border-radius: 6px;
+	font-size: 1rem;
+	text-transform: uppercase;
 }
