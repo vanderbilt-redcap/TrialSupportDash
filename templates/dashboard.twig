@@ -375,13 +375,24 @@
 	<div id="links">
 		{# blue bar #}
 		<div class="blue_bar"></div>
-		<div class='row'>
-			<div class='column'>
+		<div class="row" style="justify-content: center;">
+			<div class="column">
 				{% for link in helpfulLinks %}
-					<div class='card'>
-						Display: {{ link.display }}<br />
-						URL: {{ link.url }}<br />
-					</div class='card'>
+					<div class="card">
+						<div class="row" style="align-items: center;">
+							<div class="rank">
+								<span>#{{ loop.index }}</span>
+							</div>
+							<h1 class="link_display">{{ link.display }}</h1>
+						</div>
+						<div class="row" style="margin: 12px 0px;">
+							<a href="{{ link.url }}"class="link_url">{{ link.url }}</a>
+						</div>
+						<div class="row" style="align-items: center;">
+							<button class="clipboard"><img src="{{ clipboardImageSource }}"></button>
+							<small>Copy URL to clipboard</small>
+						</div>
+					</div class="card">
 				{% endfor %}
 				{% if helpfulLinks is empty %}
 					<h3>There are no links to show at the moment</h3>

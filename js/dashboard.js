@@ -40,6 +40,15 @@ function logout() {
 //    window.location="https://passitonstudy.org";
 }
 
+function copyToClipboard(element) {
+	// see: https://stackoverflow.com/questions/22581345/click-button-copy-to-clipboard-using-jquery
+    var $temp = $("<input>");
+    $("body").append($temp);
+    $temp.val($(element).text()).select();
+    document.execCommand("copy");
+    $temp.remove();
+}
+
 $("document").ready(function() {
     activateTab("allSitesData");
 		
@@ -85,6 +94,12 @@ $("document").ready(function() {
 			
 		});
 	})
+	
+	// make copy to clipboard buttons work
+	$("body").on("mousedown touchstart", "button.clipboard", function() {
+		var url_span = $(this).closest("div.card").find('a.link_url')
+		copyToClipboard(url_span);
+	});
 	
 	$('.sortable').tablesorter();
 });

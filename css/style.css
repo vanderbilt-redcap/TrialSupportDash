@@ -174,12 +174,46 @@ button.main_page {
 #links div.row {
 	display: flex;
 	flex-direction: row;
-	justify-content: center;
-	align-items; space-around;
 }
 #links div.column {
 	display: flex;
 	flex-direction: column;
+}
+#links div.card {
+	padding: 16px 32px;
+	margin: 16px;
+	background-color: #13808544;
+}
+#links div.rank {
+	display: flex;
 	justify-content: center;
-	align-items; space-around;
+	align-items: center;
+	border-radius: 50%;
+	background-color: #05587788;
+	border: none;
+	width: 44px;
+	height: 44px;
+	margin-right: 32px;
+	
+	color: #ffffff;
+	font-size: 1.25rem;
+	font-weight: 600;
+}
+#links .link_display {
+	color: #055877;
+}
+#links a.link_url {
+	color: #fff;
+	background-color: #05587788;
+	padding: 4px 12px;
+	border-radius: 4px;
+}
+#links button.clipboard {
+	border-radius: 4px;
+	margin-right: 8px;
+	background-color: #eefa;
+}
+#links button.clipboard img {
+	width: 50%;
+	height: 50%;
 }

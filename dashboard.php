@@ -25,6 +25,7 @@ $screeningLogData = $module->getScreeningLogData();
 $exclusionData = $module->getExclusionReportData();
 $screenFailData = $module->getScreenFailData();
 $helpfulLinks = $module->getHelpfulLinks();
+$clipboardImageSource = $module->getUrl("images/clipboard.PNG");
 
 echo $template->render([
 	"allSites" => $allSitesData,
@@ -34,5 +35,6 @@ echo $template->render([
 	"screeningLog" => $screeningLogData,
 	"exclusion" => $exclusionData,
 	"screenFail" => $screenFailData,
-	"helpfulLinks" => $helpfulLinks
+	"helpfulLinks" => $helpfulLinks,
+	"clipboardImageSource" => $clipboardImageSource
 ]);
