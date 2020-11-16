@@ -24,6 +24,7 @@ if ($authorized == 3) {
 $screeningLogData = $module->getScreeningLogData();
 $exclusionData = $module->getExclusionReportData();
 $screenFailData = $module->getScreenFailData();
+$helpfulLinks = $module->getHelpfulLinks();
 
 echo $template->render([
 	"allSites" => $allSitesData,
@@ -32,5 +33,6 @@ echo $template->render([
 	"site_names" => $site_names,
 	"screeningLog" => $screeningLogData,
 	"exclusion" => $exclusionData,
-	"screenFail" => $screenFailData
+	"screenFail" => $screenFailData,
+	"helpfulLinks" => $helpfulLinks
 ]);

@@ -71,6 +71,24 @@
 			"name": "Event Containing Screening Fields",
 			"type": "event-list",
 			"repeatable": false
+		},
+		{
+			"key": "helpful_links",
+			"name": "Helpful links shown in dashboard (URL)",
+			"type": "sub_settings",
+			"repeatable": true,
+			"sub_settings": [
+				{
+					"key": "link_display",
+					"name": "Link display text",
+					"type": "text"
+				},
+				{
+					"key": "link_url",
+					"name": "Link URL",
+					"type": "text"
+				}
+			]
 		}
 	],
 	"system-settings": [],

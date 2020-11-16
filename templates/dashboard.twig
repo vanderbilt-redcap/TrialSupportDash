@@ -17,6 +17,10 @@
 				<div class='top-border'></div>
 				<div class='name'><b>Screening</b></div>
 			</a>
+			<a class="tab nonactive" id="links-button" onclick="activateTab('links');">
+				<div class='top-border'></div>
+				<div class='name'><b>Helpful Links</b></div>
+			</a>
 		</div>
 	</div>
 	{#<div class='row' style="height:1px"></div>#}
@@ -365,6 +369,24 @@
 						});
 					</script>
 				</div>
+			</div>
+		</div>
+	</div>
+	<div id="links">
+		{# blue bar #}
+		<div class="blue_bar"></div>
+		<div class='row'>
+			<div class='column'>
+				{% for link in helpfulLinks %}
+					<div class='card'>
+						Display: {{ link.display }}<br />
+						URL: {{ link.url }}<br />
+					</div class='card'>
+				{% endfor %}
+				{% if helpfulLinks is empty %}
+					<h3>There are no links to show at the moment</h3>
+					<small>Check back soon to find a list of helpful resources!</small>
+				{% endif %}
 			</div>
 		</div>
 	</div>

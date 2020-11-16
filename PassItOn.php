@@ -592,6 +592,37 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		
 		return $this->screen_fail_data;
 	}
+	public function getHelpfulLinks() {
+		$links = [];
+		
+		// get display text and urls from settings
+		$display_texts = $this->getProjectSetting('link_display');
+		$url_texts = $this->getProjectSetting('link_url');
+		
+		// add links to array
+		foreach ($url_texts as $i => $url) {
+			// unless URL is missing
+			if (empty($url))
+				continue;
+			
+			$display = $display_texts[$i];
+			// display text defaults to URL if missing
+			if (empty($display))
+				$display = $url;
+			
+			// prepend http protocol text if missing to avoid pathing to ExternalModules/...
+			if (strpos($url, "http") === false)
+				$url = "http://" . $url;
+			
+			// "<a href='$url' class='helpful_link'>$display</a>\n";
+			$link = new \stdClass();
+			$link->display = $display;
+			$link->url = $url;
+			$links[] = $link;
+		}
+		
+		return $links;
+	}
 	
 	// hooks
 	public function redcap_module_link_check_display($pid, $link) {

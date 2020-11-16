@@ -5,6 +5,8 @@ function hideAllTabs() {
     $("#mySiteData-button").removeClass('active').addClass('nonactive');
     $("#screening").hide();
     $("#screening-button").removeClass('active').addClass('nonactive');
+    $("#links").hide();
+    $("#links-button").removeClass('active').addClass('nonactive');
 }
 
 function activateTab(tabSelector) {
