@@ -440,16 +440,12 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 			$data->sites[] = $site;
 		}
 		
-		// sort all sites, FPE ascending
+		// sort all sites, enrolled ascending
 		if (!function_exists(__NAMESPACE__ . '\sortAllSitesData')) {
 			function sortAllSitesData($a, $b) {
-				if ($a->fpe == $b->fpe)
+				if ($a->enrolled == $b->enrolled)
 					return 0;
-				if ($a->fpe == '-')
-					return 1;
-				if ($b->fpe == '-')
-					return -1;
-				return $a->fpe < $b->fpe ? -1 : 1;
+				return $a->enrolled < $b->enrolled ? 1 : -1;
 			}
 		}
 		uasort($data->sites, __NAMESPACE__ . '\sortAllSitesData');
