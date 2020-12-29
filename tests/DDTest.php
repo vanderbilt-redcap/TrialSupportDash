@@ -64,9 +64,9 @@ final class DDTest extends \ExternalModules\ModuleBaseTest
 		}
 	}
 
-	function testEdcData() {
-		/** @var $module \Vanderbilt\PassItOn\PassItOn */
-		$module = $this->module;
+//	function testEdcData() {
+//		/** @var $module \Vanderbilt\PassItOn\PassItOn */
+//		$module = $this->module;
 
 //		$q = \ExternalModules\ExternalModules::getEnabledProjects($module->PREFIX);
 //
@@ -86,5 +86,5 @@ final class DDTest extends \ExternalModules\ModuleBaseTest
 //			$module->edc_data = false;
 //			$module->screening_data = false;
 //		}
-	}
+//	}
 }
