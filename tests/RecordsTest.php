@@ -22,6 +22,7 @@ final class RecordsTest extends \ExternalModules\ModuleBaseTest
 		$this->module->project_ids = 		json_decode(file_get_contents(__DIR__."/test_data/project_ids.json"));
 		$this->module->event_ids = 			json_decode(file_get_contents(__DIR__."/test_data/event_ids.json"));
 		$this->module->edc_data = 			json_decode(file_get_contents(__DIR__."/test_data/edc_data.json"));
+		$this->module->mappings = 		json_decode(file_get_contents(__DIR__."/test_data/field_mappings.json"),true);
 	}
 
 	// output from these functions should be very predictable given the constrained test inputs
