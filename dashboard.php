@@ -24,8 +24,11 @@ if ($authorized == 3) {
 $screeningLogData = $module->getScreeningLogData();
 $exclusionData = $module->getExclusionReportData();
 $screenFailData = $module->getScreenFailData();
-$helpfulLinks = $module->getHelpfulLinks();
 $clipboardImageSource = $module->getUrl("images/clipboard.PNG");
+$folderImageSource = $module->getUrl("images/folder.png");
+$helpfulLinks = $module->getHelpfulLinks();
+$helpfulLinkFolders = $module->getHelpfulLinkFolders();
+
 
 echo $template->render([
 	"allSites" => $allSitesData,
@@ -36,5 +39,7 @@ echo $template->render([
 	"exclusion" => $exclusionData,
 	"screenFail" => $screenFailData,
 	"helpfulLinks" => $helpfulLinks,
-	"clipboardImageSource" => $clipboardImageSource
+	"helpfulLinkFolders" => $helpfulLinkFolders,
+	"clipboardImageSource" => $clipboardImageSource,
+	"folderImageSource" => $folderImageSource
 ]);

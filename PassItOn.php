@@ -589,35 +589,68 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		return $this->screen_fail_data;
 	}
 	public function getHelpfulLinks() {
+		$link_settings = $this->getSubSettings('helpful_links_folders');
 		$links = [];
 		
-		// get display text and urls from settings
-		$display_texts = $this->getProjectSetting('link_display');
-		$url_texts = $this->getProjectSetting('link_url');
-		
-		// add links to array
-		foreach ($url_texts as $i => $url) {
-			// unless URL is missing
-			if (empty($url))
-				continue;
-			
-			$display = $display_texts[$i];
-			// display text defaults to URL if missing
-			if (empty($display))
-				$display = $url;
-			
-			// prepend http protocol text if missing to avoid pathing to ExternalModules/...
-			if (strpos($url, "http") === false)
-				$url = "http://" . $url;
-			
-			// "<a href='$url' class='helpful_link'>$display</a>\n";
-			$link = new \stdClass();
-			$link->display = $display;
-			$link->url = $url;
-			$links[] = $link;
+		foreach($link_settings as $i => $folder) {
+			foreach($folder['helpful_links'] as $link_info) {
+				// skip links with missing URL
+				if (empty($link_info['link_url'])) {
+					continue;
+				}
+				
+				$link = new \stdClass();
+				$link->url = $link_info['link_url'];
+				
+				// prepend http protocol text if missing to avoid pathing to ExternalModules/...
+				if (strpos($link->url, "http") === false) {
+					$link->url = "http://" . $link->url;
+				}
+				
+				if (empty($link_info['link_display'])) {
+					$link->display = $link->url;
+				} else {
+					$link->display = $link_info['link_display'];
+				}
+				
+				$link->folder_index = $i;
+				
+				$links[] = $link;
+			}
 		}
 		
 		return $links;
+	}
+	public function getHelpfulLinkFolders() {
+		$link_settings = $this->getSubSettings('helpful_links_folders');
+		
+		$folders = [];
+		foreach($link_settings as $i => $folder_info) {
+			$folder = new \stdClass();
+			
+			$folder->name = $folder_info['helpful_links_folder_text'];
+			if (empty($folder->name)) {
+				$folder->name = "Folder " . ($i + 1);
+			}
+			
+			$folder->color = $folder_info['helpful_links_folder_color'];
+			$css_hex_color_pattern = "/#([[:xdigit:]]{3}){1,2}\b/";
+			if (!preg_match($css_hex_color_pattern, $folder->color)) {
+				// Ensures folders have a valid color
+				$folder->color = "#edebb4";
+			}
+			
+			// if $folder_info['helpful_links'] not array, throw exception
+			
+			$folder->linkCount = count($folder_info['helpful_links']);
+			if (!is_numeric($folder->linkCount)) {
+				$folder->linkCount = 0;
+			}
+			
+			$folders[] = $folder;
+		}
+		
+		return $folders;
 	}
 	
 	// hooks

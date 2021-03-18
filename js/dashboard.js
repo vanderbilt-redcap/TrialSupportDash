@@ -49,6 +49,24 @@ function copyToClipboard(element) {
     $temp.remove();
 }
 
+function clickedFolder(clickEvent) {
+	var folder = $(clickEvent.currentTarget);
+	var folder_index = folder.attr("data-index") - 1;
+	
+	$("#links .folders").hide();
+	
+	// unhide links div
+	$("#links div.links").show();
+	$("#links div.links .card").each(function(i, link_element) {
+		var this_link = $(link_element);
+		if (this_link.attr("data-folder-index") == folder_index) {
+			this_link.show();
+		} else {
+			this_link.hide();
+		}
+	})
+}
+
 $("document").ready(function() {
     activateTab("allSitesData");
 		
@@ -67,7 +85,6 @@ $("document").ready(function() {
 			dataType: "json"
 		})
 		.done(function(json) {
-			console.log('data pull response', json)
 			if (json.rows && json.rows.length > 1) {
 				// replace table rows with new data
 				$("#screening_log div table tbody").empty();
@@ -99,6 +116,14 @@ $("document").ready(function() {
 	$("body").on("mousedown touchstart", "button.clipboard", function() {
 		var url_span = $(this).closest("div.card").find('a.link_url')
 		copyToClipboard(url_span);
+	});
+	
+	// update links shown when user clicks helpful links folder
+	$("body").on("mousedown touchstart", "#links div.folder", clickedFolder);
+	
+	$("body").on("mousedown touchstart", "#links .close-folder", function() {
+		$("#links .folders").show();
+		$("#links div.links").hide();
 	});
 	
 	$('.sortable').tablesorter();

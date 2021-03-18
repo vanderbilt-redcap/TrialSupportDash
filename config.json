@@ -73,20 +73,38 @@
 			"repeatable": false
 		},
 		{
-			"key": "helpful_links",
-			"name": "Helpful links shown in dashboard (URL)",
+			"key": "helpful_links_folders",
+			"name": "Helpful links shown in dashboard, categorized in folders",
 			"type": "sub_settings",
 			"repeatable": true,
 			"sub_settings": [
 				{
-					"key": "link_display",
-					"name": "Link display text",
+					"key": "helpful_links_folder_text",
+					"name": "Folder name",
 					"type": "text"
 				},
 				{
-					"key": "link_url",
-					"name": "Link URL",
+					"key": "helpful_links_folder_color",
+					"name": "Folder color (hex formatted e.g., #ede5be)",
 					"type": "text"
+				},
+				{
+					"key": "helpful_links",
+					"name": "Helpful links shown in dashboard, categorized in folders",
+					"type": "sub_settings",
+					"repeatable": true,
+					"sub_settings": [
+						{
+							"key": "link_display",
+							"name": "Link display text",
+							"type": "text"
+						},
+						{
+							"key": "link_url",
+							"name": "Link URL",
+							"type": "text"
+						}
+					]
 				}
 			]
 		}

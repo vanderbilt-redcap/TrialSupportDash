@@ -375,30 +375,38 @@
 	<div id="links">
 		{# blue bar #}
 		<div class="blue_bar"></div>
-		<div class="row" style="justify-content: center;">
-			<div class="column">
-				{% for link in helpfulLinks %}
-					<div class="card">
-						<div class="row" style="align-items: center;">
-							<div class="rank">
-								<span>#{{ loop.index }}</span>
-							</div>
-							<h1 class="link_display">{{ link.display }}</h1>
+		<div class="row links" style="justify-content: center;">
+			<button class="close-folder">Return to folders</button>
+			{% for link in helpfulLinks %}
+				<div class="card" data-folder-index="{{ link.folder_index }}">
+					<div class="row" style="align-items: center;">
+						<div class="rank">
+							<span>#{{ loop.index }}</span>
 						</div>
-						<div class="row" style="margin: 12px 0px;">
-							<a href="{{ link.url }}"class="link_url">{{ link.url }}</a>
-						</div>
-						<div class="row" style="align-items: center;">
-							<button class="clipboard"><img src="{{ clipboardImageSource }}"></button>
-							<small>Copy URL to clipboard</small>
-						</div>
-					</div class="card">
-				{% endfor %}
-				{% if helpfulLinks is empty %}
-					<h3>There are no links to show at the moment</h3>
-					<small>Check back soon to find a list of helpful resources!</small>
-				{% endif %}
-			</div>
+						<h1 class="link_display">{{ link.display }}</h1>
+					</div>
+					<div class="row" style="margin: 12px 0px;">
+						<a href="{{ link.url }}"class="link_url">{{ link.url }}</a>
+					</div>
+					<div class="row" style="align-items: center;">
+						<button class="clipboard"><img src="{{ clipboardImageSource }}"></button>
+						<small>Copy URL to clipboard</small>
+					</div>
+				</div class="card">
+			{% endfor %}
+		</div>
+		<div class="row folders" style="justify-content: center;">
+			{% for folder in helpfulLinkFolders %}
+				<div class="folder" data-index="{{ loop.index }}">
+					<img src="{{ folderImageSource }}" alt="Folder of links named '{{ folder.name }}'" style="background: {{folder.color}};"/>
+					<p>{{ folder.name }}</p>
+					<p>{{ folder.linkCount }} Links</p>
+				</div>
+			{% endfor %}
+			{% if helpfulLinkFolders is empty %}
+				<h3>There are no links to show at the moment</h3>
+				<small>Check back soon to find a list of helpful resources!</small>
+			{% endif %}
 		</div>
 	</div>
 </div>

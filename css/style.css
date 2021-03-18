@@ -175,6 +175,9 @@ button.main_page {
 	display: flex;
 	flex-direction: row;
 }
+#links div.links {
+	display: none;
+}
 #links div.column {
 	display: flex;
 	flex-direction: column;
