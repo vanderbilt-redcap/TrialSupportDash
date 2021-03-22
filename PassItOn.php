@@ -33,6 +33,8 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 		'randomization',
 		'transfusion_given'
 	];
+	
+	private const MAX_FOLDER_NAME_LEN = 60;		// folder names truncated after 48 characters
 
 	public function __construct() {
 		parent::__construct();
@@ -631,6 +633,8 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 			$folder->name = $folder_info['helpful_links_folder_text'];
 			if (empty($folder->name)) {
 				$folder->name = "Folder " . ($i + 1);
+			} elseif (strlen($folder->name) > $this::MAX_FOLDER_NAME_LEN) {
+				$folder->name = substr($folder->name, 0, $this::MAX_FOLDER_NAME_LEN) . "...";
 			}
 			
 			$folder->color = $folder_info['helpful_links_folder_color'];

@@ -57,6 +57,7 @@ function clickedFolder(clickEvent) {
 	
 	// unhide links div
 	$("#links div.links").show();
+	$("#links button.close-folder").show();
 	$("#links div.links .card").each(function(i, link_element) {
 		var this_link = $(link_element);
 		if (this_link.attr("data-folder-index") == folder_index) {
@@ -123,8 +124,12 @@ $("document").ready(function() {
 	
 	$("body").on("mousedown touchstart", "#links .close-folder", function() {
 		$("#links .folders").show();
-		$("#links div.links").hide();
+		$("#links .links").hide();
+		$("#links button.close-folder").hide();
 	});
+	
+	$("#links .links").hide();
+	$("#links button.close-folder").hide();
 	
 	$('.sortable').tablesorter();
 });

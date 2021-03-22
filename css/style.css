@@ -171,21 +171,41 @@ button.main_page {
 }
 
 /* helpful links */
-#links div.row {
+#links .folders {
 	display: flex;
-	flex-direction: row;
+}
+#links .folders .folder {
+	position: relative;
+	border-radius: 20px;
+	overflow: hidden;
+	margin: 16px;
+}
+#links .folders .folder img {
+	max-width: 248px;
+	max-height: 248px;
+}
+#links .centered {
+	position: absolute;
+	font-size: 18px;
+	font-weight: 700;
+	top: 30%;
+	left: 10%;
+	max-width: 80%;
+	max-height: 45%;
 }
 #links div.links {
-	display: none;
-}
-#links div.column {
 	display: flex;
-	flex-direction: column;
 }
-#links div.card {
-	padding: 16px 32px;
+#links .links .card {
 	margin: 16px;
-	background-color: #13808544;
+	padding-left: 24px;
+	padding-right: 24px;
+	padding-top: 8px;
+	padding-bottom: 8px;	
+}
+#links button.close-folder {
+	margin-top: 16px;
+	margin-left: 16px;
 }
 #links div.rank {
 	display: flex;

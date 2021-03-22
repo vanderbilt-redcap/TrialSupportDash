@@ -375,8 +375,8 @@
 	<div id="links">
 		{# blue bar #}
 		<div class="blue_bar"></div>
-		<div class="row links" style="justify-content: center;">
-			<button class="close-folder">Return to folders</button>
+		<button class="close-folder btn btn-info">Return to folders</button>
+		<div class="row links">
 			{% for link in helpfulLinks %}
 				<div class="card" data-folder-index="{{ link.folder_index }}">
 					<div class="row" style="align-items: center;">
@@ -399,8 +399,10 @@
 			{% for folder in helpfulLinkFolders %}
 				<div class="folder" data-index="{{ loop.index }}">
 					<img src="{{ folderImageSource }}" alt="Folder of links named '{{ folder.name }}'" style="background: {{folder.color}};"/>
-					<p>{{ folder.name }}</p>
-					<p>{{ folder.linkCount }} Links</p>
+					<div class="centered">
+						<p>{{ folder.name }}</p>
+						<p>{{ folder.linkCount }} Links</p>
+					</div>
 				</div>
 			{% endfor %}
 			{% if helpfulLinkFolders is empty %}
