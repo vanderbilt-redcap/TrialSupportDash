@@ -2,7 +2,7 @@
 	"name": "RAAS_NECTAR",
 	"namespace": "Vanderbilt\\RAAS_NECTAR",
 	"framework-version": 6,
-	"description": "",
+	"description": "Copy of PassItOn for RAAS NECTAR",
 	"documentation": "README.md",
 	"authors": [
 		{
