@@ -6,7 +6,7 @@ $twig = new \Twig\Environment($loader);
 
 $template = $twig->load("dashboard.twig");
 
-/** @var $module \Vanderbilt\PassItOn\PassItOn */
+/** @var $module \Vanderbilt\RAAS_NECTAR\RAAS_NECTAR */
 $allSitesData = $module->getAllSitesData();
 $mySitesData = $module->getMySiteData();
 $authorized = $module->user->authorized;

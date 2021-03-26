@@ -1,6 +1,6 @@
 <?php
 
-namespace Vanderbilt\PassItOn;
+namespace Vanderbilt\RAAS_NECTAR;
 
 // For now, the path to "redcap_connect.php" on your system must be hard coded.
 require_once dirname(dirname(dirname(__DIR__))) . '/redcap_connect.php';

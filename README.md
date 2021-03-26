@@ -1,2 +1,2 @@
-# PassItOn
-Implements the user dashboard for PassItOn REDCap projects.
+# RAAS_NECTAR
+Implements the user dashboard for RAAS_NECTAR REDCap projects.

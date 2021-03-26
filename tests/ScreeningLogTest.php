@@ -1,6 +1,6 @@
 <?php
 
-namespace Vanderbilt\PassItOn;
+namespace Vanderbilt\RAAS_NECTAR;
 
 require_once dirname(dirname(dirname(__DIR__))) . '/redcap_connect.php';
 

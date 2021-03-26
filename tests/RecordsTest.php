@@ -1,6 +1,6 @@
 <?php
 
-namespace Vanderbilt\PassItOn;
+namespace Vanderbilt\RAAS_NECTAR;
 
 // For now, the path to "redcap_connect.php" on your system must be hard coded.
 require_once dirname(dirname(dirname(__DIR__))) . '/redcap_connect.php';
@@ -31,7 +31,7 @@ final class RecordsTest extends \ExternalModules\ModuleBaseTest
 		$records = $this->module->records;
 		
 		// ensure our records are structured as expected
-		$this->assertIsArray($records, "PassItOn->records is not an array after calling ->getRecords()");
+		$this->assertIsArray($records, "RAAS_NECTAR->records is not an array after calling ->getRecords()");
 		
 		// ensure we have the correct number of rows
 		$record_count = count($records);

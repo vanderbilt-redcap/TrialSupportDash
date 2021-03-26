@@ -1,7 +1,7 @@
 <?php
-namespace Vanderbilt\PassItOn;
+namespace Vanderbilt\RAAS_NECTAR;
 
-class PassItOn extends \ExternalModules\AbstractExternalModule {
+class RAAS_NECTAR extends \ExternalModules\AbstractExternalModule {
 	public $edc_data;
 	public $uad_data;
 	private $access_tier_by_role = [
@@ -659,7 +659,7 @@ class PassItOn extends \ExternalModules\AbstractExternalModule {
 	
 	// hooks
 	public function redcap_module_link_check_display($pid, $link) {
-		if ($link['name'] == 'PassItOn Dashboard') {
+		if ($link['name'] == 'RAAS_NECTAR Dashboard') {
 			$this->getUser();
 			$this->authorizeUser();
 			if ($this->user->authorized === false) {

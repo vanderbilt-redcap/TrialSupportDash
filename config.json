@@ -1,8 +1,8 @@
 {
-	"name": "PassItOn",
-	"namespace": "Vanderbilt\\PassItOn",
-	"framework-version": 5,
-	"description": "REDCap external module that implements the user dashboard for PassItOn REDCap projects.",
+	"name": "RAAS_NECTAR",
+	"namespace": "Vanderbilt\\RAAS_NECTAR",
+	"framework-version": 6,
+	"description": "",
 	"documentation": "README.md",
 	"authors": [
 		{
@@ -24,7 +24,7 @@
 	"links": {
 		"project": [
 			{
-				"name": "PassItOn Dashboard",
+				"name": "RAAS_NECTAR Dashboard",
 				"icon": "report",
 				"url": "dashboard.php"
 			}
@@ -35,21 +35,21 @@
 	"project-settings": [
 		{
 			"key": "screening_project",
-			"name": "PassItOn Screening Project ID",
+			"name": "RAAS_NECTAR Screening Project ID",
 			"required": false,
 			"type": "project-id",
 			"repeatable": false
 		},
 		{
 			"key": "user_access_project",
-			"name": "PassItOn User Access Database Project ID",
+			"name": "RAAS_NECTAR User Access Database Project ID",
 			"required": false,
 			"type": "project-id",
 			"repeatable": false
 		},
 		{
 			"key": "site_regulation_project",
-			"name": "PassItOn Site Regulation Project ID",
+			"name": "RAAS_NECTAR Site Regulation Project ID",
 			"required": false,
 			"type": "project-id",
 			"repeatable": false

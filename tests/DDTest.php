@@ -1,6 +1,6 @@
 <?php
 
-namespace Vanderbilt\PassItOn;
+namespace Vanderbilt\RAAS_NECTAR;
 
 // For now, the path to "redcap_connect.php" on your system must be hard coded.
 require_once dirname(dirname(dirname(__DIR__))) . '/redcap_connect.php';
@@ -13,7 +13,7 @@ final class DDTest extends \ExternalModules\ModuleBaseTest
 		parent::setUp();
 
 		if(!defined("PROJECT_ID")) {
-			/** @var $module \Vanderbilt\PassItOn\PassItOn */
+			/** @var $module \Vanderbilt\RAAS_NECTAR\RAAS_NECTAR */
 			$module = $this->module;
 
 			$q = \ExternalModules\ExternalModules::getEnabledProjects($module->PREFIX);
@@ -26,7 +26,7 @@ final class DDTest extends \ExternalModules\ModuleBaseTest
 	}
 
 	function testDD(){
-		/** @var $module \Vanderbilt\PassItOn\PassItOn */
+		/** @var $module \Vanderbilt\RAAS_NECTAR\RAAS_NECTAR */
 		$module = $this->module;
 
 		$q = \ExternalModules\ExternalModules::getEnabledProjects($module->PREFIX);
@@ -65,7 +65,7 @@ final class DDTest extends \ExternalModules\ModuleBaseTest
 	}
 
 //	function testEdcData() {
-//		/** @var $module \Vanderbilt\PassItOn\PassItOn */
+//		/** @var $module \Vanderbilt\RAAS_NECTAR\RAAS_NECTAR */
 //		$module = $this->module;
 
 //		$q = \ExternalModules\ExternalModules::getEnabledProjects($module->PREFIX);
