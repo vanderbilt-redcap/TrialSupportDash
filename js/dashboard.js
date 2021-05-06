@@ -69,7 +69,7 @@ function clickedFolder(clickEvent) {
 }
 
 $("document").ready(function() {
-    activateTab("allSitesData");
+    activateTab(startTab);
 		
 	// get new Screening Log Report when select#site changes
 	$("select#site").change('change', function() {

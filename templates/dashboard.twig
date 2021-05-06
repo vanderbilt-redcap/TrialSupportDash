@@ -2,10 +2,15 @@
 
 {% block content %}
 
+<script type="text/javascript">
+    var startTab = "{{ use_screening ? "allSitesData" : "links" }}";
+</script>
+    
 <div id="tabs" style="width:100%; float:left; margin-top:5px;">
 	<div class='row'>
 		<div id="event-tabs" style="background-color:#ffffff; margin-left:0px;text-align:left">
-			<a class="tab active" id="allSitesData-button" onclick="activateTab('allSitesData');">
+            {% if use_screening %}
+            <a class="tab active" id="allSitesData-button" onclick="activateTab('allSitesData');">
 				<div class='top-border'></div>
 				<div class='name'><b>Enrollment Statistics</b></div>
 			</a>
@@ -17,13 +22,14 @@
 				<div class='top-border'></div>
 				<div class='name'><b>Screening</b></div>
 			</a>
-			<a class="tab nonactive" id="links-button" onclick="activateTab('links');">
-				<div class='top-border'></div>
+            {% endif %}
+			<a class="tab {{ use_screening ? "nonactive" : "active "}}" id="links-button" onclick="activateTab('links');">				<div class='top-border'></div>
 				<div class='name'><b>Helpful Links</b></div>
 			</a>
 		</div>
 	</div>
 	{#<div class='row' style="height:1px"></div>#}
+    {% if use_screening %}
 	<div id="allSitesData">
 		<table>
 			<thead>
@@ -372,6 +378,7 @@
 			</div>
 		</div>
 	</div>
+    {% endif %}
 	<div id="links">
 		{# blue bar #}
 		<div class="blue_bar"></div>
