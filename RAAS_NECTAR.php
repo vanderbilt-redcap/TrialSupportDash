@@ -34,7 +34,7 @@ class RAAS_NECTAR extends \ExternalModules\AbstractExternalModule {
 		'transfusion_given'
 	];
 	
-	private const MAX_FOLDER_NAME_LEN = 60;		// folder names truncated after 48 characters
+	protected const MAX_FOLDER_NAME_LEN = 60;		// folder names truncated after 48 characters
 
 	public function __construct() {
 		parent::__construct();
