@@ -1,5 +1,5 @@
 <?php
-namespace Vanderbilt\RAAS_NECTAR;
+namespace Vanderbilt\TrialSupportDash;
 
 class RAAS_NECTAR extends \ExternalModules\AbstractExternalModule {
 	public $edc_data;
