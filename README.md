@@ -1,2 +1,3 @@
-# RAAS_NECTAR
-Implements the user dashboard for RAAS_NECTAR REDCap projects!
+# Trial Support Dashboard
+Customizable dashboard with various features for supporting trial management
+

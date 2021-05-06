@@ -1,8 +1,8 @@
 {
-	"name": "RAAS_NECTAR",
-	"namespace": "Vanderbilt\\RAAS_NECTAR",
+	"name": "TrialSupportDash",
+	"namespace": "Vanderbilt\\TrialSupportDash",
 	"framework-version": 6,
-	"description": "Copy of PassItOn for RAAS NECTAR",
+	"description": "Copy of PassItOn for New Trial Dashboards",
 	"documentation": "README.md",
 	"authors": [
 		{
@@ -24,7 +24,7 @@
 	"links": {
 		"project": [
 			{
-				"name": "RAAS_NECTAR Dashboard",
+				"name": "Trial Support Dashboard",
 				"icon": "report",
 				"url": "dashboard.php"
 			}
@@ -34,10 +34,21 @@
 	"no-auth-pages": [],
 	"project-settings": [
 		{
+			"key": "use_screening",
+			"name": "Use Screening Module?",
+			"required": false,
+			"type": "checkbox",
+			"repeatable": false
+		},
+		{
 			"key": "screening_project",
 			"name": "RAAS_NECTAR Screening Project ID",
 			"required": false,
 			"type": "project-id",
+			"branchingLogic": {
+				"field": "use_screening",
+				"value": "1"
+			},
 			"repeatable": false
 		},
 		{
@@ -45,6 +56,10 @@
 			"name": "RAAS_NECTAR User Access Database Project ID",
 			"required": false,
 			"type": "project-id",
+			"branchingLogic": {
+				"field": "use_screening",
+				"value": "1"
+			},
 			"repeatable": false
 		},
 		{
@@ -52,24 +67,47 @@
 			"name": "RAAS_NECTAR Site Regulation Project ID",
 			"required": false,
 			"type": "project-id",
+			"branchingLogic": {
+				"field": "use_screening",
+				"value": "1"
+			},
 			"repeatable": false
 		},
 		{
 			"key": "demographics_event",
 			"name": "Event Containing Demographics Fields",
 			"type": "event-list",
+			"branchingLogic": {
+				"field": "use_screening",
+				"value": "1"
+			},
 			"repeatable": false
 		},
 		{
 			"key": "transfusion_event",
 			"name": "Event Containing Transfusion Field",
 			"type": "event-list",
+			"branchingLogic": {
+				"field": "use_screening",
+				"value": "1"
+			},
 			"repeatable": false
 		},
 		{
 			"key": "screening_event",
 			"name": "Event Containing Screening Fields",
 			"type": "event-list",
+			"branchingLogic": {
+				"field": "use_screening",
+				"value": "1"
+			},
+			"repeatable": false
+		},
+		{
+			"key": "use_site_activation",
+			"name": "Use Site Activation Module?",
+			"required": false,
+			"type": "checkbox",
 			"repeatable": false
 		},
 		{
