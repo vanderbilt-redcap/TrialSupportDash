@@ -26,41 +26,43 @@ final class DDTest extends \ExternalModules\ModuleBaseTest
 	}
 
 	function testDD(){
-		/** @var $module \Vanderbilt\RAAS_NECTAR\RAAS_NECTAR */
+		/** @var $module \Vanderbilt\TrialSupportDash\TrialSupportDash */
 		$module = $this->module;
 
-		$q = \ExternalModules\ExternalModules::getEnabledProjects($module->PREFIX);
+		$projects = $module->getProjectsWithModuleEnabled();
 
-		while($row = db_fetch_assoc($q)) {
-			$project_id = $row["project_id"];
-
-			$screeningProject = $module->getProjectSetting("screening_project",$project_id);
-			$uaProject = $module->getProjectSetting("user_access_project",$project_id);
-
-			$this->assertNotEquals($screeningProject,NULL);
-			$this->assertNotEquals($uaProject,NULL);
-
-			$demoEvent = $module->getProjectSetting("demographics_event",$project_id);
-			$transfusionEvent = $module->getProjectSetting("transfusion_event",$project_id);
-			$screeningEvent = $module->getProjectSetting("screening_event",$project_id);
-
-			$this->assertNotEquals($demoEvent,NULL);
-			$this->assertNotEquals($transfusionEvent,NULL);
-
-			$demographicsEventFields = \REDCap::getValidFieldsByEvents($project_id,[$demoEvent]);
-			$transfusionEventFields = \REDCap::getValidFieldsByEvents($project_id,[$transfusionEvent]);
-			$screeningEventFields = \REDCap::getValidFieldsByEvents($project_id,[$screeningEvent]);
-
-			$this->assertContains("sex",$demographicsEventFields);
-			$this->assertContains("race_ethnicity",$demographicsEventFields);
-			$this->assertContains("screen_date",$demographicsEventFields);
-
-			$this->assertContains("randomization_date",$screeningEventFields);
-
-			$this->assertContains("transfusion_given",$transfusionEventFields);
-			$this->assertContains("transfusion_datetime",$transfusionEventFields);
-
-//			$metadata = $module->getMetadata($project_id);
+		foreach($projects as $project_id) {
+			$useScreening = $module->getProjectSetting("use_screening",$project_id);
+			
+			if($useScreening) {
+				$screeningProject = $module->getProjectSetting("screening_project",$project_id);
+				$uaProject = $module->getProjectSetting("user_access_project",$project_id);
+	
+				$this->assertNotEquals($screeningProject,NULL);
+				$this->assertNotEquals($uaProject,NULL);
+	
+				$demoEvent = $module->getProjectSetting("demographics_event",$project_id);
+				$transfusionEvent = $module->getProjectSetting("transfusion_event",$project_id);
+				$screeningEvent = $module->getProjectSetting("screening_event",$project_id);
+	
+				$this->assertNotEquals($demoEvent,NULL);
+				$this->assertNotEquals($transfusionEvent,NULL);
+	
+				$demographicsEventFields = \REDCap::getValidFieldsByEvents($project_id,[$demoEvent]);
+				$transfusionEventFields = \REDCap::getValidFieldsByEvents($project_id,[$transfusionEvent]);
+				$screeningEventFields = \REDCap::getValidFieldsByEvents($project_id,[$screeningEvent]);
+	
+				$this->assertContains("sex",$demographicsEventFields);
+				$this->assertContains("race_ethnicity",$demographicsEventFields);
+				$this->assertContains("screen_date",$demographicsEventFields);
+	
+				$this->assertContains("randomization_date",$screeningEventFields);
+	
+				$this->assertContains("transfusion_given",$transfusionEventFields);
+				$this->assertContains("transfusion_datetime",$transfusionEventFields);
+	
+	//			$metadata = $module->getMetadata($project_id);
+			}
 		}
 	}
 

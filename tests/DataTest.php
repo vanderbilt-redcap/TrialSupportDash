@@ -25,28 +25,44 @@ final class DataTest extends \ExternalModules\ModuleBaseTest
 	function testUADUsersHaveDAG() {
 		$module = $this->module;
 
-		$this->assertNotEmpty($_GET['pid'], "Can't run integration test without UAD project ID specified");
-		unset($module->uad_data);
-		$module->getUADData();
+		$projects = $module->getProjectsWithModuleEnabled();
 
-		$user_records = $module->uad_data;
-		$this->assertNotCount(0,$user_records, "No user records found");
-
-		unset($module->uad_data);
+		foreach($projects as $project_id) {
+			$useScreening = $module->getProjectSetting("use_screening",$project_id);
+			
+			if($useScreening) {
+				$this->assertNotEmpty($project_id, "Can't run integration test without UAD project ID specified");
+				unset($module->uad_data);
+				$module->getUADData($project_id);
+		
+				$user_records = $module->uad_data;
+				$this->assertNotCount(0,$user_records, "No user records found");
+		
+				unset($module->uad_data);
+			}
+		}
 	}
 	
 	function testEDCPatientRecordsHaveDAG() {
 		$module = $this->module;
 
-		$this->assertNotEmpty($_GET['pid'], "Can't run integration test without EDC project ID specified");
-        unset($module->edc_data);
-		$records = $module->getEDCData();
+		$projects = $module->getProjectsWithModuleEnabled();
 
-		$this->assertNotCount(0,$records, "No patient records found");
+		foreach($projects as $project_id) {
+			$useScreening = $module->getProjectSetting("use_screening",$project_id);
+			
+			if($useScreening) {
+				$this->assertNotEmpty($project_id, "Can't run integration test without EDC project ID specified");
+		        unset($module->edc_data);
+				$records = $module->getEDCData($project_id);
 		
-		foreach ($records as $record) {
-			$this->assertNotEmpty($record->redcap_data_access_group, "Found patient record with empty 'dag' field: record {$record->record_id}");
+				$this->assertNotCount(0,$records, "No patient records found");
+				
+				foreach ($records as $record) {
+					$this->assertNotEmpty($record->redcap_data_access_group, "Found patient record with empty 'dag' field: record {$record->record_id}");
+				}
+				unset($module->edc_data);
+			}
 		}
-		unset($module->edc_data);
 	}
 }
