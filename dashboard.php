@@ -34,7 +34,8 @@ $clipboardImageSource = $module->getUrl("images/clipboard.PNG");
 $folderImageSource = $module->getUrl("images/folder.png");
 $helpfulLinks = $module->getHelpfulLinks();
 $helpfulLinkFolders = $module->getHelpfulLinkFolders();
-
+$customColors = $module->getCustomColors();
+$customLogo = $module->getCustomLogo();
 
 echo $template->render([
 	"use_screening" => $screeningLog,
@@ -49,5 +50,5 @@ echo $template->render([
 	"helpfulLinks" => $helpfulLinks,
 	"helpfulLinkFolders" => $helpfulLinkFolders,
 	"clipboardImageSource" => $clipboardImageSource,
-	"folderImageSource" => $folderImageSource
+	"folderImageSource" => $folderImageSource,
 ]);

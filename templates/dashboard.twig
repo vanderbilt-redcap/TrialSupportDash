@@ -11,19 +11,19 @@
 		<div id="event-tabs" style="background-color:#ffffff; margin-left:0px;text-align:left">
             {% if use_screening %}
             <a class="tab active" id="allSitesData-button" onclick="activateTab('allSitesData');">
-				<div class='top-border'></div>
+				<div class='top-border' style="background-color: {{constant("BAR_BACKGROUND_COLOR")}};"></div>
 				<div class='name'><b>Enrollment Statistics</b></div>
 			</a>
 			<a class="tab nonactive" id="mySiteData-button" onclick="activateTab('mySiteData');">
-				<div class='top-border'></div>
+				<div class='top-border' style="background-color: {{constant("BAR_BACKGROUND_COLOR")}};"></div>
 				<div class='name'><b>My Site's Metrics</b></div>
 			</a>
 			<a class="tab nonactive" id="screening-button" onclick="activateTab('screening');">
-				<div class='top-border'></div>
+				<div class='top-border' style="background-color: {{constant("BAR_BACKGROUND_COLOR")}};"></div>
 				<div class='name'><b>Screening</b></div>
 			</a>
             {% endif %}
-			<a class="tab {{ use_screening ? "nonactive" : "active "}}" id="links-button" onclick="activateTab('links');">				<div class='top-border'></div>
+			<a class="tab {{ use_screening ? "nonactive" : "active "}}" id="links-button" onclick="activateTab('links');">	<div class='top-border' style="background-color: {{constant("BAR_BACKGROUND_COLOR")}};"></div>
 				<div class='name'><b>Helpful Links</b></div>
 			</a>
 		</div>
@@ -34,20 +34,20 @@
 		<table>
 			<thead>
 				<tr>
-					<th></th>
-					<th>Enrolled</th>
-					<th>Treated</th>
-					<th>FPE</th>
-					<th>LPE</th>
+					<th style="background-color: {{constant("BAR_BACKGROUND_COLOR")}};"></th>
+					<th style="background-color: {{constant("BAR_BACKGROUND_COLOR")}}; color: {{constant("TEXT_COLOR")}};">Enrolled</th>
+					<th style="background-color: {{constant("BAR_BACKGROUND_COLOR")}}; color: {{constant("TEXT_COLOR")}};">Treated</th>
+					<th style="background-color: {{constant("BAR_BACKGROUND_COLOR")}}; color: {{constant("TEXT_COLOR")}};">FPE</th>
+					<th style="background-color: {{constant("BAR_BACKGROUND_COLOR")}}; color: {{constant("TEXT_COLOR")}};">LPE</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr class="first_row">
-					<td>Entire Project</td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
+				<tr class="first_row" >
+					<td style="background-color: {{constant("SECONDARY_BAR_BACKGROUND_COLOR")}}; color: {{constant("TEXT_COLOR")}};">Entire Project</td>
+					<td style="background-color: {{constant("SECONDARY_BAR_BACKGROUND_COLOR")}};"></td>
+					<td style="background-color: {{constant("SECONDARY_BAR_BACKGROUND_COLOR")}};"></td>
+					<td style="background-color: {{constant("SECONDARY_BAR_BACKGROUND_COLOR")}};"></td>
+					<td style="background-color: {{constant("SECONDARY_BAR_BACKGROUND_COLOR")}};"></td>
 				</tr>
 				{% for totalDetails in allSites["totals"] %}
 					<tr>
@@ -59,11 +59,11 @@
 					</tr>
 				{% endfor %}
 				<tr class="first_row">
-					<td>By Site</td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
+					<td style="background-color: {{constant("SECONDARY_BAR_BACKGROUND_COLOR")}}; color: {{constant("TEXT_COLOR")}};">By Site</td>
+					<td style="background-color: {{constant("SECONDARY_BAR_BACKGROUND_COLOR")}};"></td>
+					<td style="background-color: {{constant("SECONDARY_BAR_BACKGROUND_COLOR")}};"></td>
+					<td style="background-color: {{constant("SECONDARY_BAR_BACKGROUND_COLOR")}};"></td>
+					<td style="background-color: {{constant("SECONDARY_BAR_BACKGROUND_COLOR")}};"></td>
 				</tr>
 				{% for siteDetails in allSites["sites"] %}
 					<tr>
@@ -82,15 +82,15 @@
 			<thead>
 			<tr>
 				{% if authorized == '3' %}
-					<th>Record</th>
-					<th>Site</th>
+					<th style="background-color: {{constant("BAR_BACKGROUND_COLOR")}}; color: {{constant("TEXT_COLOR")}};">Record</th>
+					<th style="background-color: {{constant("BAR_BACKGROUND_COLOR")}};color: {{constant("TEXT_COLOR")}};">Site</th>
 				{% else %}
-					<th>{{ mySite["site_name"] }}</th>
+					<th style="background-color: {{constant("BAR_BACKGROUND_COLOR")}};color: {{constant("TEXT_COLOR")}};">{{ mySite["site_name"] }}</th>
 				{% endif %}
-				<th>Sex</th>
-				<th>Race</th>
-				<th>Enrolled</th>
-				<th>Treated</th>
+				<th style="background-color: {{constant("BAR_BACKGROUND_COLOR")}};color: {{constant("TEXT_COLOR")}};">Sex</th>
+				<th style="background-color: {{constant("BAR_BACKGROUND_COLOR")}};color: {{constant("TEXT_COLOR")}};">Race</th>
+				<th style="background-color: {{constant("BAR_BACKGROUND_COLOR")}};color: {{constant("TEXT_COLOR")}};">Enrolled</th>
+				<th style="background-color: {{constant("BAR_BACKGROUND_COLOR")}};color: {{constant("TEXT_COLOR")}};">Treated</th>
 			</tr>
 			</thead>
 			<tbody>
@@ -111,9 +111,9 @@
 	</div>
 	<div id="screening">
 		{# blue bar #}
-		<div class="blue_bar"></div>
+		<div class="blue_bar" style="background-color: {{constant("BAR_BACKGROUND_COLOR")}};"></div>
 		{# green title bar #}
-		<div class="report_title_bar"><span id="report_title"></span></div>
+		<div class="report_title_bar"><span id="report_title" style="background-color: {{constant("SECONDARY_BAR_BACKGROUND_COLOR")}};"></span></div>
 		<div class="buttons">
 			<button onclick="showReport('screening_log')" class="report_switch">Screening Log Report</button>
 			<button onclick="showReport('exclusion')" class="report_switch">Exclusion Report</button>
@@ -381,7 +381,7 @@
     {% endif %}
 	<div id="links">
 		{# blue bar #}
-		<div class="blue_bar"></div>
+		<div class="blue_bar" style="background-color: {{constant("BAR_BACKGROUND_COLOR")}};"></div>
 		<button class="close-folder btn btn-info">Return to folders</button>
 		<div class="row links">
 			{% for link in helpfulLinks %}

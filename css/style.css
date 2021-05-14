@@ -35,7 +35,7 @@
     border: 1px solid #055877;
 }
 #event-tabs .tab.active .top-border {
-    background: #055877;
+    /* background: #055877; */
     height: 5px;
 }
 #event-tabs .tab.active .name {
@@ -94,7 +94,7 @@ a.nonactive div.name {
 div.blue_bar {
 	height: 36px;
 	margin-bottom: 4px;
-    background-color:#055877;
+    background-color:#055877; 
 }
 span#report_title {
     background-color:#138085;

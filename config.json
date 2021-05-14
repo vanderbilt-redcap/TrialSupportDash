@@ -145,6 +145,52 @@
 					]
 				}
 			]
+		},
+		{
+			"key": "custom_accent_colors",
+			"name": "Custom accent colors for dashboard",
+			"type": "sub_settings",
+			"sub_settings": [
+				{
+					"key": "logo_upload",
+					"name": "Upload Logo",
+					"required": false,
+					"type": "file",
+					"repeatable": false
+					
+				},
+				{
+					"key": "custom_header_color",
+					"name": "Custom Header Color (hex formatted e.g., #eeeeee)",
+					"type": "text"
+				},
+			
+				{
+					"key": "custom_bar_color",
+					"name": "Custom Bar Color (hex formatted e.g., #055877)",
+					"type": "text"
+				},
+				{
+					"key": "custom_secondary_bar_color",
+					"name": "Custom Secondary Bar Color (hex formatted e.g., #138085)",
+					"type": "text"
+				},
+				{
+					"key": "custom_text_color",
+					"name": "Custom text color (hex formatted e.g. #ffffff)",
+					"type": "dropdown",
+					"choices": [
+						{
+							"name": "Dark text",
+							"value": "dark"
+						},
+						{
+							"name": "Light text",
+							"value": "light"
+						}
+					]
+				}
+			]
 		}
 	],
 	"system-settings": [],
