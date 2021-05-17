@@ -26,18 +26,16 @@ class TrialSupportDash extends \Vanderbilt\TrialSupportDash\RAAS_NECTAR
 		}
 	}
 
-	function combine_arr($labels, $exclusion_counts){
-		$combine_arr = [];
-		foreach($exclusion_counts as $key => $counts){
-			foreach($labels as $i => $label){
-				if($i === $key){
-					$combine_arr[$label] = $counts;
-				}
-			}
-		}
-	
-		return $combine_arr;
+	function combine_arr($exclusion_results_1, $exclusion_results_2){
+		 $exclusion_combined = [];
+			//gets all keys from both arrays
+		 foreach(array_keys($exclusion_results_1 + $exclusion_results_2) as $key){
+			//adding each value up in both arrays to the new exclusion_combined array
+			$exclusion_combined[$key] = (isset($exclusion_results_1[$key]) ? $exclusion_results_1[$key] : 0) + (isset($exclusion_results_2[$key]) ? $exclusion_results_2[$key] : 0);
 		
+		 }
+		
+		return $exclusion_combined;
 	}
 
 
@@ -50,36 +48,49 @@ class TrialSupportDash extends \Vanderbilt\TrialSupportDash\RAAS_NECTAR
 
 			// get labels, init exclusion counts
 			$screening_pid = $this->getProjectSetting('screening_project');
-			$labels = $this->getChoiceLabels("exclude_primary_reason_2", $screening_pid);
+			$labels = $this->getChoiceLabels("exclude_primary_reason", $screening_pid);
+
+			$labels_2 = $this->getChoiceLabels("exclude_primary_reason_2", $screening_pid);
 			
 			$exclusionSetting = $this->getProjectSettingExclusion();
 
 
 			$exclusion_counts = [];
+			$exclusion_counts_2 = [];
 
 			foreach ($labels as $i => $label) {
 				$exclusion_counts[$i] = 0;
+				$exclusion_counts_2[$i] = 0;
 			}
 			
 			// iterate through screening records, summing exclusion reasons
 			$screening_data = $this->getScreeningData();
 			foreach ($screening_data as $record) {
+				if (!empty($record->exclude_primary_reason) && isset($record->exclude_primary_reason)) {
+					$exclusion_counts[$record->exclude_primary_reason]++;
+				}		
 				if (!empty($record->exclude_primary_reason_2) && isset($record->exclude_primary_reason_2)) {
-					$exclusion_counts[$record->exclude_primary_reason_2]++;
+					$exclusion_counts_2[$record->exclude_primary_reason_2]++;
 				}		
 			}
 
-			
+
 			//we use array intersect key to get all arrays with keys flip $exclusionSetting to match keys with $exclusion_counts
-			$exclusion_results = array_intersect_key($exclusion_counts, array_flip($exclusionSetting));
-			$combine = $this->combine_arr($labels, $exclusion_results);
+			$exclusion_results_1 = array_intersect_key($exclusion_counts, array_flip($exclusionSetting));
+
+			$exclusion_results_2 = array_intersect_key($exclusion_counts_2, array_flip($exclusionSetting));
 			
+			
+
+			$exclusion_results = $this->combine_arr($exclusion_results_1, $exclusion_results_2);
+
 			// add rows to data object
-			foreach ($labels as $i => $label) {
+			foreach ($labels_2 as $i => $label) {
 				$exclusion_data->rows[] = [
 					"#$i",
 					$label,
-					$exclusion_results[$i]
+					$exclusion_results[$i],
+					
 				];
 			}
 			$this->exclusion_data = $exclusion_data;
