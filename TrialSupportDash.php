@@ -5,27 +5,76 @@ require_once(__DIR__."/RAAS_NECTAR.php");
 
 class TrialSupportDash extends \Vanderbilt\TrialSupportDash\RAAS_NECTAR
 {
-	public function getExclusionReportData() {
+
+	//new function to get the key 
+	public function getProjectSettingExclusion(){
+		$exclusions = $this->getProjectSetting('exclusion_reason_field');
+
+		$exclusion_field_key = [];
+		
+		foreach($exclusions as $i => $exclusionArray){
+			
+			foreach($exclusionArray as $exclusion_field){
+				//need convert field name to key for matching
+				$digits = explode('_', $exclusion_field);
+
+				$exclusion_field_key[] = $digits[2];
+				
+			}
+			return $exclusion_field_key;
+			
+		}
+	}
+
+	function combine_arr($labels, $exclusion_counts){
+		$combine_arr = [];
+		foreach($exclusion_counts as $key => $counts){
+			foreach($labels as $i => $label){
+				if($i === $key){
+					$combine_arr[$label] = $counts;
+				}
+			}
+		}
+	
+		return $combine_arr;
+		
+	}
+
+
+	public function getExclusionReportData()
+	{
 		if (!isset($this->exclusion_data)) {
 			// create data object
 			$exclusion_data = new \stdClass();
 			$exclusion_data->rows = [];
-			
+
 			// get labels, init exclusion counts
 			$screening_pid = $this->getProjectSetting('screening_project');
-			$labels = $this->getChoiceLabels("exclude_primary_reason", $screening_pid);
+			$labels = $this->getChoiceLabels("exclude_primary_reason_2", $screening_pid);
+			
+			$exclusionSetting = $this->getProjectSettingExclusion();
+
+
 			$exclusion_counts = [];
+
 			foreach ($labels as $i => $label) {
 				$exclusion_counts[$i] = 0;
 			}
 			
+		
+			
 			// iterate through screening records, summing exclusion reasons
 			$screening_data = $this->getScreeningData();
 			foreach ($screening_data as $record) {
-				if (!empty($record->exclude_primary_reason) and isset($exclusion_counts[$record->exclude_primary_reason]))
-					$exclusion_counts[$record->exclude_primary_reason]++;
+				if (!empty($record->exclude_primary_reason_2) && isset($record->exclude_primary_reason_2)) {
+					$exclusion_counts[$record->exclude_primary_reason_2]++;
+				}		
 			}
+
+			//we use array intersect key to get all arrays with keys flip $exclusionSetting to match keys with $exclusion_counts
+			$exclusion_results = array_intersect_key($exclusion_counts, array_flip($exclusionSetting));
 			
+			$combine = $this->combine_arr($labels, $exclusion_results);
 			// add rows to data object
 			foreach ($labels as $i => $label) {
 				$exclusion_data->rows[] = [
@@ -37,6 +86,8 @@ class TrialSupportDash extends \Vanderbilt\TrialSupportDash\RAAS_NECTAR
 			$this->exclusion_data = $exclusion_data;
 		}
 		return $this->exclusion_data;
+			
+			
 	}
 
 	public function getCustomColors(){

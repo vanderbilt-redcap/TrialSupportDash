@@ -120,7 +120,6 @@ class RAAS_NECTAR extends \ExternalModules\AbstractExternalModule {
 		        $project_id = $_GET['pid'];
             }
 		    $uadProject = $this->getProjectSetting("user_access_project",$project_id);
-			
 			if (!empty($uadProject)) {
 				$params = [
 					'project_id' => $uadProject,
@@ -136,7 +135,10 @@ class RAAS_NECTAR extends \ExternalModules\AbstractExternalModule {
 					]
 				];
 				$uad_data = json_decode(\REDCap::getData($params));
+
+			
 			}
+
 			$this->uad_data = $uad_data;
 		}
 		
@@ -185,14 +187,12 @@ class RAAS_NECTAR extends \ExternalModules\AbstractExternalModule {
             }
 
             $screeningProject = $this->getProjectSetting("screening_project", $projectId);
-
             $this->screening_data = json_decode(\REDCap::getData([
                 "project_id" => $screeningProject,
 				"return_format" => "json",
                 'exportDataAccessGroups' => true
             ]));
         }
-
         return $this->screening_data;
     }
 
@@ -596,6 +596,7 @@ class RAAS_NECTAR extends \ExternalModules\AbstractExternalModule {
 		
 		foreach($link_settings as $i => $folder) {
 			foreach($folder['helpful_links'] as $link_info) {
+
 				// skip links with missing URL
 				if (empty($link_info['link_url'])) {
 					continue;
@@ -620,7 +621,7 @@ class RAAS_NECTAR extends \ExternalModules\AbstractExternalModule {
 				$links[] = $link;
 			}
 		}
-		
+
 		return $links;
 	}
 	public function getHelpfulLinkFolders() {

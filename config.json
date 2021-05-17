@@ -191,6 +191,21 @@
 					]
 				}
 			]
+		},
+		{
+			"key": "exclusion",
+			"name": "Choose a exclusion field",
+			"type": "sub_settings",
+			"sub_settings": [
+				{
+					"key": "exclusion_reason_field",
+					"name": "Exclusion Field",
+					"repeatable": true,
+					"type": "field-list",
+         			"field-type": "enum"
+
+				}
+			]
 		}
 	],
 	"system-settings": [],
