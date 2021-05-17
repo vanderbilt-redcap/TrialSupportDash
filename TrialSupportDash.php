@@ -61,8 +61,6 @@ class TrialSupportDash extends \Vanderbilt\TrialSupportDash\RAAS_NECTAR
 				$exclusion_counts[$i] = 0;
 			}
 			
-		
-			
 			// iterate through screening records, summing exclusion reasons
 			$screening_data = $this->getScreeningData();
 			foreach ($screening_data as $record) {
@@ -71,16 +69,17 @@ class TrialSupportDash extends \Vanderbilt\TrialSupportDash\RAAS_NECTAR
 				}		
 			}
 
+			
 			//we use array intersect key to get all arrays with keys flip $exclusionSetting to match keys with $exclusion_counts
 			$exclusion_results = array_intersect_key($exclusion_counts, array_flip($exclusionSetting));
-			
 			$combine = $this->combine_arr($labels, $exclusion_results);
+			
 			// add rows to data object
 			foreach ($labels as $i => $label) {
 				$exclusion_data->rows[] = [
 					"#$i",
 					$label,
-					$exclusion_counts[$i]
+					$exclusion_results[$i]
 				];
 			}
 			$this->exclusion_data = $exclusion_data;
