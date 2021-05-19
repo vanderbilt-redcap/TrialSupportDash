@@ -152,6 +152,12 @@
 			"type": "sub_settings",
 			"sub_settings": [
 				{
+					"key": "site_name",
+					"name": "Change Site Name",
+					"required": true,
+					"type": "text"
+				},
+				{
 					"key": "logo_upload",
 					"name": "Upload Logo",
 					"required": false,

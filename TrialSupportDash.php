@@ -1,41 +1,51 @@
 <?php
+
 namespace Vanderbilt\TrialSupportDash;
 
-require_once(__DIR__."/RAAS_NECTAR.php");
+require_once(__DIR__ . "/RAAS_NECTAR.php");
 
 class TrialSupportDash extends \Vanderbilt\TrialSupportDash\RAAS_NECTAR
 {
 
+	public function getEDCData($projectId = false)
+	{
+		if (!$this->screening_data) {
+			if (!$projectId) {
+				$projectId = $_GET['pid'];
+			}
+			//we are getting instrument name
+			$instrument_name = "inclusionexclusion";
+			//getting all fields in that instrument
+			$inclusionexclusionFields = \REDCap::getFieldNames($instrument_name);
+
+			//get data just from that instrument
+			$this->data = json_decode(\REDCap::getData([
+				"project_id" => $projectId,
+				"return_format" => "json",
+				"fields" => $inclusionexclusionFields,
+				"exportDataAccessGroups" => true
+
+			]));
+		}
+		return $this->data;
+	}
+
 	//new function to get the key 
-	public function getProjectSettingExclusion(){
+	public function getProjectSettingExclusion()
+	{
 		$exclusions = $this->getProjectSetting('exclusion_reason_field');
 
 		$exclusion_field_key = [];
-		
-		foreach($exclusions as $i => $exclusionArray){
-			
-			foreach($exclusionArray as $exclusion_field){
-				//need convert field name to key for matching
-				$digits = explode('_', $exclusion_field);
 
-				$exclusion_field_key[] = $digits[2];
-				
+		foreach ($exclusions as $i => $exclusionArray) {
+
+
+			foreach ($exclusionArray as $exclusion_field) {
+				$exclusion_field_key[$exclusion_field] = 0;
 			}
-			return $exclusion_field_key;
-			
 		}
-	}
+		return $exclusion_field_key;
 
-	function combine_arr($exclusion_results_1, $exclusion_results_2){
-		 $exclusion_combined = [];
-			//gets all keys from both arrays
-		 foreach(array_keys($exclusion_results_1 + $exclusion_results_2) as $key){
-			//adding each value up in both arrays to the new exclusion_combined array
-			$exclusion_combined[$key] = (isset($exclusion_results_1[$key]) ? $exclusion_results_1[$key] : 0) + (isset($exclusion_results_2[$key]) ? $exclusion_results_2[$key] : 0);
-		
-		 }
-		
-		return $exclusion_combined;
 	}
 
 
@@ -47,71 +57,37 @@ class TrialSupportDash extends \Vanderbilt\TrialSupportDash\RAAS_NECTAR
 			$exclusion_data->rows = [];
 
 			// get labels, init exclusion counts
-			$screening_pid = $this->getProjectSetting('screening_project');
-			$labels = $this->getChoiceLabels("exclude_primary_reason", $screening_pid);
-
-			$labels_2 = $this->getChoiceLabels("exclude_primary_reason_2", $screening_pid);
-			
+			//exclusion_1 inclusionexclusion
+			$data = $this->getEDCData();
 			$exclusionSetting = $this->getProjectSettingExclusion();
-
-
-			$exclusion_counts = [];
-			$exclusion_counts_2 = [];
-
-			foreach ($labels as $i => $label) {
-				$exclusion_counts[$i] = 0;
-				$exclusion_counts_2[$i] = 0;
-			}
 			
-			// iterate through screening records, summing exclusion reasons
-			$screening_data = $this->getScreeningData();
-			foreach ($screening_data as $record) {
-				if (!empty($record->exclude_primary_reason) && isset($record->exclude_primary_reason)) {
-					$exclusion_counts[$record->exclude_primary_reason]++;
-				}		
-				if (!empty($record->exclude_primary_reason_2) && isset($record->exclude_primary_reason_2)) {
-					$exclusion_counts_2[$record->exclude_primary_reason_2]++;
-				}		
-			}
-
-
-			//we use array intersect key to get all arrays with keys flip $exclusionSetting to match keys with $exclusion_counts
-			$exclusion_results_1 = array_intersect_key($exclusion_counts, array_flip($exclusionSetting));
-
-			$exclusion_results_2 = array_intersect_key($exclusion_counts_2, array_flip($exclusionSetting));
-			
+		
 			
 
-			$exclusion_results = $this->combine_arr($exclusion_results_1, $exclusion_results_2);
-
-			// add rows to data object
-			foreach ($labels_2 as $i => $label) {
-				$exclusion_data->rows[] = [
-					"#$i",
-					$label,
-					$exclusion_results[$i],
-					
-				];
-			}
-			$this->exclusion_data = $exclusion_data;
+		
+			
+			
 		}
-		return $this->exclusion_data;
-			
-			
 	}
 
-	public function getCustomColors(){
+	public function getCustomColors()
+	{
 		$color_settings = $this->getSubSettings('custom_accent_colors');
 
-		foreach($color_settings as $i => $customColor){
+
+		foreach ($color_settings as $i => $customColor) {
 			$color = new \stdClass();
+
+
+			$color->site_name = $customColor['site_name'];
+
 			$color->header = $customColor['custom_header_color'];
 			$color->bar = $customColor['custom_bar_color'];
 			$color->secondaryBar = $customColor['custom_secondary_bar_color'];
 			$color->text = $customColor['custom_text_color'];
-			if($color->text == "dark"){
+			if ($color->text == "dark") {
 				$color->text = "#000000";
-			}elseif($color->text == "light"){
+			} elseif ($color->text == "light") {
 				$color->text = "#ffffff";
 			}
 			$css_hex_color_pattern = "/#([[:xdigit:]]{3}){1,2}\b/";
@@ -123,18 +99,19 @@ class TrialSupportDash extends \Vanderbilt\TrialSupportDash\RAAS_NECTAR
 				$color->secondaryBar = "#138085";
 				$color->text = "#ffffff";
 			}
+
+			define("CUSTOM_SITE_NAME", $color->site_name);
 			define("LOGO_BACKGROUND_COLOR", $color->header);
 			define("BAR_BACKGROUND_COLOR", $color->bar);
 			define("SECONDARY_BAR_BACKGROUND_COLOR", $color->secondaryBar);
 			define("TEXT_COLOR", $color->text);
-
 		}
-
 	}
 
-	public function getCustomLogo(){
+	public function getCustomLogo()
+	{
 		$color_settings = $this->getSubSettings('custom_accent_colors');
-		
+
 		$stored_name = [];
 		foreach ($color_settings as $i => $customLogo) {
 			$logo = new \stdClass();
@@ -151,23 +128,15 @@ class TrialSupportDash extends \Vanderbilt\TrialSupportDash\RAAS_NECTAR
 			WHERE doc_id = ?', $logo->image);
 
 			$result = $query->execute();
-			
+
 			while ($row = $result->fetch_assoc()) {
 				//get latest image with base64_encode
 				$imageData = base64_encode(file_get_contents(EDOC_PATH . $row['stored_name']));
 				//use mime data to get src 
-				$src = 'data: ' . $row['mime_type'] .';base64,'. $imageData;
+				$src = 'data: ' . $row['mime_type'] . ';base64,' . $imageData;
 				//define constant called LOGO that is used on base.twig 
 				define("LOGO", $src);
-
 			}
 		}
-
-	
-	
-
-		
-
-	
 	}
 }

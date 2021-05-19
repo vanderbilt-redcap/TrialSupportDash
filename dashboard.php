@@ -6,6 +6,8 @@ $twig = new \Twig\Environment($loader);
 
 $template = $twig->load("dashboard.twig");
 
+
+
 /** @var $module \Vanderbilt\TrialSupportDash\TrialSupportDash */
 $siteActivation = $module->getProjectSetting("use_site_activation");
 $screeningLog = $module->getProjectSetting("use_screening");
