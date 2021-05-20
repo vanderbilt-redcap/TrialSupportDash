@@ -18,17 +18,33 @@ class TrialSupportDash extends \Vanderbilt\TrialSupportDash\RAAS_NECTAR
 			//getting all fields in that instrument
 			$inclusionexclusionFields = \REDCap::getFieldNames($instrument_name);
 
+			$OnlyExclusion = [];
+			//make array that have name exclusion_ 
+			foreach($inclusionexclusionFields as $field){
+				if (strpos($field, "exclusion_") !== false ) {
+					$OnlyExclusion[] = $field;
+				}
+			}
+			//remove fist element do not need
+			 array_shift($OnlyExclusion);
+			 //remove last element do not need
+			 array_pop($OnlyExclusion);  
 			//get data just from that instrument
 			$this->data = json_decode(\REDCap::getData([
 				"project_id" => $projectId,
 				"return_format" => "json",
-				"fields" => $inclusionexclusionFields,
-				"exportDataAccessGroups" => true
-
+				"fields" => $OnlyExclusion,
+				"exportDataAccessGroups" => true,				
 			]));
+
+			
 		}
+		
+		
 		return $this->data;
 	}
+
+
 
 	//new function to get the key 
 	public function getProjectSettingExclusion()
@@ -44,11 +60,11 @@ class TrialSupportDash extends \Vanderbilt\TrialSupportDash\RAAS_NECTAR
 				$exclusion_field_key[$exclusion_field] = 0;
 			}
 		}
+
 		return $exclusion_field_key;
 
 	}
-
-
+	
 	public function getExclusionReportData()
 	{
 		if (!isset($this->exclusion_data)) {
@@ -56,18 +72,42 @@ class TrialSupportDash extends \Vanderbilt\TrialSupportDash\RAAS_NECTAR
 			$exclusion_data = new \stdClass();
 			$exclusion_data->rows = [];
 
-			// get labels, init exclusion counts
-			//exclusion_1 inclusionexclusion
+			$exclusionCount = array();
+
 			$data = $this->getEDCData();
 			$exclusionSetting = $this->getProjectSettingExclusion();
-			
-		
+			foreach($exclusionSetting as $i => $field_name){
+				$exclusionCount[$i] = 0;
+			}
+
+
+			foreach($data as $record){
+				//change to array to compare
+				$obj = get_object_vars($record);
+				//looping through exclusion settings
+				foreach($exclusionSetting as $key => $value){
+					//if data equal 1 get all items and increment 
+					if($obj[$key] === '1'){
+						$exclusionCount[$key]++;
+					}
+				}
+			}	
 			
 
-		
-			
-			
+			foreach($exclusionSetting as $field_name => $value){
+				$exclusion_data->rows[] = [
+					"$field_name",
+					"",
+					$exclusionCount[$field_name]
+				];
+			}
+
+			$this->exclusion_data = $exclusion_data;
+
+						
 		}
+		return $this->exclusion_data;
+
 	}
 
 	public function getCustomColors()
