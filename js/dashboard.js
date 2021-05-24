@@ -20,6 +20,13 @@ function activateTab(tabSelector) {
 		$(".screening_report").hide();
 		$(".report_switch").show();
 		$("span#report_title").text("");
+		
+	}
+
+	if (tabSelector === "allSitesData") {
+		$("#region").show();
+	} else {
+		$("#region").hide();
 	}
 }
 
@@ -68,7 +75,35 @@ function clickedFolder(clickEvent) {
 	})
 }
 
+function getSelectedValue() {
+	//get dropdown id update on when there is a change
+	$('#region').change(function () {
+		//set value of selectbox
+		var filterValue = $(this).val();
+		//loop through to get each data attribute that matches region 
+		$('#allSitesData .region').each(function (index, value) {
+			var region = $(this).attr('data-region');
+			//hiding table row .region area
+			$(this).hide();
+
+			//if match from dropdown and json in config show results
+			if (region === filterValue) {
+				$(this).show();
+			}
+			//hide class if there is data
+			$('.no-sites').hide();
+		});
+		//if there is no match display string statement 
+		if (!$('.region').is(':visible')) {
+			$('tbody:first').append('<tr class="no-sites"><td colspan="5">Sorry, no sites</td></tr>');
+		} 
+	})
+}
+
 $("document").ready(function () {
+
+	getSelectedValue();
+	
     activateTab(startTab);
 		
 	// get new Screening Log Report when select#site changes
