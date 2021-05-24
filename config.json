@@ -158,6 +158,11 @@
 					"type": "text"
 				},
 				{
+					"key": "custom_logout",
+					"name": "Change logout Url",
+					"type": "link"
+				},
+				{
 					"key": "logo_upload",
 					"name": "Upload Logo",
 					"required": false,

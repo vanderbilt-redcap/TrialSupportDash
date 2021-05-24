@@ -6,6 +6,7 @@ require_once(__DIR__ . "/RAAS_NECTAR.php");
 
 class TrialSupportDash extends \Vanderbilt\TrialSupportDash\RAAS_NECTAR
 {
+	
 
 	public function getEDCData($projectId = false)
 	{
@@ -120,6 +121,7 @@ class TrialSupportDash extends \Vanderbilt\TrialSupportDash\RAAS_NECTAR
 
 
 			$color->site_name = $customColor['site_name'];
+			$color->custom_logout = $customColor['custom_logout'];
 
 			$color->header = $customColor['custom_header_color'];
 			$color->bar = $customColor['custom_bar_color'];
@@ -139,8 +141,8 @@ class TrialSupportDash extends \Vanderbilt\TrialSupportDash\RAAS_NECTAR
 				$color->secondaryBar = "#138085";
 				$color->text = "#ffffff";
 			}
-
 			define("CUSTOM_SITE_NAME", $color->site_name);
+			define("CUSTOM_LOGOUT", $color->custom_logout);
 			define("LOGO_BACKGROUND_COLOR", $color->header);
 			define("BAR_BACKGROUND_COLOR", $color->bar);
 			define("SECONDARY_BAR_BACKGROUND_COLOR", $color->secondaryBar);
