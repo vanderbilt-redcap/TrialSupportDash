@@ -55,13 +55,12 @@ class TrialSupportDash extends \Vanderbilt\TrialSupportDash\RAAS_NECTAR
 		$exclusion_field_key = [];
 
 		foreach ($exclusions as $i => $exclusionArray) {
-
-
+			
+			
 			foreach ($exclusionArray as $exclusion_field) {
-				$exclusion_field_key[$exclusion_field] = 0;
+				$exclusion_field_key[$exclusion_field] = $exclusionArray;
 			}
 		}
-
 		return $exclusion_field_key;
 
 	}
@@ -77,10 +76,10 @@ class TrialSupportDash extends \Vanderbilt\TrialSupportDash\RAAS_NECTAR
 
 			$data = $this->getEDCData();
 			$exclusionSetting = $this->getProjectSettingExclusion();
+			// $test = $this->getFieldLabel($keys);
 			foreach($exclusionSetting as $i => $field_name){
 				$exclusionCount[$i] = 0;
 			}
-
 
 			foreach($data as $record){
 				//change to array to compare
@@ -92,13 +91,22 @@ class TrialSupportDash extends \Vanderbilt\TrialSupportDash\RAAS_NECTAR
 						$exclusionCount[$key]++;
 					}
 				}
+		
 			}	
 			
 
 			foreach($exclusionSetting as $field_name => $value){
+				//getting number after exclusion_
+				$extract_exclusion_number = explode('exclusion_', $field_name);
+				//getting that number ex 1, 2, 3
+				$field_number = array_pop($extract_exclusion_number);
+				//getting number after appendix_
+				$extract_appendix_number = explode('appendix_', $field_number);
+				//get that number ex 1_1, 1_2, 1_3
+				$field_number = array_pop($extract_appendix_number);
 				$exclusion_data->rows[] = [
-					"$field_name",
-					"",
+					"#$field_number",
+					$this->getFieldLabel($field_name),
 					$exclusionCount[$field_name]
 				];
 			}
