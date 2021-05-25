@@ -80,18 +80,27 @@ function getSelectedValue() {
 	$('#region').change(function () {
 		//set value of selectbox
 		var filterValue = $(this).val();
+
+		
+
 		//loop through to get each data attribute that matches region 
 		$('#allSitesData .region').each(function (index, value) {
 			var region = $(this).attr('data-region');
 			//hiding table row .region area
 			$(this).hide();
 
+			if (isEmpty(filterValue)) {
+				$(this).show()
+			}
 			//if match from dropdown and json in config show results
 			if (region === filterValue) {
 				$(this).show();
 			}
 			//hide class if there is data
 			$('.no-sites').hide();
+
+			
+
 		});
 		//if there is no match display string statement 
 		if (!$('.region').is(':visible')) {

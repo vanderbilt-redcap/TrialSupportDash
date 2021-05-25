@@ -146,6 +146,7 @@
 				}
 			]
 		},
+	
 		{
 			"key": "custom_accent_colors",
 			"name": "Custom accent colors for dashboard",
@@ -217,6 +218,11 @@
 
 				}
 			]
+		},
+		{
+			"key": "json_text_dag",
+			"name": "json text of DAGs, Key: (West, Southwest, Southeast, Northeast, Midwest) ",
+			"type": "textarea"
 		}
 	],
 	"system-settings": [],
