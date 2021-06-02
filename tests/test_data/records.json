@@ -9,7 +9,8 @@
 		"transfusion_datetime": "2020-01-01 05:13",
 		"randomization_date": "2020-01-02",
 		"transfusion_given": "1",
-		"randomization": "1"
+		"randomization": "1",
+		
 	},
 	{
 		"record_id": "3",

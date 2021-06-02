@@ -146,6 +146,50 @@
 				}
 			]
 		},
+		
+		{
+			"key": "record_fields",
+			"name": "Record fields for dashboard",
+			"type": "sub_settings",
+			"sub_settings": [
+				{
+					"key": "gender",
+					"name": "pick field for gender",
+					"type": "field-list"
+				},
+				{
+					"key": "ethnic",
+					"name": "Race Ethniciy",
+					"type": "field-list"
+				},
+				{
+					"key": "is_randomized",
+					"name": "Field for Randomized",
+					"type": "field-list"
+				},
+				{
+					"key": "enrolled",
+					"name": "Field for Enrolled",
+					"type": "field-list"
+				},
+				{
+					"key": "is_treated",
+					"name": "Field for is Treated",
+					"type": "field-list"
+				},
+				{
+					"key": "randomization_date",
+					"name": "Field for random date",
+					"type": "field-list"
+				},
+				{
+					"key": "treated_date",
+					"name": "Field for treated date",
+					"type": "field-list"
+				}
+				
+			]
+		},
 	
 		{
 			"key": "custom_accent_colors",

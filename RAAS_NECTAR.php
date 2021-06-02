@@ -60,7 +60,6 @@ class RAAS_NECTAR extends \ExternalModules\AbstractExternalModule
 			$event_ids->screening = $this->getProjectSetting('screening_event');
 			$this->event_ids = $event_ids;
 		}
-
 		return $this->event_ids;
 	}
 
@@ -340,7 +339,6 @@ class RAAS_NECTAR extends \ExternalModules\AbstractExternalModule
 		$site_data->site_name = "";
 		$site_data->rows = [];
 		$site_data->site_name = $this->user->dag_group_name;
-
 		// add record rows
 		foreach ($this->records as $record) {
 			if (($this->user->authorized == '2' and $record->dag_name == $this->user->dag_group_name) or $this->user->authorized == '3') {
@@ -427,7 +425,6 @@ class RAAS_NECTAR extends \ExternalModules\AbstractExternalModule
 				$data->totals[1]->enrolled++;
 				$site->enrolled = $site->enrolled + 1;
 			}
-
 			$enroll_date = $record->randomization_date;
 			if (!empty($enroll_date)) {
 				if ($site->fpe == '-') {
