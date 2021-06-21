@@ -1,0 +1,39 @@
+TrialSupportDash interface:
+	
+LOW LEVEL
+	## These functions are NOT unit testable -- they only get data from database
+	
+	getProjectIDs
+		needs (database)
+		makes $this->project_ids
+	getDAGs
+		needs (database)
+		makes $this->dags
+	getEventIDs
+		needs (database)
+		makes $this->event_ids
+	getEDCData
+		needs (database)
+		makes $this->edc_data
+	getUADData
+		needs (database)
+		makes $this->uad_data
+	getUser
+		needs uad_data, (database)
+		makes $this->user
+		
+HIGH LEVEL
+	## The following functions ARE unit testable (after calling lower level methods)
+	
+	authorizeUser
+		needs user
+		makes $this->user->authorized (t/f)
+	getRecords
+		needs project_ids, event_ids, dags, edc_data
+		makes $this->records
+	getMySiteData
+		needs user, records
+		makes $this->my_site_data
+	getAllSitesData
+		needs records
+		makes $this->all_sites_data

@@ -1,0 +1,428 @@
+{% extends "base.twig" %}
+
+{% block content %}
+
+<script type="text/javascript">
+    var startTab = "{{ use_screening ? "allSitesData" : "allSitesData" }}";
+</script>
+ 
+<select name="region" id="region">
+	<option value="">Select Region</option>
+	<option value="Southeast">Southeast</option>
+	<option value="Southwest">Southwest</option>
+	<option value="West">West</option>
+	<option value="Midwest">Midwest</option>
+	<option value="Northeast">Northeast</option>
+</select>
+<div id="tabs" style="width:100%; float:left; margin-top:5px;">
+	<div class='row'>
+
+		<div id="event-tabs" style="background-color:#ffffff; margin-left:0px;text-align:left">
+            
+            <a class="tab active" id="allSitesData-button" onclick="activateTab('allSitesData');">
+				<div class='top-border' style="background-color: {{constant("BAR_BACKGROUND_COLOR")}};"></div>
+				<div class='name'><b>Enrollment Statistics</b></div>
+			</a>
+			<a class="tab nonactive" id="mySiteData-button" onclick="activateTab('mySiteData');">
+				<div class='top-border' style="background-color: {{constant("BAR_BACKGROUND_COLOR")}};"></div>
+				<div class='name'><b>My Site's Metrics</b></div>
+			</a>
+			<a class="tab nonactive" id="screening-button" onclick="activateTab('screening');">
+				<div class='top-border' style="background-color: {{constant("BAR_BACKGROUND_COLOR")}};"></div>
+				<div class='name'><b>Screening</b></div>
+			</a>
+           
+			<a class="tab {{ use_screening ? "nonactive" : "active "}}" id="links-button" onclick="activateTab('links');">	<div class='top-border' style="background-color: {{constant("BAR_BACKGROUND_COLOR")}};"></div>
+				<div class='name'><b>Helpful Links</b></div>
+			</a>
+		</div>
+	</div>
+	{#<div class='row' style="height:1px"></div>#}
+	<div id="allSitesData">
+		<table>
+			<thead>
+				<tr>
+					<th style="background-color: {{constant("BAR_BACKGROUND_COLOR")}};"></th>
+					{# <th style="background-color: {{constant("BAR_BACKGROUND_COLOR")}}; color: {{constant("TEXT_COLOR")}};">Enrolled</th> #}
+					<th style="background-color: {{constant("BAR_BACKGROUND_COLOR")}}; color: {{constant("TEXT_COLOR")}};">Randomized</th>
+					<th style="background-color: {{constant("BAR_BACKGROUND_COLOR")}}; color: {{constant("TEXT_COLOR")}};">FPE</th>
+					<th style="background-color: {{constant("BAR_BACKGROUND_COLOR")}}; color: {{constant("TEXT_COLOR")}};">LPE</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="first_row" >
+					<td style="background-color: {{constant("SECONDARY_BAR_BACKGROUND_COLOR")}}; color: {{constant("TEXT_COLOR")}};">Entire Project</td>
+					{# <td style="background-color: {{constant("SECONDARY_BAR_BACKGROUND_COLOR")}};"></td> #}
+					<td style="background-color: {{constant("SECONDARY_BAR_BACKGROUND_COLOR")}};"></td>
+					<td style="background-color: {{constant("SECONDARY_BAR_BACKGROUND_COLOR")}};"></td>
+					<td style="background-color: {{constant("SECONDARY_BAR_BACKGROUND_COLOR")}};"></td>
+				</tr>
+				{% for totalDetails in allSites["totals"] %}
+					<tr>
+						<td>{{ totalDetails["name"] }}</td>
+						{# <td>{{ totalDetails["enrolled"] }}</td> #}
+						<td>{{ totalDetails["treated"] }}</td>
+						<td>{{ totalDetails["fpe"] }}</td>
+						<td>{{ totalDetails["lpe"] }}</td>
+					</tr>
+				{% endfor %}
+				<tr class="first_row">
+					<td style="background-color: {{constant("SECONDARY_BAR_BACKGROUND_COLOR")}}; color: {{constant("TEXT_COLOR")}};">By Site</td>
+					{# <td style="background-color: {{constant("SECONDARY_BAR_BACKGROUND_COLOR")}};"></td> #}
+					<td style="background-color: {{constant("SECONDARY_BAR_BACKGROUND_COLOR")}};"></td>
+					<td style="background-color: {{constant("SECONDARY_BAR_BACKGROUND_COLOR")}};"></td>
+					<td style="background-color: {{constant("SECONDARY_BAR_BACKGROUND_COLOR")}};"></td>
+				</tr>
+				{% for siteDetails in allSites["sites"] %}
+					<tr class="region" data-region="{{ siteDetails["class"] }}">
+						<td >{{ siteDetails["name"] }}</td>
+						{# <td>{{ siteDetails["enrolled"] }}</td> #}
+						<td>{{ siteDetails["treated"] }}</td>
+						<td>{{ siteDetails["fpe"] }}</td>
+						<td>{{ siteDetails["lpe"] }}</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+	<div id="mySiteData">
+		<table class="sortable">
+			<thead>
+			<tr>
+				{% if authorized == '3' %}
+					<th style="background-color: {{constant("BAR_BACKGROUND_COLOR")}}; color: {{constant("TEXT_COLOR")}};">Record</th>
+					<th style="background-color: {{constant("BAR_BACKGROUND_COLOR")}};color: {{constant("TEXT_COLOR")}};">Site</th>
+				{% else %}
+					<th style="background-color: {{constant("BAR_BACKGROUND_COLOR")}};color: {{constant("TEXT_COLOR")}};">{{ mySite["site_name"] }}</th>
+				{% endif %}
+				<th style="background-color: {{constant("BAR_BACKGROUND_COLOR")}};color: {{constant("TEXT_COLOR")}};">Sex</th>
+				<th style="background-color: {{constant("BAR_BACKGROUND_COLOR")}};color: {{constant("TEXT_COLOR")}};">Race</th>
+				<th style="background-color: {{constant("BAR_BACKGROUND_COLOR")}};color: {{constant("TEXT_COLOR")}};">Randomized</th>
+			</tr>
+			</thead>
+			<tbody>
+			{% for personDetails in mySite["rows"] %}
+				<tr>
+					<td>{{ personDetails["id"] }}</td>
+					{% if authorized == '3' %}
+						<td>{{ personDetails["site"] }}</td>
+					{% endif %}
+					<td>{{ personDetails["sex"] }}</td>
+					<td>{{ personDetails["race"] }}</td>
+					<td>{{ personDetails["treated"] }}</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+	</div>
+	<div id="screening">
+		{# blue bar #}
+		<div class="blue_bar" style="background-color: {{constant("BAR_BACKGROUND_COLOR")}};"></div>
+		{# green title bar #}
+		<div class="report_title_bar"><span id="report_title" style="background-color: {{constant("SECONDARY_BAR_BACKGROUND_COLOR")}};"></span></div>
+		<div class="buttons">
+			<button onclick="showReport('screening_log')" class="report_switch">Screening Log Report</button>
+			<button onclick="showReport('exclusion')" class="report_switch">Exclusion Report</button>
+			<button onclick="showReport('screen_fail')" class="report_switch">Screening Fail Report</button>
+		</div>
+		<div class="screening_report" id="screening_log">
+			<div class="row">
+				<div class="col-6">
+					{# dropdown #}
+					<select name="site" id="site">
+						<option>Choose institution</option>
+						{% for site_name in site_names %}
+						<option>{{ site_name }}</option>
+						{% endfor %}
+					</select>
+					
+					{# table #}
+					<table>
+						<thead>
+							<tr>
+								<th>Week</th>
+								<th>Sum of Prescreened</th>
+								<th>Cumulative Prescreened</th>
+							</tr>
+						</thead>
+						<tbody>
+						{% for row in screeningLog.rows %}
+							<tr>
+								<td>{{ row.0 }}</td>
+								<td>{{ row.1 }}</td>
+								<td>{{ row.2 }}</td>
+							</tr>
+						{% endfor %}
+						</tbody>
+					</table>
+					<button class="main_page" onclick="activateTab('screening');">Return to Main Page</button>
+				</div>
+				{# chart #}
+				<div class="col-6">
+					<canvas id="screening_log_chart" width="400" height="400"></canvas>
+					<script>
+						var week_labels = [
+							{% for row in screeningLog.rows|slice(0,-1) %}
+								'{{ row.0 }}',
+							{% endfor %}
+						];
+						var data1 = [
+							{% for row in screeningLog.rows|slice(0,-1) %}
+								{{ row.1 }},
+							{% endfor %}
+						];
+						var data2 = [
+							{% for row in screeningLog.rows|slice(0,-1) %}
+								{{ row.2 }},
+							{% endfor %}
+						];
+						var ctx = document.getElementById('screening_log_chart').getContext('2d');
+						var screening_log_chart = new Chart(ctx, {
+							type: 'bar',
+							data: {
+								labels: week_labels,
+								datasets: [{
+									label: 'Participants Screened',
+									data: data1,
+									{# backgroundColor: 'rgba(255, 99, 132, 0.2)', #}
+									borderColor: 'rgba(13, 127, 133, 1)',
+									borderWidth: 2,
+									type: 'line',
+									datalabels: {
+										anchor: 'center'
+									}
+								},{
+									label: 'Cumulative Screened',
+									data: data2,
+									backgroundColor: 'rgba(180, 199, 231, 1)',
+									borderWidth: 1,
+									datalabels: {
+										offset: 12
+									}
+								}]
+							},
+							options: {
+								title: {
+									display: true,
+									fontSize: 24,
+									fontStyle: 'normal',
+									text: 'Participant Screening'
+								},
+								scales: {
+									yAxes: [{
+										ticks: {
+											beginAtZero: true
+										}
+									}]
+								}
+							}
+						});
+					</script>
+				</div>
+			</div>
+		</div>
+		<div class="screening_report" id="exclusion">
+			<div class="row">
+				<div class="col-6">
+					{# table #}
+					<table>
+						<thead>
+							<tr>
+								<th>Criteria</th>
+								<th>Description</th>
+								<th>Count</th>
+							</tr>
+						</thead>
+						<tbody>
+						{% for row in exclusion.rows %}
+							<tr>
+								<td>{{ row.0 }}</td>
+								<td>{{ row.1 }}</td>
+								<td>{{ row.2 }}</td>
+							</tr>
+						{% endfor %}
+						</tbody>
+					</table>
+					<button class="main_page" onclick="activateTab('screening');">Return to Main Page</button>
+				</div>
+				{# chart #}
+				<div class="col-6">
+					<canvas id="exclusion_chart" width="400" height="300"></canvas>
+					<script>
+						var excl_labels = [
+							{% for row in exclusion.rows %}
+								'{{ row.0 }}',
+							{% endfor %}
+						];
+						var exclusion_counts = [
+							{% for row in exclusion.rows %}
+								{{ row.2 }},
+							{% endfor %}
+						];
+						var exclusion_sum = 0;
+						exclusion_counts.forEach(function(count) {exclusion_sum = exclusion_sum + count;});
+						
+						var ctx_excl = document.getElementById('exclusion_chart').getContext('2d');
+						var exclusion_chart = new Chart(ctx_excl, {
+							type: 'bar',
+							data: {
+								labels: excl_labels,
+								datasets: [{
+									label: 'Participants Excluded',
+									data: exclusion_counts,
+									borderColor: 'rgba(13, 127, 133, 1)',
+									backgroundColor: 'rgba(13, 127, 133, 1)',
+									borderWidth: 1
+								}]
+							},
+							options: {
+								title: {
+									display: true,
+									fontSize: 24,
+									fontStyle: 'normal',
+									text: 'Total Excluded; n=' + exclusion_sum
+								},
+								scales: {
+									xAxes: [{
+										ticks: {
+											fontColor: '#8c4cbc',
+											fontSize: 18,
+											fontStyle: 'bold'
+										}
+									}],
+									yAxes: [{
+										ticks: {
+											beginAtZero: true
+										}
+									}]
+								}
+							}
+						});
+					</script>
+				</div>
+			</div>
+		</div>
+		<div class="screening_report" id="screen_fail">
+			<div class="row">
+				<div class="col-6">
+					{# table #}
+					<table>
+						<thead>
+							<tr>
+								<th>Criteria</th>
+								<th>Description</th>
+								<th>Count</th>
+							</tr>
+						</thead>
+						<tbody>
+						{% for row in screenFail.rows %}
+							<tr>
+								<td>{{ row.0 }}</td>
+								<td>{{ row.1 }}</td>
+								<td>{{ row.2 }}</td>
+							</tr>
+						{% endfor %}
+						</tbody>
+					</table>
+					<button class="main_page" onclick="activateTab('screening');">Return to Main Page</button>
+				</div>
+				{# chart #}
+				<div class="col-6">
+					<canvas id="screen_fail_chart" width="400" height="300"></canvas>
+					<script>
+						var fail_labels = [
+							{% for row in screenFail.rows %}
+								'{{ row.0 }}',
+							{% endfor %}
+						];
+						var fail_counts = [
+							{% for row in screenFail.rows %}
+								{{ row.2 }},
+							{% endfor %}
+						];
+						var fail_sum = 0;
+						fail_counts.forEach(function(count) {fail_sum = fail_sum + count;});
+						
+						var ctx_fail = document.getElementById('screen_fail_chart').getContext('2d');
+						var fail_chart = new Chart(ctx_fail, {
+							type: 'bar',
+							data: {
+								labels: fail_labels,
+								datasets: [{
+									label: 'Screening Failures',
+									data: fail_counts,
+									borderColor: 'rgba(13, 127, 133, 1)',
+									backgroundColor: 'rgba(13, 127, 133, 1)',
+									borderWidth: 1
+								}]
+							},
+							options: {
+								title: {
+									display: true,
+									fontSize: 24,
+									fontStyle: 'normal',
+									text: 'Total Excluded; n=' + fail_sum
+								},
+								scales: {
+									xAxes: [{
+										ticks: {
+											fontColor: '#8c4cbc',
+											fontSize: 18,
+											fontStyle: 'bold'
+										}
+									}],
+									yAxes: [{
+										ticks: {
+											beginAtZero: true
+										}
+									}]
+								}
+							}
+						});
+					</script>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="links">
+		{# blue bar #}
+		<div class="blue_bar" style="background-color: {{constant("BAR_BACKGROUND_COLOR")}};"></div>
+		<button class="close-folder btn btn-info">Return to folders</button>
+		<div class="row links">
+			{% for link in helpfulLinks %}
+				<div class="card" data-folder-index="{{ link.folder_index }}">
+					<div class="row" style="align-items: center;">
+						<div class="rank">
+							<span>#{{ loop.index }}</span>
+						</div>
+						<h1 class="link_display">{{ link.display }}</h1>
+					</div>
+					<div class="row" style="margin: 12px 0px;">
+						<a href="{{ link.url }}"class="link_url">{{ link.url }}</a>
+					</div>
+					<div class="row" style="align-items: center;">
+						<button class="clipboard"><img src="{{ clipboardImageSource }}"></button>
+						<small>Copy URL to clipboard</small>
+					</div>
+				</div class="card">
+			{% endfor %}
+		</div>
+		<div class="row folders" style="justify-content: center;">
+			{% for folder in helpfulLinkFolders %}
+				<div class="folder" data-index="{{ loop.index }}">
+					<img src="{{ folderImageSource }}" alt="Folder of links named '{{ folder.name }}'" style="background: {{folder.color}};"/>
+					<div class="centered">
+						<p>{{ folder.name }}</p>
+						<p>{{ folder.linkCount }} Links</p>
+					</div>
+				</div>
+			{% endfor %}
+			{% if helpfulLinkFolders is empty %}
+				<h3>There are no links to show at the moment</h3>
+				<small>Check back soon to find a list of helpful resources!</small>
+			{% endif %}
+		</div>
+	</div>
+</div>
+{% endblock %}

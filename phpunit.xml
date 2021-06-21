@@ -1,0 +1,14 @@
+<phpunit>
+    <testsuites>
+        <testsuite name='Integration'>
+               <directory>./tests/DDTest.php</directory>
+               <directory>./tests/DataTest.php</directory>
+               <directory>./tests/RecordsTest.php</directory>
+        </testsuite>
+        <testsuite name='Unit'>
+               <directory>./tests/AuthorizationTest.php</directory>
+               <directory>./tests/PIOUnitTest.php</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>
+

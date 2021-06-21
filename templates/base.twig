@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+	{% block head %}
+		<link rel="stylesheet" href="{{ constant('APP_PATH_WEBPACK') }}css/bundle.css" />
+		{% if(constant("CSS_PATH_1")) %}
+		<link rel="stylesheet" href="{{ constant("CSS_PATH_1") }}" />
+		{% endif %}
+
+		<script type="text/javascript" src="{{ constant('APP_PATH_WEBPACK') }}js/bundle.js"></script>
+		<script type="text/javascript" src="{{ constant('APP_PATH_JS') }}Libraries/bundle.js"></script>
+		<script type="text/javascript" src="{{ constant('APP_PATH_JS') }}base.js"></script>
+		<script type="text/javascript" src="{{ constant("JS_PATH_1") }}"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.1/js/jquery.tablesorter.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0/dist/chartjs-plugin-datalabels.min.js"></script>
+		
+		<script type="text/javascript">
+			var APP_PATH_WEBROOT = "{{ constant("APP_PATH_WEBROOT") }}";
+			var SCREENING_LOG_DATA_AJAX_URL = "{{ constant("SCREENING_LOG_DATA_AJAX_URL")|raw }}";
+			
+			// set chart.js datalabels plugin options globally
+			Chart.helpers.merge(Chart.defaults.global.plugins.datalabels, {
+				align: 'top',
+				anchor: 'end',
+				font: {size: "16"}
+			});
+		</script>
+
+		<style>
+			th.tablesorter-header {
+				background-image:url("{{ constant("APP_PATH_WEBPACK") }}images/sort_both.png");
+				background-repeat: no-repeat;
+				background-position: center right;
+			}
+
+			th.tablesorter-headerDesc {
+				background-image:url("{{ constant("APP_PATH_WEBPACK") }}images/sort_desc.png");
+			}
+
+			th.tablesorter-headerAsc {
+				background-image:url("{{ constant("APP_PATH_WEBPACK") }}images/sort_asc.png");
+			}
+		</style>
+
+		<title>{% block title %} {{constant("CUSTOM_SITE_NAME")}} {%  endblock %}</title>
+	{% endblock %}
+</head>
+<body>
+<div class='main-wrapper'>
+	<div id="main-header" style="background-color: {{constant("LOGO_BACKGROUND_COLOR")}};min-height: 100px;">
+		<div class='row'>
+			<div class="col-sm-6 col-logo">
+				<a href="">
+					
+					<img class="mlogo" style="max-height: 100px;" src="{{ constant("LOGO") }}">
+				</a>
+			</div>
+			<div class="col-sm-6 col-logo col-logo-right"><a href="" target="_blank"></a></div>
+		</div>
+	</div>
+</div>
+<div class='row' style='height:20px'>
+	<div style="padding-left:20px">
+		Welcome {{ constant("PIO_USER_DISPLAY_NAME") }} - <a href="{{constant("CUSTOM_LOGOUT")}}" onclick="logout();">Logout</a>
+	</div>
+</div>
+
+<div id="content" class="cols-xs-12" style="padding-left:15px">
+	{% block content %}{% endblock %}
+</div>
+<div>
+	{% block footer %}
+	{% endblock %}
+</div>
+</body>
+</html>

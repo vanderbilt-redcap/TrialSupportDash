@@ -1,0 +1,41 @@
+{
+	"totals": [
+		{
+			"name": "Target",
+			"enrolled": 1000,
+			"treated": 1000,
+			"fpe": "-",
+			"lpe": "-"
+		},
+		{
+			"name": "Current Enrolled",
+			"enrolled": 3,
+			"treated": 3,
+			"fpe": "-",
+			"lpe": "-"
+		}
+	],
+	"sites": [
+		{
+			"name": "001 - Site A",
+			"enrolled": 1,
+			"treated": 2,
+			"fpe": "2020-01-02",
+			"lpe": "2020-01-02"
+		},
+		{
+			"name": "002 - Site B",
+			"enrolled": 2,
+			"treated": 0,
+			"fpe": "2020-01-01",
+			"lpe": "2020-03-01"
+		},
+		{
+			"name": "003 - Site C",
+			"enrolled": 0,
+			"treated": 1,
+			"fpe": "-",
+			"lpe": "-"
+		}
+	]
+}

@@ -1,0 +1,280 @@
+{
+	"name": "TrialSupportDash",
+	"namespace": "Vanderbilt\\TrialSupportDash",
+	"framework-version": 6,
+	"description": "Copy of PassItOn for New Trial Dashboards",
+	"documentation": "README.md",
+	"authors": [
+		{
+			"name": "Carl Reed",
+			"email": "datacore@vumc.org",
+			"institution": "Vanderbilt University Medical Center"
+		},
+		{
+			"name": "Kyle McGuffin",
+			"email": "datacore@vumc.org",
+			"institution": "Vanderbilt University Medical Center"
+		}
+	],
+	"versions": {
+		"0.0.1": "Initial module creation"
+	},
+	"permissions": [],
+	"enable-every-page-hooks-on-system-pages": false,
+	"links": {
+		"project": [
+			{
+				"name": "Trial Support Dashboard",
+				"icon": "report",
+				"url": "dashboard.php"
+			}
+		],
+		"control-center": []
+	},
+	"no-auth-pages": [],
+	"project-settings": [
+		{
+			"key": "use_screening",
+			"name": "Use Screening Module?",
+			"required": false,
+			"type": "checkbox",
+			"repeatable": false
+		},
+		{
+			"key": "screening_project",
+			"name": "Trial Support Dashboard Screening Project ID",
+			"required": false,
+			"type": "project-id",
+			"branchingLogic": {
+				"field": "use_screening",
+				"value": "1"
+			},
+			"repeatable": false
+		},
+		{
+			"key": "user_access_project",
+			"name": "Trial Support Dashboard User Access Database Project ID",
+			"required": false,
+			"type": "project-id",
+			"branchingLogic": {
+				"field": "use_screening",
+				"value": "1"
+			},
+			"repeatable": false
+		},
+		{
+			"key": "site_regulation_project",
+			"name": "Trial Support Dashboard Site Regulation Project ID",
+			"required": false,
+			"type": "project-id",
+			"branchingLogic": {
+				"field": "use_screening",
+				"value": "1"
+			},
+			"repeatable": false
+		},
+		{
+			"key": "demographics_event",
+			"name": "Event Containing Demographics Fields",
+			"type": "event-list",
+			"branchingLogic": {
+				"field": "use_screening",
+				"value": "1"
+			},
+			"repeatable": false
+		},
+		{
+			"key": "transfusion_event",
+			"name": "Event Containing Transfusion Field",
+			"type": "event-list",
+			"branchingLogic": {
+				"field": "use_screening",
+				"value": "1"
+			},
+			"repeatable": false
+		},
+		{
+			"key": "screening_event",
+			"name": "Event Containing Screening Fields",
+			"type": "event-list",
+			"branchingLogic": {
+				"field": "use_screening",
+				"value": "1"
+			},
+			"repeatable": false
+		},
+		{
+			"key": "use_site_activation",
+			"name": "Use Site Activation Module?",
+			"required": false,
+			"type": "checkbox",
+			"repeatable": false
+		},
+		{
+			"key": "helpful_links_folders",
+			"name": "Helpful links shown in dashboard, categorized in folders",
+			"type": "sub_settings",
+			"repeatable": true,
+			"sub_settings": [
+				{
+					"key": "helpful_links_folder_text",
+					"name": "Folder name",
+					"type": "text"
+				},
+				{
+					"key": "helpful_links_folder_color",
+					"name": "Folder color (hex formatted e.g., #ede5be)",
+					"type": "text"
+				},
+				{
+					"key": "helpful_links",
+					"name": "Helpful links shown in dashboard, categorized in folders",
+					"type": "sub_settings",
+					"repeatable": true,
+					"sub_settings": [
+						{
+							"key": "link_display",
+							"name": "Link display text",
+							"type": "text"
+						},
+						{
+							"key": "link_url",
+							"name": "Link URL",
+							"type": "text"
+						}
+					]
+				}
+			]
+		},
+		
+		{
+			"key": "record_fields",
+			"name": "Record fields for dashboard",
+			"type": "sub_settings",
+			"sub_settings": [
+				{
+					"key": "gender",
+					"name": "pick field for gender",
+					"type": "field-list"
+				},
+				{
+					"key": "ethnic",
+					"name": "Race Ethniciy",
+					"type": "field-list"
+				},
+				{
+					"key": "is_randomized",
+					"name": "Field for Randomized",
+					"type": "field-list"
+				},
+				{
+					"key": "enrolled",
+					"name": "Field for Enrolled",
+					"type": "field-list"
+				},
+				{
+					"key": "is_treated",
+					"name": "Field for is Treated",
+					"type": "field-list"
+				},
+				{
+					"key": "randomization_date",
+					"name": "Field for random date",
+					"type": "field-list"
+				},
+				{
+					"key": "treated_date",
+					"name": "Field for treated date",
+					"type": "field-list"
+				}
+				
+			]
+		},
+	
+		{
+			"key": "custom_accent_colors",
+			"name": "Custom accent colors for dashboard",
+			"type": "sub_settings",
+			"sub_settings": [
+				{
+					"key": "site_name",
+					"name": "Change Site Name",
+					"required": true,
+					"type": "text"
+				},
+				{
+					"key": "custom_logout",
+					"name": "Change logout Url",
+					"type": "link"
+				},
+				{
+					"key": "logo_upload",
+					"name": "Upload Logo",
+					"required": false,
+					"type": "file",
+					"repeatable": false
+					
+				},
+				{
+					"key": "custom_header_color",
+					"name": "Custom Header Color (hex formatted e.g., #eeeeee)",
+					"type": "text"
+				},
+			
+				{
+					"key": "custom_bar_color",
+					"name": "Custom Bar Color (hex formatted e.g., #055877)",
+					"type": "text"
+				},
+				{
+					"key": "custom_secondary_bar_color",
+					"name": "Custom Secondary Bar Color (hex formatted e.g., #138085)",
+					"type": "text"
+				},
+				{
+					"key": "custom_text_color",
+					"name": "Custom text color (hex formatted e.g. #ffffff)",
+					"type": "dropdown",
+					"choices": [
+						{
+							"name": "Dark text",
+							"value": "dark"
+						},
+						{
+							"name": "Light text",
+							"value": "light"
+						}
+					]
+				}
+			]
+		},
+		{
+			"key": "exclusion",
+			"name": "Choose a exclusion field",
+			"type": "sub_settings",
+			"sub_settings": [
+				{
+					"key": "exclusion_reason_field",
+					"name": "Exclusion Field",
+					"repeatable": true,
+					"type": "field-list",
+         			"field-type": "enum"
+
+				}
+			]
+		},
+		{
+			"key": "json_text_dag",
+			"name": "json text of DAGs, Key: (West, Southwest, Southeast, Northeast, Midwest) ",
+			"type": "textarea"
+		}
+	],
+	"system-settings": [],
+	"crons": [],
+	"compatibility": {
+		"php-version-min": "",
+		"php-version-max": "",
+		"redcap-version-min": "",
+		"redcap-version-max": ""
+	}
+}

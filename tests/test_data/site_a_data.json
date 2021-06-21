@@ -1,0 +1,19 @@
+{
+	"site_name": "001 - Site A",
+	"rows": [
+		{
+			"id": "1",
+			"sex": "F",
+			"race": "Declined",
+			"enrolled": "2020-01-02",
+			"treated": "2020-01-01"
+		},
+		{
+			"id": "006",
+			"sex": "M",
+			"race": "Non-hispanic black",
+			"enrolled": "",
+			"treated": ""
+		}
+	]
+}

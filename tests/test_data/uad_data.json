@@ -1,0 +1,20 @@
+[{
+	"dashboard": "1",
+	"first_name": "Test",
+	"last_name": "User",
+	"record_id": "1",
+	"redcap_repeat_instrument": "",
+	"redcap_repeat_instance": "",
+	"role_ext_2": "1043",
+	"user_name": "user_123",
+	"dag_group_name": "001 - Site A"
+}, {
+	"first_name": "def",
+	"last_name": "ghi",
+	"record_id": "2",
+	"redcap_repeat_instrument": "",
+	"redcap_repeat_instance": "",
+	"role_ext_2": "1048",
+	"user_name": "not_user_123",
+	"dag_group_name": ""
+}]

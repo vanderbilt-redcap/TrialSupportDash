@@ -1,0 +1,248 @@
+#content {
+    padding:5px;
+	font-size: 1.25rem;
+}
+
+#event-tabs {
+    border-bottom: 1px solid #ebeded;
+    background: #f7f9f9;
+    text-align: center;
+    margin: auto;
+}
+#event-tabs .tab {
+    display: inline-block;
+    text-decoration: none;
+    color: #929597;
+    margin-right: -3px;
+}
+#event-tabs .tab .name {
+    margin-top: 2px;
+    padding: 11px 28px;
+    font-size: 1.5rem;
+}
+#event-tabs .tab .name {
+    border-right: 2px solid #f1f2f3;
+}
+#event-tabs .tab:hover {
+    color: black;
+}
+#event-tabs .tab.active {
+    margin-top: -5px;
+    color: black;
+    background: white;
+    position: relative;
+    top: 1px;
+    border: 1px solid #055877;
+}
+#event-tabs .tab.active .top-border {
+    /* background: #055877; */
+    height: 5px;
+}
+#event-tabs .tab.active .name {
+    border-right-width: 1px;
+}
+#event-tabs .tab:last-child .name {
+    border-right: none;
+}
+
+table {
+	width: calc(100% - 16px);
+}
+th {
+    background-color:#055877;
+    color: #ffffff;
+    padding: 5px 15px;
+    text-align:center;
+}
+tr > td {
+    text-align: center;
+    padding:2px 10px;
+    background-color:#eeeeee;
+}
+tr.first_row > td {
+    background-color:#138085;
+    color: #ffffff;
+    font-weight:bold;
+}
+tr:nth-child(even):not(.first_row) > td {
+    background-color:#d9d9d9;
+}
+tr > td {
+    text-align: center;
+    padding:2px 10px;
+}
+tr > td:nth-child(1) {
+    text-align: left;
+}
+#allSitesData td:nth-child(2) {
+	font-weight: 600;
+}
+.row {
+    margin: 0;
+}
+button.nonactive {
+    background-color:#FFFFFF;
+    color: #000;
+    border: 1px solid black;
+}
+
+a.nonactive div.name {
+    background-color:#eeeeee;
+}
+
+/* screening reports */
+div.blue_bar {
+	height: 36px;
+	margin-bottom: 4px;
+    background-color:#055877; 
+}
+span#report_title {
+    background-color:#138085;
+    color: #ffffff;
+    padding: 2px 15px;
+	display: block;
+	font-weight: bold;
+	font-size: 1.5rem;
+	min-height: 36px;
+}
+
+div.buttons {
+	display: flex;
+	justify-content: center;
+}
+.report_switch {
+	padding: 96px 32px;
+	margin: 16px;
+	border-color: #aaaaaa;
+	border-style: solid;
+	border-radius: 16px;
+}
+
+#screening table, #screening th, #screening td {
+	text-align: center;
+	border: 1px solid black;
+}
+#screening tr:nth-child(even):not(.first_row):not(:last-child) > td {
+    background-color:#fff;
+}
+#screening thead th {
+    background-color:#138085;
+	font-weight: normal;
+}
+
+.screening_report div.col-6 * {
+	margin-top: 20px;
+}
+
+#screening_log table tr:last-child {
+    color: #ffffff;
+	font-weight: bold;
+}
+#screening_log table tr:last-child td {
+    background-color:#138085;
+}
+#screening_log div.col-6 {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+#screening_log div.col-6 > select {
+	margin: 20px 0px;
+}
+#exclusion td:nth-child(1) {
+	font-weight: bold;
+	color: #8c4cbc;
+}
+#exclusion tbody td:nth-child(2) {
+	text-align: left;
+}
+#screen_fail tbody td:nth-child(2) {
+	text-align: left;
+}
+button.main_page {
+	color: #ffffff;
+	background-color: #239095;
+	margin-bottom: 40px;
+	padding: 12px;
+	border: none;
+	border-radius: 6px;
+	font-size: 1rem;
+	text-transform: uppercase;
+}
+
+/* helpful links */
+#links .folders {
+	display: flex;
+}
+#links .folders .folder {
+	position: relative;
+	border-radius: 20px;
+	overflow: hidden;
+	margin: 16px;
+}
+#links .folders .folder img {
+	max-width: 248px;
+	max-height: 248px;
+}
+#links .centered {
+	position: absolute;
+	font-size: 18px;
+	font-weight: 700;
+	top: 30%;
+	left: 10%;
+	max-width: 80%;
+	max-height: 45%;
+}
+#links div.links {
+	display: flex;
+}
+#links .links .card {
+	margin: 16px;
+	padding-left: 24px;
+	padding-right: 24px;
+	padding-top: 8px;
+	padding-bottom: 8px;	
+}
+#links button.close-folder {
+	margin-top: 16px;
+	margin-left: 16px;
+}
+#links div.rank {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 50%;
+	background-color: #05587788;
+	border: none;
+	width: 44px;
+	height: 44px;
+	margin-right: 32px;
+	
+	color: #ffffff;
+	font-size: 1.25rem;
+	font-weight: 600;
+}
+#links .link_display {
+	color: #055877;
+}
+#links a.link_url {
+	color: #fff;
+	background-color: #05587788;
+	padding: 4px 12px;
+	border-radius: 4px;
+}
+#links button.clipboard {
+	border-radius: 4px;
+	margin-right: 8px;
+	background-color: #eefa;
+}
+#links button.clipboard img {
+	width: 50%;
+	height: 50%;
+}
+#region{
+	height: 50px;
+    margin: 20px 0 !important;
+	
+}
+

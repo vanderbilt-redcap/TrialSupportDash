@@ -1,0 +1,49 @@
+{
+    "rows": [
+        [
+            "#1",
+            "Prisoner",
+            2
+        ],
+        [
+            "#2",
+            "Unable to randomize within 14 days after onset of acute respiratory infection symptoms",
+            3
+        ],
+        [
+            "#3",
+            "Patient",
+            2
+        ],
+        [
+            "#4",
+            "Inability to be contacted on Day 29-36 for clinical outcome assessment",
+            1
+        ],
+        [
+            "#5",
+            "Receipt of COVID-19 convalescent plasma or pooled immunoglobulin in the past 30 days",
+            0
+        ],
+        [
+            "#6",
+            "Contraindications to transfusion or history of prior reactions to transfused blood products",
+            1
+        ],
+        [
+            "#7",
+            "Plan for hospital discharge within 24 hours of enrollment",
+            2
+        ],
+        [
+            "#8",
+            "Previous enrollment in this trial",
+            3
+        ],
+        [
+            "#9",
+            "Enrollment in another clinical trial evaluating monoclonal antibodies",
+            1
+        ]
+    ]
+}

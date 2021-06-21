@@ -1,0 +1,34 @@
+{
+    "rows": [
+        [
+            "#1",
+            "Declined",
+            2
+        ],
+        [
+            "#2",
+            "LAR needed not available",
+            1
+        ],
+        [
+            "#3",
+            "Language barrier - Interpreter not available",
+            0
+        ],
+        [
+            "#4",
+            "Language barrier - Consent not available",
+            2
+        ],
+        [
+            "#5",
+            "Never approached",
+            1
+        ],
+        [
+            "#6",
+            "Other",
+            6
+        ]
+    ]
+}

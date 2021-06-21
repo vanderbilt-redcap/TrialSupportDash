@@ -1,0 +1,75 @@
+[
+	{
+		"record_id": "1",
+		"redcap_data_access_group": "001__site_a",
+	"dag": "210",
+	"dag_name": "001 - Site A",
+		"sex": "F",
+		"race_ethnicity": "Declined",
+		"transfusion_datetime": "2020-01-01 05:13",
+		"randomization_date": "2020-01-02",
+		"transfusion_given": "1",
+		"randomization": "1",
+		
+	},
+	{
+		"record_id": "3",
+		"redcap_data_access_group": "002__site_b",
+	"dag": "211",
+	"dag_name": "002 - Site B",
+		"sex": "M",
+		"race_ethnicity": "Hispanic",
+		"transfusion_datetime": "2020-01-06 14:18",
+		"randomization_date": "",
+		"transfusion_given": "",
+		"randomization": ""
+	},
+	{
+		"record_id": "5",
+		"redcap_data_access_group": "002__site_b",
+	"dag": "211",
+	"dag_name": "002 - Site B",
+		"sex": "F",
+		"race_ethnicity": "Other",
+		"transfusion_datetime": "",
+		"randomization_date": "2020-01-01",
+		"transfusion_given": "",
+		"randomization": "1"
+	},
+	{
+		"record_id": "006",
+		"redcap_data_access_group": "001__site_a",
+	"dag": "210",
+	"dag_name": "001 - Site A",
+		"sex": "M",
+		"race_ethnicity": "Non-hispanic black",
+		"transfusion_datetime": "",
+		"randomization_date": "",
+		"transfusion_given": "1",
+		"randomization": ""
+	},
+	{
+		"record_id": "9",
+		"redcap_data_access_group": "002__site_b",
+	"dag": "211",
+	"dag_name": "002 - Site B",
+		"sex": "M",
+		"race_ethnicity": "",
+		"transfusion_datetime": "",
+		"randomization_date": "2020-03-01",
+		"transfusion_given": "",
+		"randomization": "2"
+	},
+	{
+		"record_id": "10",
+		"redcap_data_access_group": "003__site_c",
+	"dag": "232",
+	"dag_name": "003 - Site C",
+		"sex": "F",
+		"race_ethnicity": "Non-hispanic white",
+		"transfusion_datetime": "",
+		"randomization_date": "",
+		"transfusion_given": "1",
+		"randomization": ""
+	}
+]

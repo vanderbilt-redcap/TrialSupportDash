@@ -1,2 +1,3 @@
-# TrialSupportDash
-Trial Support Dashboard external module for REDCap.
+# Trial Support Dashboard
+Customizable dashboard with various features for supporting trial management
+
