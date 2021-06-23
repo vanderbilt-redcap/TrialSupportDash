@@ -1,6 +1,6 @@
 <?php
 
-namespace Vanderbilt\RAAS_NECTAR;
+namespace Vanderbilt\TrialSupportDash;
 
 // For now, the path to "redcap_connect.php" on your system must be hard coded.
 require_once dirname(dirname(dirname(__DIR__))) . '/redcap_connect.php';
@@ -8,7 +8,7 @@ require_once dirname(dirname(dirname(__DIR__))) . '/redcap_connect.php';
 
 final class PIOUnitTest extends \ExternalModules\ModuleBaseTest
 {
-    /** @var RAAS_NECTAR $module */
+    /** @var TrialSupportDash $module */
     public $module;
 
 	public function setUp() : void {
@@ -32,9 +32,9 @@ final class PIOUnitTest extends \ExternalModules\ModuleBaseTest
 		$result = $this->module->my_site_data;
 		
 		// ensure our result is structured as expected
-		$this->assertIsObject($result, "RAAS_NECTAR->my_site_data is not an object after calling ->getMySiteData()");
+		$this->assertIsObject($result, "TrialSupportDash->my_site_data is not an object after calling ->getMySiteData()");
 		$this->assertEquals("001 - Site A", $result->site_name, "getMySiteData() didn't correctly determine site name property");
-		$this->assertIsArray($result->rows, "RAAS_NECTAR->my_site_data->rows is not an object after calling ->getMySiteData()");
+		$this->assertIsArray($result->rows, "TrialSupportDash->my_site_data->rows is not an object after calling ->getMySiteData()");
 
 		// ensure we have the correct number of rows
 		$row_count = count($result->rows);
@@ -61,9 +61,9 @@ final class PIOUnitTest extends \ExternalModules\ModuleBaseTest
 		$result = $this->module->my_site_data;
 
 		// ensure our result is structured as expected
-		$this->assertIsObject($result, "RAAS_NECTAR->my_site_data is not an object after calling ->getMySiteData()");
+		$this->assertIsObject($result, "TrialSupportDash->my_site_data is not an object after calling ->getMySiteData()");
 		$this->assertEquals("002 - Site B", $result->site_name, "getMySiteData() didn't correctly determine site name property");
-		$this->assertIsArray($result->rows, "RAAS_NECTAR->my_site_data->rows is not an object after calling ->getMySiteData()");
+		$this->assertIsArray($result->rows, "TrialSupportDash->my_site_data->rows is not an object after calling ->getMySiteData()");
 		
 		// ensure we have the correct number of rows (all 6 since we set user to have level 3 access role)
 		$row_count = count($result->rows);
@@ -88,8 +88,8 @@ final class PIOUnitTest extends \ExternalModules\ModuleBaseTest
 		$result = $this->module->my_site_data;
 
 		// ensure our result is structured as expected
-		$this->assertIsObject($result, "RAAS_NECTAR->my_site_data is not an object after calling ->getMySiteData()");
-		$this->assertIsArray($result->rows, "RAAS_NECTAR->my_site_data->rows is not an object after calling ->getMySiteData()");
+		$this->assertIsObject($result, "TrialSupportDash->my_site_data is not an object after calling ->getMySiteData()");
+		$this->assertIsArray($result->rows, "TrialSupportDash->my_site_data->rows is not an object after calling ->getMySiteData()");
 
 		// ensure we have the correct number of rows (all 6 since we set user to have level 3 access role)
 		$row_count = count($result->rows);
@@ -113,9 +113,9 @@ final class PIOUnitTest extends \ExternalModules\ModuleBaseTest
 		$result = $this->module->all_sites_data;
 		
 		// ensure our result is structured as expected
-		$this->assertIsObject($result, "RAAS_NECTAR->all_sites_data is not an object after calling ->getAllSitesData()");
-		$this->assertIsArray($result->totals, "RAAS_NECTAR->my_site_data->totals is not an object after calling ->getAllSitesData()");
-		$this->assertIsArray($result->sites, "RAAS_NECTAR->my_site_data->sites is not an object after calling ->getAllSitesData()");
+		$this->assertIsObject($result, "TrialSupportDash->all_sites_data is not an object after calling ->getAllSitesData()");
+		$this->assertIsArray($result->totals, "TrialSupportDash->my_site_data->totals is not an object after calling ->getAllSitesData()");
+		$this->assertIsArray($result->sites, "TrialSupportDash->my_site_data->sites is not an object after calling ->getAllSitesData()");
 		
 		// ensure we have the correct number of rows
 		$totals_row_count = count($result->totals);

@@ -3,13 +3,23 @@
 {% block content %}
 
 <script type="text/javascript">
-    var startTab = "{{ use_screening ? "allSitesData" : "links" }}";
+    var startTab = "{{ use_exclusion ? "allSitesData" : "links" ? use_screening ? "allSitesData" : "links"}}";
 </script>
-    
+ 
+<select name="region" id="region">
+	<option value="">Select Region</option>
+	<option value="Southeast">Southeast</option>
+	<option value="Southwest">Southwest</option>
+	<option value="West">West</option>
+	<option value="Midwest">Midwest</option>
+	<option value="Northeast">Northeast</option>
+</select>
 <div id="tabs" style="width:100%; float:left; margin-top:5px;">
 	<div class='row'>
+
 		<div id="event-tabs" style="background-color:#ffffff; margin-left:0px;text-align:left">
-            {% if use_screening %}
+                {% if (use_screening == 1) or (use_exclusion) %}
+
             <a class="tab active" id="allSitesData-button" onclick="activateTab('allSitesData');">
 				<div class='top-border' style="background-color: {{constant("BAR_BACKGROUND_COLOR")}};"></div>
 				<div class='name'><b>Enrollment Statistics</b></div>
@@ -22,21 +32,23 @@
 				<div class='top-border' style="background-color: {{constant("BAR_BACKGROUND_COLOR")}};"></div>
 				<div class='name'><b>Screening</b></div>
 			</a>
-            {% endif %}
+        		{% endif %}
+
 			<a class="tab {{ use_screening ? "nonactive" : "active "}}" id="links-button" onclick="activateTab('links');">	<div class='top-border' style="background-color: {{constant("BAR_BACKGROUND_COLOR")}};"></div>
 				<div class='name'><b>Helpful Links</b></div>
 			</a>
 		</div>
 	</div>
 	{#<div class='row' style="height:1px"></div>#}
-    {% if use_screening %}
+	{% if (use_screening == 1) or (use_exclusion) %}
+
 	<div id="allSitesData">
 		<table>
 			<thead>
 				<tr>
 					<th style="background-color: {{constant("BAR_BACKGROUND_COLOR")}};"></th>
-					<th style="background-color: {{constant("BAR_BACKGROUND_COLOR")}}; color: {{constant("TEXT_COLOR")}};">Enrolled</th>
-					<th style="background-color: {{constant("BAR_BACKGROUND_COLOR")}}; color: {{constant("TEXT_COLOR")}};">Treated</th>
+					{# <th style="background-color: {{constant("BAR_BACKGROUND_COLOR")}}; color: {{constant("TEXT_COLOR")}};">Enrolled</th> #}
+					<th style="background-color: {{constant("BAR_BACKGROUND_COLOR")}}; color: {{constant("TEXT_COLOR")}};">Randomized</th>
 					<th style="background-color: {{constant("BAR_BACKGROUND_COLOR")}}; color: {{constant("TEXT_COLOR")}};">FPE</th>
 					<th style="background-color: {{constant("BAR_BACKGROUND_COLOR")}}; color: {{constant("TEXT_COLOR")}};">LPE</th>
 				</tr>
@@ -44,7 +56,7 @@
 			<tbody>
 				<tr class="first_row" >
 					<td style="background-color: {{constant("SECONDARY_BAR_BACKGROUND_COLOR")}}; color: {{constant("TEXT_COLOR")}};">Entire Project</td>
-					<td style="background-color: {{constant("SECONDARY_BAR_BACKGROUND_COLOR")}};"></td>
+					{# <td style="background-color: {{constant("SECONDARY_BAR_BACKGROUND_COLOR")}};"></td> #}
 					<td style="background-color: {{constant("SECONDARY_BAR_BACKGROUND_COLOR")}};"></td>
 					<td style="background-color: {{constant("SECONDARY_BAR_BACKGROUND_COLOR")}};"></td>
 					<td style="background-color: {{constant("SECONDARY_BAR_BACKGROUND_COLOR")}};"></td>
@@ -52,7 +64,7 @@
 				{% for totalDetails in allSites["totals"] %}
 					<tr>
 						<td>{{ totalDetails["name"] }}</td>
-						<td>{{ totalDetails["enrolled"] }}</td>
+						{# <td>{{ totalDetails["enrolled"] }}</td> #}
 						<td>{{ totalDetails["treated"] }}</td>
 						<td>{{ totalDetails["fpe"] }}</td>
 						<td>{{ totalDetails["lpe"] }}</td>
@@ -60,15 +72,15 @@
 				{% endfor %}
 				<tr class="first_row">
 					<td style="background-color: {{constant("SECONDARY_BAR_BACKGROUND_COLOR")}}; color: {{constant("TEXT_COLOR")}};">By Site</td>
-					<td style="background-color: {{constant("SECONDARY_BAR_BACKGROUND_COLOR")}};"></td>
+					{# <td style="background-color: {{constant("SECONDARY_BAR_BACKGROUND_COLOR")}};"></td> #}
 					<td style="background-color: {{constant("SECONDARY_BAR_BACKGROUND_COLOR")}};"></td>
 					<td style="background-color: {{constant("SECONDARY_BAR_BACKGROUND_COLOR")}};"></td>
 					<td style="background-color: {{constant("SECONDARY_BAR_BACKGROUND_COLOR")}};"></td>
 				</tr>
 				{% for siteDetails in allSites["sites"] %}
-					<tr>
-						<td>{{ siteDetails["name"] }}</td>
-						<td>{{ siteDetails["enrolled"] }}</td>
+					<tr class="region" data-region="{{ siteDetails["class"] }}">
+						<td >{{ siteDetails["name"] }}</td>
+						{# <td>{{ siteDetails["enrolled"] }}</td> #}
 						<td>{{ siteDetails["treated"] }}</td>
 						<td>{{ siteDetails["fpe"] }}</td>
 						<td>{{ siteDetails["lpe"] }}</td>
@@ -89,8 +101,7 @@
 				{% endif %}
 				<th style="background-color: {{constant("BAR_BACKGROUND_COLOR")}};color: {{constant("TEXT_COLOR")}};">Sex</th>
 				<th style="background-color: {{constant("BAR_BACKGROUND_COLOR")}};color: {{constant("TEXT_COLOR")}};">Race</th>
-				<th style="background-color: {{constant("BAR_BACKGROUND_COLOR")}};color: {{constant("TEXT_COLOR")}};">Enrolled</th>
-				<th style="background-color: {{constant("BAR_BACKGROUND_COLOR")}};color: {{constant("TEXT_COLOR")}};">Treated</th>
+				<th style="background-color: {{constant("BAR_BACKGROUND_COLOR")}};color: {{constant("TEXT_COLOR")}};">Randomized</th>
 			</tr>
 			</thead>
 			<tbody>
@@ -102,7 +113,6 @@
 					{% endif %}
 					<td>{{ personDetails["sex"] }}</td>
 					<td>{{ personDetails["race"] }}</td>
-					<td>{{ personDetails["enrolled"] }}</td>
 					<td>{{ personDetails["treated"] }}</td>
 				</tr>
 			{% endfor %}
@@ -378,7 +388,7 @@
 			</div>
 		</div>
 	</div>
-    {% endif %}
+{% endif %}
 	<div id="links">
 		{# blue bar #}
 		<div class="blue_bar" style="background-color: {{constant("BAR_BACKGROUND_COLOR")}};"></div>

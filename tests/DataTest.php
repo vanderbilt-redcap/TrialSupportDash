@@ -1,6 +1,6 @@
 <?php
 
-namespace Vanderbilt\RAAS_NECTAR;
+namespace Vanderbilt\TrialSupportDash;
 
 // For now, the path to "redcap_connect.php" on your system must be hard coded.
 require_once dirname(dirname(dirname(__DIR__))) . '/redcap_connect.php';
@@ -8,7 +8,7 @@ require_once dirname(dirname(dirname(__DIR__))) . '/redcap_connect.php';
 
 final class DataTest extends \ExternalModules\ModuleBaseTest
 {
-    /** @var RAAS_NECTAR $module */
+    /** @var TrialSupportDash $module */
     public $module;
 
 	public function setUp() : void {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Vanderbilt\RAAS_NECTAR;
+namespace Vanderbilt\TrialSupportDash;
 
 require_once dirname(dirname(dirname(__DIR__))) . '/redcap_connect.php';
 

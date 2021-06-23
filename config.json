@@ -42,7 +42,7 @@
 		},
 		{
 			"key": "screening_project",
-			"name": "RAAS_NECTAR Screening Project ID",
+			"name": "Trial Support Dashboard Screening Project ID",
 			"required": false,
 			"type": "project-id",
 			"branchingLogic": {
@@ -53,7 +53,7 @@
 		},
 		{
 			"key": "user_access_project",
-			"name": "RAAS_NECTAR User Access Database Project ID",
+			"name": "Trial Support Dashboard User Access Database Project ID",
 			"required": false,
 			"type": "project-id",
 			"branchingLogic": {
@@ -64,7 +64,7 @@
 		},
 		{
 			"key": "site_regulation_project",
-			"name": "RAAS_NECTAR Site Regulation Project ID",
+			"name": "Trial Support Dashboard Site Regulation Project ID",
 			"required": false,
 			"type": "project-id",
 			"branchingLogic": {
