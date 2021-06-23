@@ -1306,7 +1306,7 @@ class TrialSupportDash extends \ExternalModules\AbstractExternalModule {
 		$this->getDAGs();
 		$this->getUser();
 		$this->getRecords();
-		// $this->authorizeUser();
+	    $this->authorizeUser();
 
 
 		$site_data = new \stdClass();
