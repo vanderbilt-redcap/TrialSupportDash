@@ -8,22 +8,6 @@
     "packages": [
         {
             "name": "symfony/polyfill-ctype",
-<<<<<<< HEAD
-            "version": "v1.18.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/polyfill-ctype.git",
-                "reference": "1c302646f6efc070cd46856e600e5e0684d6b454"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/1c302646f6efc070cd46856e600e5e0684d6b454",
-                "reference": "1c302646f6efc070cd46856e600e5e0684d6b454",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3"
-=======
             "version": "v1.23.0",
             "source": {
                 "type": "git",
@@ -38,7 +22,6 @@
             },
             "require": {
                 "php": ">=7.1"
->>>>>>> 86fcb2dab484a564f77718335bead2464ca85bab
             },
             "suggest": {
                 "ext-ctype": "For best performance"
@@ -46,11 +29,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-<<<<<<< HEAD
-                    "dev-master": "1.18-dev"
-=======
                     "dev-main": "1.23-dev"
->>>>>>> 86fcb2dab484a564f77718335bead2464ca85bab
                 },
                 "thanks": {
                     "name": "symfony/polyfill",
@@ -87,26 +66,6 @@
                 "polyfill",
                 "portable"
             ],
-<<<<<<< HEAD
-            "time": "2020-07-14T12:35:20+00:00"
-        },
-        {
-            "name": "symfony/polyfill-mbstring",
-            "version": "v1.18.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "a6977d63bf9a0ad4c65cd352709e230876f9904a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/a6977d63bf9a0ad4c65cd352709e230876f9904a",
-                "reference": "a6977d63bf9a0ad4c65cd352709e230876f9904a",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3"
-=======
             "time": "2021-02-19T12:13:01+00:00"
         },
         {
@@ -125,7 +84,6 @@
             },
             "require": {
                 "php": ">=7.1"
->>>>>>> 86fcb2dab484a564f77718335bead2464ca85bab
             },
             "suggest": {
                 "ext-mbstring": "For best performance"
@@ -133,11 +91,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-<<<<<<< HEAD
-                    "dev-master": "1.18-dev"
-=======
                     "dev-main": "1.23-dev"
->>>>>>> 86fcb2dab484a564f77718335bead2464ca85bab
                 },
                 "thanks": {
                     "name": "symfony/polyfill",
@@ -175,22 +129,6 @@
                 "portable",
                 "shim"
             ],
-<<<<<<< HEAD
-            "time": "2020-07-14T12:35:20+00:00"
-        },
-        {
-            "name": "twig/twig",
-            "version": "v3.3.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/twigphp/Twig.git",
-                "reference": "ac44433c49892bf28d47c852b19832f3823bd351"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/ac44433c49892bf28d47c852b19832f3823bd351",
-                "reference": "ac44433c49892bf28d47c852b19832f3823bd351",
-=======
             "time": "2021-05-27T09:27:20+00:00"
         },
         {
@@ -205,7 +143,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/twigphp/Twig/zipball/21578f00e83d4a82ecfa3d50752b609f13de6790",
                 "reference": "21578f00e83d4a82ecfa3d50752b609f13de6790",
->>>>>>> 86fcb2dab484a564f77718335bead2464ca85bab
                 "shasum": ""
             },
             "require": {
@@ -254,25 +191,7 @@
             "keywords": [
                 "templating"
             ],
-<<<<<<< HEAD
-            "support": {
-                "issues": "https://github.com/twigphp/Twig/issues",
-                "source": "https://github.com/twigphp/Twig/tree/v3.3.1"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/twig/twig",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2021-05-12T08:05:35+00:00"
-=======
             "time": "2021-05-16T12:14:13+00:00"
->>>>>>> 86fcb2dab484a564f77718335bead2464ca85bab
         }
     ],
     "packages-dev": [],
@@ -282,10 +201,5 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
-<<<<<<< HEAD
-    "platform-dev": [],
-    "plugin-api-version": "2.0.0"
-=======
     "platform-dev": []
->>>>>>> 86fcb2dab484a564f77718335bead2464ca85bab
 }
