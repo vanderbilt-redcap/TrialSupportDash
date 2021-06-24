@@ -12,12 +12,12 @@ $template = $twig->load("dashboard.twig");
 $siteActivation = $module->getProjectSetting("use_site_activation");
 $screeningLog = $module->getProjectSetting("use_screening");
 $exclusionField = $module->getProjectSetting("exclusion_reason_field");
+
 //loop to find value in array if none assign value
+$exclusionValue = "";
 foreach ($exclusionField as $results) {
 	foreach ($results as $value) {
-		if (empty($value)) {
-			$exclusionValue = "";
-		} else {
+		if (!empty($value)) {
 			$exclusionValue = 1;
 		}
 	}
