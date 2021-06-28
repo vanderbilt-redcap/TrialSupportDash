@@ -264,6 +264,16 @@
 			]
 		},
 		{
+			"key": "enrolled-target",
+			"name": "Enrollment Target",
+			"type": "text"
+		},
+		{
+			"key": "treated-target",
+			"name": "Treated Target",
+			"type": "text"
+		},
+		{
 			"key": "json_text_dag",
 			"name": "json text of DAGs, Key: (West, Southwest, Southeast, Northeast, Midwest) ",
 			"type": "textarea"

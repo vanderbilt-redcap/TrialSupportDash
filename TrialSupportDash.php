@@ -1065,12 +1065,15 @@ class TrialSupportDash extends \ExternalModules\AbstractExternalModule {
 		$this->getDAGs();
 		$this->getRecords();
 
-		$data = new \stdClass();
+        $enrolledTarget = $this->getProjectSetting("enrolled-target");
+        $treatedTarget = $this->getProjectSetting("treated-target");
+
+        $data = new \stdClass();
 		$data->totals = json_decode('[
 			{
 				"name": "Target",
-				"enrolled": 1000,
-				"treated": 1000,
+				"enrolled": '.($enrolledTarget ?: '1000').',
+				"treated": '.($treatedTarget ?: '1000').',
 				"fpe": "-",
 				"lpe": "-"
 			},
