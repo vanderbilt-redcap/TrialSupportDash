@@ -43,51 +43,60 @@
 	{% if (use_screening == 1) or (use_exclusion) %}
 
 	<div id="allSitesData">
-		<table>
-			<thead>
-				<tr>
-					<th style="background-color: {{constant("BAR_BACKGROUND_COLOR")}};"></th>
-					{# <th style="background-color: {{constant("BAR_BACKGROUND_COLOR")}}; color: {{constant("TEXT_COLOR")}};">Enrolled</th> #}
-					<th style="background-color: {{constant("BAR_BACKGROUND_COLOR")}}; color: {{constant("TEXT_COLOR")}};">Randomized</th>
-					<th style="background-color: {{constant("BAR_BACKGROUND_COLOR")}}; color: {{constant("TEXT_COLOR")}};">FPE</th>
-					<th style="background-color: {{constant("BAR_BACKGROUND_COLOR")}}; color: {{constant("TEXT_COLOR")}};">LPE</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr class="first_row" >
-					<td style="background-color: {{constant("SECONDARY_BAR_BACKGROUND_COLOR")}}; color: {{constant("TEXT_COLOR")}};">Entire Project</td>
-					{# <td style="background-color: {{constant("SECONDARY_BAR_BACKGROUND_COLOR")}};"></td> #}
-					<td style="background-color: {{constant("SECONDARY_BAR_BACKGROUND_COLOR")}};"></td>
-					<td style="background-color: {{constant("SECONDARY_BAR_BACKGROUND_COLOR")}};"></td>
-					<td style="background-color: {{constant("SECONDARY_BAR_BACKGROUND_COLOR")}};"></td>
-				</tr>
-				{% for totalDetails in allSites["totals"] %}
-					<tr>
-						<td>{{ totalDetails["name"] }}</td>
-						{# <td>{{ totalDetails["enrolled"] }}</td> #}
-						<td>{{ totalDetails["treated"] }}</td>
-						<td>{{ totalDetails["fpe"] }}</td>
-						<td>{{ totalDetails["lpe"] }}</td>
-					</tr>
-				{% endfor %}
-				<tr class="first_row">
-					<td style="background-color: {{constant("SECONDARY_BAR_BACKGROUND_COLOR")}}; color: {{constant("TEXT_COLOR")}};">By Site</td>
-					{# <td style="background-color: {{constant("SECONDARY_BAR_BACKGROUND_COLOR")}};"></td> #}
-					<td style="background-color: {{constant("SECONDARY_BAR_BACKGROUND_COLOR")}};"></td>
-					<td style="background-color: {{constant("SECONDARY_BAR_BACKGROUND_COLOR")}};"></td>
-					<td style="background-color: {{constant("SECONDARY_BAR_BACKGROUND_COLOR")}};"></td>
-				</tr>
-				{% for siteDetails in allSites["sites"] %}
-					<tr class="region" data-region="{{ siteDetails["class"] }}">
-						<td >{{ siteDetails["name"] }}</td>
-						{# <td>{{ siteDetails["enrolled"] }}</td> #}
-						<td>{{ siteDetails["treated"] }}</td>
-						<td>{{ siteDetails["fpe"] }}</td>
-						<td>{{ siteDetails["lpe"] }}</td>
-					</tr>
-				{% endfor %}
-			</tbody>
-		</table>
+		<div class="blue_bar col-12"></div>
+		<div class="row" style="width: 100%;">
+			<div class="col-6">
+				<table>
+					<thead>
+						<tr>
+							<th style="background-color: {{constant("BAR_BACKGROUND_COLOR")}};"></th>
+							{# <th style="background-color: {{constant("BAR_BACKGROUND_COLOR")}}; color: {{constant("TEXT_COLOR")}};">Enrolled</th> #}
+							<th style="background-color: {{constant("BAR_BACKGROUND_COLOR")}}; color: {{constant("TEXT_COLOR")}};">Randomized</th>
+							<th style="background-color: {{constant("BAR_BACKGROUND_COLOR")}}; color: {{constant("TEXT_COLOR")}};">FPE</th>
+							<th style="background-color: {{constant("BAR_BACKGROUND_COLOR")}}; color: {{constant("TEXT_COLOR")}};">LPE</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr class="first_row" >
+							<td style="background-color: {{constant("SECONDARY_BAR_BACKGROUND_COLOR")}}; color: {{constant("TEXT_COLOR")}};">Entire Project</td>
+							{# <td style="background-color: {{constant("SECONDARY_BAR_BACKGROUND_COLOR")}};"></td> #}
+							<td style="background-color: {{constant("SECONDARY_BAR_BACKGROUND_COLOR")}};"></td>
+							<td style="background-color: {{constant("SECONDARY_BAR_BACKGROUND_COLOR")}};"></td>
+							<td style="background-color: {{constant("SECONDARY_BAR_BACKGROUND_COLOR")}};"></td>
+						</tr>
+						{% for totalDetails in allSites["totals"] %}
+							<tr>
+								<td>{{ totalDetails["name"] }}</td>
+								{# <td>{{ totalDetails["enrolled"] }}</td> #}
+								<td>{{ totalDetails["treated"] }}</td>
+								<td>{{ totalDetails["fpe"] }}</td>
+								<td>{{ totalDetails["lpe"] }}</td>
+							</tr>
+						{% endfor %}
+						<tr class="first_row">
+							<td style="background-color: {{constant("SECONDARY_BAR_BACKGROUND_COLOR")}}; color: {{constant("TEXT_COLOR")}};">By Site</td>
+							{# <td style="background-color: {{constant("SECONDARY_BAR_BACKGROUND_COLOR")}};"></td> #}
+							<td style="background-color: {{constant("SECONDARY_BAR_BACKGROUND_COLOR")}};"></td>
+							<td style="background-color: {{constant("SECONDARY_BAR_BACKGROUND_COLOR")}};"></td>
+							<td style="background-color: {{constant("SECONDARY_BAR_BACKGROUND_COLOR")}};"></td>
+						</tr>
+						{% for siteDetails in allSites["sites"] %}
+							<tr class="region" data-region="{{ siteDetails["class"] }}">
+								<td >{{ siteDetails["name"] }}</td>
+								{# <td>{{ siteDetails["enrolled"] }}</td> #}
+								<td>{{ siteDetails["treated"] }}</td>
+								<td>{{ siteDetails["fpe"] }}</td>
+								<td>{{ siteDetails["lpe"] }}</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+			{# chart #}
+			<div class="col-6 chart-container" style="position: relative; height: 75vh; width: 50vw">
+				<canvas id="enrollment_chart"></canvas>
+			</div>
+		</div>
 	</div>
 	<div id="mySiteData">
 		<table class="sortable">
