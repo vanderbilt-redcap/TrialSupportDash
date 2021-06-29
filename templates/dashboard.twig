@@ -81,7 +81,7 @@
 							<td style="background-color: {{constant("SECONDARY_BAR_BACKGROUND_COLOR")}};"></td>
 						</tr>
 						{% for siteDetails in allSites["sites"] %}
-							<tr class="region" data-region="{{ siteDetails["class"] }}">
+							<tr class="region" data-region="{{ siteDetails["class"] }}" data-dag="{{ siteDetails["dag"] }}">
 								<td >{{ siteDetails["name"] }}</td>
 								{# <td>{{ siteDetails["enrolled"] }}</td> #}
 								<td>{{ siteDetails["treated"] }}</td>

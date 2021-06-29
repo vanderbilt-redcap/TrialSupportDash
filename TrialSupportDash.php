@@ -153,11 +153,11 @@ class TrialSupportDash extends \ExternalModules\AbstractExternalModule {
 		$last_date = date("Y-m-d", 0);
 		foreach ($enroll_data as $record) {
 			$site_match_or_null = $site === null ? true : $record->redcap_data_access_group == $site;
-			if (!empty($record->randomization_date) and $site_match_or_null) {
-				if (strtotime($record->randomization_date) < strtotime($first_date))
-					$first_date = date("Y-m-d", strtotime($record->randomization_date));
-				if (strtotime($record->randomization_date) > strtotime($last_date))
-					$last_date = date("Y-m-d", strtotime($record->randomization_date));
+			if (!empty($record->randomization_time) and $site_match_or_null) {
+				if (strtotime($record->randomization_time) < strtotime($first_date))
+					$first_date = date("Y-m-d", strtotime($record->randomization_time));
+				if (strtotime($record->randomization_time) > strtotime($last_date))
+					$last_date = date("Y-m-d", strtotime($record->randomization_time));
 			}
 		}
 		if (strtotime($last_date) == 0)
@@ -191,7 +191,7 @@ class TrialSupportDash extends \ExternalModules\AbstractExternalModule {
 			$ts_b = strtotime("+24 hours", strtotime($date2));
 			// echo "\$date1, \$date2, \$ts_a, \$ts_b: $date1, $date2, $ts_a, $ts_b\n";
 			foreach ($enroll_data as $record) {
-				$ts_x = strtotime($record->randomization_date);
+				$ts_x = strtotime($record->randomization_time);
 				$site_match_or_null = $site === null ? true : $record->redcap_data_access_group == $site;
 				if ($ts_a <= $ts_x and $ts_x <= $ts_b and $site_match_or_null)
 					$enrolled_this_week++;
@@ -1096,6 +1096,7 @@ class TrialSupportDash extends \ExternalModules\AbstractExternalModule {
 				$sites->$patient_dag = new \stdClass();
 				$site = $sites->$patient_dag;
 				$site->name = $record->dag_name;
+                $site->dag = $record->redcap_data_access_group;
 				$site->enrolled = 0;
 				$site->treated = 0;
 				$site->fpe = '-';
