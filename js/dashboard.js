@@ -172,8 +172,99 @@ $("document").ready(function () {
 		$("#links button.close-folder").hide();
 	});
 	
+	// when a user clicks on a site row in the enrollments table, select that row and update the chart
+	$("body").on("mousedown touchstart", "#allSitesData tr:not('first_row')", function(clickEvent) {
+		$("#allSitesData tr").removeClass('selected');
+
+		var site_row = $(clickEvent.currentTarget);
+		site_row.addClass('selected');
+
+		// if empty, fetch total enrollments, otherwise get site specific enrollment data
+		var site_dag = site_row.attr('data-dag') || "";
+		console.log('site_dag', site_dag);
+
+		$.ajax({
+			url: ENROLLMENT_CHART_DATA_AJAX_URL,
+			type: "POST",
+			data: {site_dag: site_dag},
+			cache: false,
+			dataType: "json"
+		})
+		.done(function(json) {
+			console.log('received json: ', json);
+			if (json.rows && json.rows.length > 1) {
+				// update enrollment chart with new data
+				json.rows.pop()
+				var week_labels = [];
+				var data1 = [];
+				var data2 = [];
+				json.rows.forEach(function(row) {
+					week_labels.push(row[0]);
+					data1.push(row[1]);
+					data2.push(row[2]);
+				})
+				enrollment_chart.data.labels = week_labels;
+				enrollment_chart.data.datasets[0].data = data1;
+				enrollment_chart.data.datasets[1].data = data2;
+				enrollment_chart.update();
+			}
+
+		});
+	});
+
+	// when a user clicks on a site option in the Site Activation tab dropdown, select that site and update the Site Activation chart
+	$("body").on("mousedown touchstart", "#activation .active-site-select .dropdown-item", function(clickEvent) {
+		var site_name = $(clickEvent.target).text();
+		var found_site_container;
+		$('.activation-container').each(function(i, div) {
+			if (site_name == $(div).find('h2').text()) {
+				found_site_container = $(div);
+			}
+		});
+		if (found_site_container.length) {
+			$('.activation-container').hide();
+			found_site_container.show();
+		}
+	});
+
 	$("#links .links").hide();
 	$("#links button.close-folder").hide();
 	
 	$('.sortable').tablesorter();
+
+	// site activation table color coding
+	$("tr.data td:not(.signoff):nth-child(n+3)").each(function(i, td) {
+		var cell = $(td);
+
+		var text_red = [
+			"Initiated",
+			"Awaiting Site Response"
+		];
+		var text_green = [
+			"Complete",
+			"Confirmed by VCC"
+		];
+
+		var digit_regex = /\d/;
+		var text = cell.text();
+		console.log('text', text);
+		text = text.trim();
+		if (digit_regex.test(text)) {
+			// probably a date cell or count of days between site engaged/open for enrollment
+			if (text != '') {
+				cell.addClass('green');
+			}
+		} else {
+			if (text_red.includes(text)) {
+				cell.addClass('red');
+			} else if (text_green.includes(text)) {
+				cell.addClass('green');
+			} else {
+				cell.addClass('yellow');
+			}
+		}
+	});
+
+	// show first site in activation tab
+	$('.activation-container').first().show();
 });

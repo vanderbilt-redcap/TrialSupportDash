@@ -18,7 +18,8 @@
 		<script type="text/javascript">
 			var APP_PATH_WEBROOT = "{{ constant("APP_PATH_WEBROOT") }}";
 			var SCREENING_LOG_DATA_AJAX_URL = "{{ constant("SCREENING_LOG_DATA_AJAX_URL")|raw }}";
-			
+			var ENROLLMENT_CHART_DATA_AJAX_URL = "{{ constant("ENROLLMENT_CHART_DATA_AJAX_URL")|raw }}";
+
 			// set chart.js datalabels plugin options globally
 			Chart.helpers.merge(Chart.defaults.global.plugins.datalabels, {
 				align: 'top',
