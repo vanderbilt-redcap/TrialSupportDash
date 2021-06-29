@@ -429,4 +429,66 @@
 		</div>
 	</div>
 </div>
+
+{# enrollment chart js script below: #}
+<script>
+	var week_labels = [
+		{% for row in enrollmentChart.rows|slice(0,-1) %}
+			'{{ row.0 }}',
+		{% endfor %}
+	];
+	var data1 = [
+		{% for row in enrollmentChart.rows|slice(0,-1) %}
+			{{ row.1 }},
+		{% endfor %}
+	];
+	var data2 = [
+		{% for row in enrollmentChart.rows|slice(0,-1) %}
+			{{ row.2 }},
+		{% endfor %}
+	];
+	var ctx = document.getElementById('enrollment_chart').getContext('2d');
+	var enrollment_chart = new Chart(ctx, {
+		type: 'bar',
+		data: {
+			labels: week_labels,
+			datasets: [{
+				label: 'Participants Enrolled',
+				data: data1,
+				borderColor: 'rgba(13, 127, 133, 1)',
+				borderWidth: 2,
+				type: 'line',
+				datalabels: {
+					anchor: 'center'
+				}
+			},{
+				label: 'Cumulative Enrollments',
+				data: data2,
+				backgroundColor: 'rgba(180, 199, 231, 1)',
+				borderWidth: 1,
+				datalabels: {
+					offset: 12
+				}
+			}]
+		},
+		options: {
+			title: {
+				display: true,
+				fontSize: 24,
+				fontStyle: 'normal',
+				text: 'Enrollments By Week'
+			},
+			scales: {
+				yAxes: [{
+					ticks: {
+						beginAtZero: true
+					}
+				}]
+			},
+			responsive: true,
+			responsiveAnimationDuration: 50,
+			maintainAspectRatio: false
+		}
+	});
+</script>
 {% endblock %}

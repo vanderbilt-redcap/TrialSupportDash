@@ -1,7 +1,8 @@
 <?php
 
 define("SCREENING_LOG_DATA_AJAX_URL", $module->getUrl('ajax/getScreeningLogData.php'));
-$loader = new \Twig\Loader\FilesystemLoader(__DIR__ . "/templates");
+define("ENROLLMENT_CHART_DATA_AJAX_URL", $module->getUrl('ajax/getEnrollmentChartData.php'));
+$loader = new \Twig\Loader\FilesystemLoader(__DIR__."/templates");
 $twig = new \Twig\Environment($loader);
 
 $template = $twig->load("dashboard.twig");
@@ -39,6 +40,7 @@ if ($authorized == 3) {
 $setDagSettings = $module->setDagsSetting();
 $getDagSettings = $module->getDagsSetting();
 $screeningLogData = $module->getScreeningLogData();
+$enrollmentChartData = $module->getEnrollmentChartData();
 $exclusionData = $module->getExclusionReportData();
 $screenFailData = $module->getScreenFailData();
 
