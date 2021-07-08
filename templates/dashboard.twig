@@ -389,8 +389,13 @@
 											beginAtZero: true
 										}
 									}]
+								},
+								animation: {
+									onComplete:function() {
+										updateEnrollmentChart("");
+									}
 								}
-							}
+							},
 						});
 					</script>
 				</div>

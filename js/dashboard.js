@@ -109,6 +109,38 @@ function getSelectedValue() {
 	})
 }
 
+function updateEnrollmentChart(site_dag) {
+	console.log('site_dag', site_dag);
+
+	$.ajax({
+		url: ENROLLMENT_CHART_DATA_AJAX_URL,
+		type: "POST",
+		data: {site_dag: site_dag},
+		cache: false,
+		dataType: "json"
+	})
+		.done(function(json) {
+			console.log('received json: ', json);
+			if (json.rows && json.rows.length > 1) {
+				// update enrollment chart with new data
+				json.rows.pop()
+				var week_labels = [];
+				var data1 = [];
+				var data2 = [];
+				json.rows.forEach(function(row) {
+					week_labels.push(row[0]);
+					data1.push(row[1]);
+					data2.push(row[2]);
+				})
+				enrollment_chart.data.labels = week_labels;
+				enrollment_chart.data.datasets[0].data = data1;
+				enrollment_chart.data.datasets[1].data = data2;
+				enrollment_chart.update();
+			}
+
+		});
+}
+
 $("document").ready(function () {
 
 	getSelectedValue();
@@ -175,41 +207,13 @@ $("document").ready(function () {
 	// when a user clicks on a site row in the enrollments table, select that row and update the chart
 	$("body").on("mousedown touchstart", "#allSitesData tr:not('first_row')", function(clickEvent) {
 		$("#allSitesData tr").removeClass('selected');
-
 		var site_row = $(clickEvent.currentTarget);
-		site_row.addClass('selected');
 
+		site_row.addClass('selected');
 		// if empty, fetch total enrollments, otherwise get site specific enrollment data
 		var site_dag = site_row.attr('data-dag') || "";
-		console.log('site_dag', site_dag);
 
-		$.ajax({
-			url: ENROLLMENT_CHART_DATA_AJAX_URL,
-			type: "POST",
-			data: {site_dag: site_dag},
-			cache: false,
-			dataType: "json"
-		})
-		.done(function(json) {
-			console.log('received json: ', json);
-			if (json.rows && json.rows.length > 1) {
-				// update enrollment chart with new data
-				json.rows.pop()
-				var week_labels = [];
-				var data1 = [];
-				var data2 = [];
-				json.rows.forEach(function(row) {
-					week_labels.push(row[0]);
-					data1.push(row[1]);
-					data2.push(row[2]);
-				})
-				enrollment_chart.data.labels = week_labels;
-				enrollment_chart.data.datasets[0].data = data1;
-				enrollment_chart.data.datasets[1].data = data2;
-				enrollment_chart.update();
-			}
-
-		});
+		updateEnrollmentChart(site_dag);
 	});
 
 	// when a user clicks on a site option in the Site Activation tab dropdown, select that site and update the Site Activation chart

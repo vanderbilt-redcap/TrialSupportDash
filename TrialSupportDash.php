@@ -174,7 +174,7 @@ class TrialSupportDash extends \ExternalModules\AbstractExternalModule {
 		$cumulative_enrolled = 0;
 		$iterations = 0;
 		while (true) {
-			$screened_this_week = 0;
+            $enrolled_this_week = 0;
 			
 			// determine week boundary dates
 			$day_offset1 = ($iterations) * 7;
@@ -943,7 +943,7 @@ class TrialSupportDash extends \ExternalModules\AbstractExternalModule {
 					if ($record->redcap_data_access_group == 'dcri_call_center') {
 						$record->dag = '100000';
 						$record->dag_name = 'DCRI Call Center';
-						$record->class = $thisDag->region;
+						$record->class = "Southeast";
 						break;
 					}
 					if ($thisDag->unique == $record->redcap_data_access_group) {
