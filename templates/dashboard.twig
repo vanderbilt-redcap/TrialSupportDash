@@ -134,10 +134,16 @@
 		{# green title bar #}
 		<div class="report_title_bar"><span id="report_title" style="background-color: {{constant("SECONDARY_BAR_BACKGROUND_COLOR")}};"></span></div>
 		<div class="buttons">
+			{% if use_screening %}
 			<button onclick="showReport('screening_log')" class="report_switch">Screening Log Report</button>
+			{% endif %}
 			<button onclick="showReport('exclusion')" class="report_switch">Exclusion Report</button>
+
+			{% if use_screening %}
 			<button onclick="showReport('screen_fail')" class="report_switch">Screening Fail Report</button>
+			{% endif %}
 		</div>
+		{% if use_screening %}
 		<div class="screening_report" id="screening_log">
 			<div class="row">
 				<div class="col-6">
@@ -234,6 +240,7 @@
 				</div>
 			</div>
 		</div>
+		{% endif %}
 		<div class="screening_report" id="exclusion">
 			<div class="row">
 				<div class="col-6">
@@ -315,6 +322,7 @@
 				</div>
 			</div>
 		</div>
+		{% if use_screening %}
 		<div class="screening_report" id="screen_fail">
 			<div class="row">
 				<div class="col-6">
@@ -401,6 +409,7 @@
 				</div>
 			</div>
 		</div>
+		{% endif %}
 	</div>
 {% endif %}
 	<div id="links">
