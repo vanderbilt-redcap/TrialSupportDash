@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * We know 1g is insufficient to prevent dashboard.php from crashing on the ACTIV6 project.
+ * This was set to 4g somewhat arbitrarily.  Hopefully that will cover many potential future use cases.
+ */
+ini_set('memory_limit', '4g');
 define("SCREENING_LOG_DATA_AJAX_URL", $module->getUrl('ajax/getScreeningLogData.php'));
 define("ENROLLMENT_CHART_DATA_AJAX_URL", $module->getUrl('ajax/getEnrollmentChartData.php'));
 $loader = new \Twig\Loader\FilesystemLoader(__DIR__."/templates");
